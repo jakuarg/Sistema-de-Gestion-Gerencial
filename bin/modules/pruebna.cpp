@@ -2,6 +2,6 @@
 
 main()
 {
-	printf ("prueba");
+	printf ("prueba");//hola
 	return 0;
 }
