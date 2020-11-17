@@ -10,8 +10,11 @@
 //DECLARACIONES DE LIBRERIAS
 #include<stdio.h>
 #include<stdlib.h>
+//PARA HABILITAR EL USO DE CARACTERES ESPECIALES
 #include <wchar.h>
 #include <locale.h>
+
+#include <windows.h>
 
 //DEFINICIONES DE LA LONGITUD DEL USUARIO Y CONTRASENIA
 typedef char userlen[12];//Longitud del n. usuario(10)
@@ -30,7 +33,7 @@ int val_user(userlen usuario,passlen contrasenia,int usorpass);//int usorpass es
 int val_in(int entrada,int lim_min, int lim_max);
 main()
 {
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "SPANISH");
 	system("CLS");
 	
 	//ALTA
