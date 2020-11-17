@@ -10,7 +10,7 @@
 //DECLARACIONES DE LIBRERIAS
 #include<stdio.h>
 #include<stdlib.h>
-#include <wchar.h>
+#include <wchar.h>//hola
 #include <locale.h>
 
 //DEFINICIONES DE LA LONGITUD DEL USUARIO Y CONTRASENIA
