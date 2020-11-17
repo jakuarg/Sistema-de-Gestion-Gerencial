@@ -33,7 +33,7 @@ main()
 	//ALTA
 	FILE*archauth;
 	archauth=fopen("usuarios.dat","w+b");
-	//SECCION DE DECLARACIONES
+	//SECCION DE DECLARACIONES 
 	int error,op_1;
 	//
 	error=1;
@@ -45,8 +45,8 @@ main()
 	 	printf("\n2.- Registrar Usuario Asistente");
 	 	printf("\n3.- Atenciones por Veterinarios");
 	 	printf("\n4.- Ranking de Veterinarios por Atenciones");
-	 	printf("\n\n5.- Cerrar la aplicación.");
-	 	printf("\n\nIngrese una opción: _");
+	 	printf("\n\n5.- Cerrar la aplicaciï¿½n.");
+	 	printf("\n\nIngrese una opciï¿½n: _");
 	 	scanf("%d",&op_1);
 	 	
 	 	//Validacion de entrada
@@ -60,7 +60,7 @@ main()
 	switch(op_1)
 	{
 		case 1:
-			Registro_v;
+			//Reg_Vet();
 	}
 	fclose(archauth);
 }
