@@ -10,6 +10,8 @@
 //DECLARACIONES DE LIBRERIAS
 #include<stdio.h>
 #include<stdlib.h>
+#include <wchar.h>
+#include <locale.h>
 
 //DEFINICIONES DE LA LONGITUD DEL USUARIO Y CONTRASENIA
 typedef char userlen[12];//Longitud del n. usuario(10)
@@ -28,6 +30,7 @@ int val_user(userlen usuario,passlen contrasenia,int usorpass);//int usorpass es
 int val_in(int entrada,int lim_min, int lim_max);
 main()
 {
+	setlocale(LC_ALL, "");
 	system("CLS");
 	
 	//ALTA
@@ -45,8 +48,8 @@ main()
 	 	printf("\n2.- Registrar Usuario Asistente");
 	 	printf("\n3.- Atenciones por Veterinarios");
 	 	printf("\n4.- Ranking de Veterinarios por Atenciones");
-	 	printf("\n\n5.- Cerrar la aplicaci�n.");
-	 	printf("\n\nIngrese una opci�n: _");
+	 	printf("\n\n5.- Cerrar la aplicacion.");
+	 	printf("\n\nIngrese una opcion: _");
 	 	scanf("%d",&op_1);
 	 	
 	 	//Validacion de entrada
@@ -60,7 +63,7 @@ main()
 	switch(op_1)
 	{
 		case 1:
-			//Reg_Vet();
+			break;//Reg_Vet();
 	}
 	fclose(archauth);
 }
@@ -79,7 +82,7 @@ int val_in(int entrada,int lim_min, int lim_max)
 {
 	if(lim_max>lim_min)
 	{
-		if(entrada >= lim_min and entrada <= lim_max)
+		if(entrada >= lim_min && entrada <= lim_max)
 		{
 			return 1;
 		}else return 0;
