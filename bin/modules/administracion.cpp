@@ -75,13 +75,36 @@ main()
 	}
 }
 
-int val_user(userlen usuario,passlen contrasenia, FILE*)//Verifica si el usuario y contra es correcta
+int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y contra es correcta
 {
-	//CONTADORES
+	//ALTA
+	FILE*arch_admin;//Archivo donde se guardan el usuario y la constrasenia
+	arch_admin=fopen("USERSinf.dat","a+b");
+	if(arch_admin==NULL)
+	{
+		system("CLS");
+		printf("\n\n SE PRODUJO UN ERROR AL INTENTAR ABRIR EL ARCHIVO");
+		system("PAUSE");
+		exit(1);
+	}
+	//FIN DE ALTA
+
+	//APERTURA REGISTRO
+	auth reg;
+	//CONTADORES 
 	int lmay=0;//LETRAS MAYUSCULAS
 	int cdig=0;//CONTADOR DIGITOS
+	int lmin=0;//LETRAS MINUSCULAS
+	
+	int ccar=0;//CARACTERES
+	int calf=0;//Contador alfanumerico
+
 	//BANDERAS DE LAS CONDICIONES
-	int band=0;//BANDERA
+	int buser=0;//usuario
+	int bpass=0;//contrasenia
+	int bccon=0;//3 caracteres consecutivos
+
+
 
 	//VALIDACION DE USUARIO
 
@@ -98,44 +121,102 @@ int val_user(userlen usuario,passlen contrasenia, FILE*)//Verifica si el usuario
 			}
 			if(lmay>2)//verifica si tiene al menos 2 mayusculas
 			{
-				band = 0;
-			}
-			else
-			{
-				band = 1;
-			}
-
-			for(int i=0;i<strlen(usuario);i++)//contador de digitos
-			{
-				if(isdigit(usuario[i])!=0) //verifica digito
+				for(int i=0;i<strlen(usuario);i++)//contador de digitos
 				{
-					cdig++;
+					if(isdigit(usuario[i])!=0) //verifica digito
+					{
+						cdig++;
+					}
+				}
+
+				if(cdig<=3)//verifica si tiene 3 digitos
+				{
+					rewind(arch_admin);
+					fread(&reg.user, sizeof(userlen), 1, arch_admin);
+					while(!feof(arch_admin))
+					{
+						if(strcmp(usuario,reg.user)==0)
+						{
+							buser=1;
+						}
+						else
+						{
+							buser=0;
+						}
+						
+					}
+				}
+				else
+				{
+					buser=1;
 				}
 			}
-
-			if(cdig<=3)
-			{
-				band=0;
-			}
 			else
 			{
-				band=1;
+				buser = 1;
 			}
+
+			
 		}
 		else
 		{
-			band = 1;
+			buser = 1;
 		}
 	}
 	else
 	{
-		band = 1;
+		buser = 1;
 	}
-
+	//FIN DE VALIDACION DE USUARIO
+	
+	//REINICIO DE CONTADORES
+	lmay=0;
+	cdig=0;
+	lmin=0;
+	
 	//VALIDACION DE CONTRASENIA
 
-	if()
-	if(band==1)//CONDICION FINAL
+	for(int i=0;i<strlen(contrasenia);i++)
+	{
+		if(islower(contrasenia[i])!=0)//verifica minuscula
+		{
+			lmin++;
+		}
+		else
+		{
+			if(isupper(contrasenia[i])!=0)//verifica mayuscula
+			{
+				lmay++;
+			}
+			else
+			{
+				if(isdigit(contrasenia[i])!=0)//verifica digito
+				{
+					cdig++;
+					if((i>=3) && (((contrasenia[i])==(contrasenia[i-1]))==(contrasenia[i-2])))
+					{
+						bccon=1;
+					}
+				}
+				else
+				{
+					if(isalnum(contrasenia[i])==1)//verifica alfanumerico
+					{
+						calf++;
+					}
+					else
+					{
+						printf("\n\n no se cumplio ninguna pa : %c",contrasenia[i]);
+					}
+				}
+			}
+			
+		}	
+	}
+
+	//BAJA
+	fclose(arch_admin);
+	if(buser==1 && bpass==1)//CONDICION FINAL
 	{
 		return 0;//no se cumplieron todas
 	}else return 1;//se cumplieron todas
@@ -155,17 +236,7 @@ int val_in(int entrada,int lim_min, int lim_max)//Ingresa una entrada y verifica
 void Reg_Veterinario()
 {
 	system("CLS");
-	//ALTA
-	FILE*arch_admin;
-	arch_admin=fopen("USERSinf.dat","a+b");
-	if(arch_admin==NULL)
-	{
-		system("CLS");
-		printf("\n\n SE PRODUJO UN ERROR AL INTENTAR ABRIR EL ARCHIVO");
-		system("PAUSE");
-		exit(1);
-	}
-	//FIN DE ALTA
+	
 
 	//Llamada al registro
 	auth rv; //rv=registroveterinario
@@ -186,11 +257,10 @@ void Reg_Veterinario()
 		{
 			printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
 		}
-		else 
+		else
 		{
 			error=0;printf("El usuario y contraseña se han ingresado correctamente.");
-		}	
+		}
 	}
-	//BAJA
-	fclose(arch_admin);
+	
 }
