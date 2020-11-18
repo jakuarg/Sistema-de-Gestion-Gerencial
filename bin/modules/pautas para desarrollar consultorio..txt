@@ -1,0 +1,11 @@
+* Identificacion del veterinario:
+- Matricula.
+- Contraseña.
+- accediendo a la opcion indicada.
+* Identificacion de mascota:
+- Apellido y nombre de mascota.
+- Evolucion de la mascota (texto).
+- DNI DEL DUEÑO.
+- LOCALIDAD, EDAD (CALCULADA CON LA FECHA DE NACIMIENTO REGISTRADA).
+- Peso del animal.
+- Fecha de atencion al animal y el veterinario que la redacto.
