@@ -31,7 +31,7 @@ struct Turno{
 
 int matricula_de_veterinario; 
 fecha fec;       // fecha del turno
-int DNI_DUENIO;
+int DNI_DUENIO; // dni dueño
 char detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
 
 };
@@ -144,9 +144,9 @@ void reg_turno(FILE *ArchTurno){
 
     scanf ("%d", &reg.matricula_de_veterinario);
     printf("\nFecha de turno");
-    printf("DIA:"); scanf("%d", &reg.fec.dia);
-    printf("MES:"); scanf("%d", &reg.fec.mes);
-    printf("ANIO:"); scanf("%d", &reg.fec.anio);
+    printf("DIA:"); scanf("%2d", &reg.fec.dia);
+    printf("MES:"); scanf("%2d", &reg.fec.mes);
+    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
     printf("\nDNI del DueÃ±o:");
     scanf("%d", &reg.DNI_DUENIO);
     printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
