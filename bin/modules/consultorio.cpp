@@ -32,11 +32,13 @@ struct documentacion{ // Documentacion del dueño del animal.
 char Apeynom[30];
 int dni;
 char Localidad[20];
-
+char informeMascota[380];
+bool borrado;
  fecha fec;
 };
 
 int menuprincipal();
+void evolucionMascota(FILE *archMascota);
 
 main()
 {
@@ -53,12 +55,29 @@ main()
 				
 				break;
 			}
+			case 2:{
+
+				break;
+			}
+			case 3:{
+				evolucionMascota(archMascota);
+				system("PAUSE");				
+				break;
+			}
+			case 4:{
+				
+				break;
+			}
 		}
-	}while(opc!=2);
+	}while(opc!=4);
 
 
 }
 
+void iniciosesion(FILE *archMascota) // inicio de sesión.
+{
+	
+}
 int menuprincipal()
 {
 	int op;
@@ -75,4 +94,13 @@ int menuprincipal()
 	scanf("%d", &op);
 	return op;
 
+}
+
+void evolucionMascota(FILE *archMascota)
+{
+	documentacion reg;
+	
+	printf ("Ingrese el dni del dueno de la mascota : ");
+	scanf ("%d", &reg.dni);
+	
 }
