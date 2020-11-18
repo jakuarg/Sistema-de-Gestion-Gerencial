@@ -27,20 +27,52 @@ int anio;
 
 };
 
-struct documentacion{
+struct documentacion{ // Documentacion del dueño del animal.
 
 char Apeynom[30];
 int dni;
 char Localidad[20];
 
-    fecha reg;
+ fecha fec;
 };
 
+int menuprincipal();
 
 main()
 {
+	int opc; //variable declarada para acceder a las opciones 
+	FILE *archMascota = fopen("Mascotas.dat", "r+b");
+	if (archMascota == NULL)	{
+		fclose(archMascota);
+		archMascota = fopen("Mascotas.dat", "w+b");
+	}
+	do{
+		opc = menuprincipal();
+		switch(opc){
+			case 1:{
+				
+				break;
+			}
+		}
+	}while(opc!=2);
 
 
+}
 
+int menuprincipal()
+{
+	int op;
+	system("CLS");
+	printf("\n\t\t\t    =============================================     ");
+	printf("\n\t\t\t            Modulo Consultorio Veterinario            ");
+	printf("\n\t\t\t  	==============================================    ");
+	printf("\n\t\t\t  	1.- Iniciar Sesión                                ");
+	printf("\n\t\t\t    2.- Visualizar Lista de Espera de Turnos (informe)");
+	printf("\n\t\t\t	3.- Registrar Evolución de la Mascota             ");
+	printf("\n\t\t\t    4.- Cerrar la aplicación.                         ");
+	printf("\n\t\t\t =======================================");
+	printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
+	scanf("%d", &op);
+	return op;
 
 }
