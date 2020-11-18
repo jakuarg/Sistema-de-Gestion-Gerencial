@@ -39,7 +39,7 @@ void Reg_Veterinario();
 
 main()
 {
-	setlocale(LC_ALL, "SPANISH");
+	setlocale(LC_ALL, "spanish");
 	system("CLS");
 
 
@@ -78,22 +78,64 @@ main()
 int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y contra es correcta
 {
 	//CONTADORES
-	int lmay=0;//lETRAS MAYUSCULAS
-	int cuser=0;//CONTADOR USUARIO
+	int lmay=0;//LETRAS MAYUSCULAS
+	int cdig=0;//CONTADOR DIGITOS
+	//BANDERAS DE LAS CONDICIONES
+	int band=0;//BANDERA
+
 	//VALIDACION DE USUARIO
-	while(strlen(usuario)>=6 && strlen(usuario)<=10)//Verifica si el usuario tiene como minimo 6 y maximo 10 caracteres
+
+	if(strlen(usuario)>=6 && strlen(usuario)<=10)//Verifica si el usuario tiene como minimo 6 y maximo 10 caracteres
 	{
-		while(islower(usuario[0])!=0)//verifica si el primer caracter es minuscula
+		if(islower(usuario[0])!=0)//verifica si el primer caracter es minuscula
 		{
-			while(lmay<2 || strlen(usuario)>cuser)//verifica si tiene al menos 2 mayusculas
+			for(int i=0;i<strlen(usuario);i++)//contador de mayusculas
 			{
-				if(isupper(usuario[cuser])!=0)
+				if(isupper(usuario[i])!=0)//verifica mayuscula
 				{
-					;
+					lmay++;
 				}
 			}
+			if(lmay>2)//verifica si tiene al menos 2 mayusculas
+			{
+				band = 0;
+			}
+			else
+			{
+				band = 1;
+			}
+
+			for(int i=0;i<strlen(usuario);i++)//contador de digitos
+			{
+				if(isdigit(usuario[i])!=0) //verifica digito
+				{
+					cdig++;
+				}
+			}
+
+			if(cdig<=3)
+			{
+				band=0;
+			}
+			else
+			{
+				band=1;
+			}
+		}
+		else
+		{
+			band = 1;
 		}
 	}
+	else
+	{
+		band = 1;
+	}
+
+	if(band==1)//CONDICION FINAL
+	{
+		return 0;//no se cumplieron todas
+	}else return 1;//se cumplieron todas
 }
 int val_in(int entrada,int lim_min, int lim_max)//Ingresa una entrada y verifica si esta entre los limites
 {
@@ -134,12 +176,17 @@ void Reg_Veterinario()
 	{
 		_flushall();
 		printf("Usuario:    "); gets(rv.user);
+		_flushall();
 		printf("\nContraseña: "); gets(rv.password);
 
 		if(val_user(rv.user,rv.password)==0)
 		{
-			printf("Ingreso fallido. Nombre o Contraseña no valido.");
-		}else error=0;
+			printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
+		}
+		else 
+		{
+			error=0;printf("El usuario y contraseña se han ingresado correctamente.");
+		}	
 	}
 	//BAJA
 	fclose(arch_admin);
