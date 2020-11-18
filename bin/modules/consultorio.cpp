@@ -27,7 +27,7 @@ int anio;
 
 };
 
-struct documentacion{ // Documentacion del dueño del animal.
+struct documentacion{ // Documentacion del dueï¿½o del animal.
 
 char Apeynom[30];
 int dni;
@@ -74,7 +74,7 @@ main()
 
 }
 
-void iniciosesion(FILE *archMascota) // inicio de sesión.
+void iniciosesion(FILE *archMascota) // inicio de sesiï¿½n.
 {
 	
 }
@@ -85,10 +85,10 @@ int menuprincipal()
 	printf("\n\t\t\t    =============================================     ");
 	printf("\n\t\t\t            Modulo Consultorio Veterinario            ");
 	printf("\n\t\t\t  	==============================================    ");
-	printf("\n\t\t\t  	1.- Iniciar Sesión                                ");
+	printf("\n\t\t\t  	1.- Iniciar Sesiï¿½n                                ");
 	printf("\n\t\t\t    2.- Visualizar Lista de Espera de Turnos (informe)");
-	printf("\n\t\t\t	3.- Registrar Evolución de la Mascota             ");
-	printf("\n\t\t\t    4.- Cerrar la aplicación.                         ");
+	printf("\n\t\t\t	3.- Registrar Evoluciï¿½n de la Mascota             ");
+	printf("\n\t\t\t    4.- Cerrar la aplicaciï¿½n.                         ");
 	printf("\n\t\t\t =======================================");
 	printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
 	scanf("%d", &op);
@@ -99,8 +99,24 @@ int menuprincipal()
 void evolucionMascota(FILE *archMascota)
 {
 	documentacion reg;
-	
-	printf ("Ingrese el dni del dueno de la mascota : ");
+	int edadDuenio;
+	printf ("Ingrese la fecha de nacimiento del dueÃ±o : dd/mm/aaaa ");
+	scanf("%2d", &reg.fec.dia);
+	scanf("%2d", &reg.fec.mes);
+	scanf("%4d", &reg.fec.anio);
+	edadDuenio = 2020 - reg.fec.anio;
+	printf ("\n La edad del duenio es %d ", edadDuenio); // Mostramos la edad del duenÃ±o de la mascota.
+	printf ("\nIngrese el Apellido y nombre de la mascota : ");
+	_flushall();
+	gets(reg.Apeynom);
+	printf ("\nIngrese el dni del dueno de la mascota : ");
 	scanf ("%d", &reg.dni);
-	
+	printf ("\nIngrese la localidad del dueno : ");
+	_flushall();
+	gets(reg.Localidad);
+	printf ("\nIngrese la evolucion de la mascota ");
+	gets(reg.informeMascota);
+	fseek(archMascota,0,2); // Comienza desde el final del archivo
+	fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.
+
 }
