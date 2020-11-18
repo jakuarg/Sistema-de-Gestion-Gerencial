@@ -55,6 +55,7 @@ int menu_principal();
 
 main()
 {
+    system ("colorF0");
    int menu; // Variable de ingreso al menu
     
     FILE *ArchTurno = fopen("Turno.dat","r+b");
@@ -72,21 +73,25 @@ main()
             {
                 case 1:
                 {
+                    system ("CLS");
          
                      break;
                 }
                 case 2:
                 {
-         
+                    system ("CLS");
+
                      break;
                 }
                 case 3: 
-                {
+                {   
+                    system ("CLS");
          
                      break;
                 }
                 case 4: 
-                {
+                {   
+                    system ("CLS");
         
                       break;
                 }
@@ -124,4 +129,31 @@ int menu_principal()
 	scanf("%d", &opcion);
     return opcion;
 
+}
+
+// Funcion para registrar Turno 
+
+void reg_turno(FILE *ArchTurno){
+    Turno reg;
+
+    
+    printf("\n\t\t\t================================"); 
+    printf("\n\t\t\t       REGISTRO DE TURNO        ");
+    printf("\n\t\t\t================================"); 
+    printf("\n\n\t\tMatricula de medico:");
+
+    scanf ("%d", &reg.matricula_de_veterinario);
+    printf("\nFecha de turno");
+    printf("DIA:"); scanf("%d", &reg.fec.dia);
+    printf("MES:"); scanf("%d", &reg.fec.mes);
+    printf("ANIO:"); scanf("%d", &reg.fec.anio);
+    printf("\nDNI del Dueño:");
+    scanf("%d", &reg.DNI_DUENIO);
+    printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
+    scanf("%s", &reg.detalle_de_atencion);
+
+    fseek(ArchTurno,0,2);
+    fwrite(&reg, sizeof(Turno), 1, ArchTurno);
+
+       
 }
