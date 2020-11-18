@@ -75,7 +75,7 @@ main()
 	}
 }
 
-int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y contra es correcta
+int val_user(userlen usuario,passlen contrasenia, FILE*)//Verifica si el usuario y contra es correcta
 {
 	//CONTADORES
 	int lmay=0;//LETRAS MAYUSCULAS
@@ -132,6 +132,9 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 		band = 1;
 	}
 
+	//VALIDACION DE CONTRASENIA
+
+	if()
 	if(band==1)//CONDICION FINAL
 	{
 		return 0;//no se cumplieron todas
