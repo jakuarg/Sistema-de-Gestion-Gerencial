@@ -19,6 +19,24 @@
 //PARA HABILITAR FUNCIONES ESPECIALES DE MANIPULACION DE VENTANA,ETC
 #include <windows.h>
 
+struct fecha{
+
+int dia;
+int mes;
+int anio;
+
+};
+
+struct documentacion{
+
+char Apeynom[30];
+int dni;
+char Localidad[20];
+
+    fecha reg;
+};
+
+
 main()
 {
 
