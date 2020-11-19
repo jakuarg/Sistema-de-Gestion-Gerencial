@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"bin/functions/valuser.h"
+#include"bin/modules/functions/valuser.h"
 
 
 main()
@@ -43,7 +43,7 @@ main()
 			gets(rv.ApeyNomb);
 			printf("Ingrese Matricula:");
 			scanf("%d",&rv.matricula);
-			if(val_user(rv.user,rv.password,rv.matricula)==0)
+			if(val_user(rv.user,rv.password,rv.matricula,arch_admin)==0)
 			{
 				printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
 			}

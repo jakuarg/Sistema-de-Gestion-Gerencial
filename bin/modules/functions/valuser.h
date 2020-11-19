@@ -20,24 +20,12 @@ struct auth //ESTRUCTURA DEL USUARIO
 	int		matricula;
 };
 
-int val_user(userlen usuario,passlen contrasenia,int matricula)//Verifica si el usuario y contra es correcta
+int val_user(userlen usuario,passlen contrasenia,int matricula, FILE*arch_admin)//Verifica si el usuario y contra es correcta
 {
 	// Establecer el idioma a español
     setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
-
-    //ALTA
-	FILE*arch_admin;//Archivo donde se guardan el usuario y la constrasenia
-	arch_admin=fopen("Usuarios.dat","a+b");
-	if(arch_admin==NULL)
-	{
-		system("CLS");
-		printf("\n\n SE PRODUJO UN ERROR AL INTENTAR ABRIR EL ARCHIVO");
-		system("PAUSE");
-		exit(1);
-	}
-	//FIN DE ALTA
 
 	//APERTURA REGISTRO
 	auth reg;
@@ -47,7 +35,6 @@ int val_user(userlen usuario,passlen contrasenia,int matricula)//Verifica si el 
 	int lmin=0;//LETRAS MINUSCULAS
 	
 	int ccar=0;//CARACTERES
-	
 
 	//BANDERAS DE LAS CONDICIONES
 	int buser=0;//usuario
@@ -55,8 +42,6 @@ int val_user(userlen usuario,passlen contrasenia,int matricula)//Verifica si el 
 	int bdcon=0;//3 digitos consecutivos
 	int bccon=0;//2 caracteres consecutivos
 	int balf=0;//Contador alfanumerico
-
-
 
 	//VALIDACION DE USUARIO
 
@@ -95,7 +80,6 @@ int val_user(userlen usuario,passlen contrasenia,int matricula)//Verifica si el 
 						{
 							buser=0;
 						}
-						
 					}
 				}
 				else
@@ -175,15 +159,11 @@ int val_user(userlen usuario,passlen contrasenia,int matricula)//Verifica si el 
 		fwrite(&usuario    , sizeof(userlen),1, arch_admin);
 		fwrite(&contrasenia, sizeof(userlen),1, arch_admin);
 		fwrite(&matricula,   sizeof(int)    ,1, arch_admin);
-		//BAJA
-		fclose(arch_admin);
 
 		return 1;//se cumplieron todas
 	}
 	else
 	{
-		//BAJA
-		fclose(arch_admin);
 		return 0;//no se cumplieron todas
 	}
 }
