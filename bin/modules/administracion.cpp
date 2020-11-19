@@ -39,7 +39,7 @@ void Reg_Veterinario();
 main()
 {
 	// Establecer el idioma a espaÃ±ol
-    setlocale(LC_ALL, "spanish"); // Cambiar locale - Suficiente para mÃ¡quinas Linux
+    setlocale(LC_ALL, "es_ES.utf8"); // Cambiar locale - Suficiente para mÃ¡quinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para mÃ¡quinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para mÃ¡quinas Windows
 
@@ -50,23 +50,23 @@ main()
 	error=1;
 	while(error==1)
 	{
-		printf("Modulo Administracion");
+		printf("Modulo Administración");
 		printf("\n=======================");
 		printf("\n1.- Registrar Veterinario");
 	 	printf("\n2.- Registrar Usuario Asistente");
 	 	printf("\n3.- Atenciones por Veterinarios");
 	 	printf("\n4.- Ranking de Veterinarios por Atenciones");
-	 	printf("\n\n5.- Cerrar la aplicacion.");
-	 	printf("\n\nIngrese una opcion: ");
+	 	printf("\n\n5.- Cerrar la aplicación.");
+	 	printf("\n\nIngrese una opción: ");
 	 	scanf("%d",&op_1);
 	 	
 	 	//Validacion de entrada
 	 	if(val_in(op_1,1,5)==0)
 	 	{
-	 		printf("\nIngrese una opcion correcta");
+	 		printf("\nIngrese una opción correcta");
 	 		system("PAUSE");
 	 		system("CLS");
-	 	}else printf("\nSe iniciara la opcion.");error=0;
+	 	}else error=0;
 	}
 	switch(op_1)
 	{
@@ -246,7 +246,7 @@ int val_in(int entrada,int lim_min, int lim_max)//Devuelve 1 si la entrada esta 
 		{
 			return 1;
 		}else return 0;
-	}else printf("\nEl limite minimo no puede ser mayor al maximo.");
+	}else printf("\nEl limite minimo no puede ser mayor al máximo.");
 	
 }
 
@@ -267,20 +267,22 @@ void Reg_Veterinario()
 		_flushall();
 		printf("Usuario:    "); 
 		gets(rv.user);
-		printf("\nContraseÃ±a: ");
+		printf("\nContraseña: ");
 		gets(rv.password);
-		printf("Ingrese Matricula:");
+		printf("\nIngrese Matricula:	");
 		scanf("%d",&rv.matricula);
 		if(val_user(rv.user,rv.password,rv.matricula)==0)
 		{
-			printf("Ingreso fallido. Nombre o ContraseÃ±a no valido.\n");
+			system("CLS");
+			printf("Ingreso fallido. Nombre o Contraseña no válido.\n");
+			system("PAUSE");
 		}
 		else
 		{
 			
 			error=0;
 			system("CLS");
-			printf("\nEl usuario y contraseÃ±a se han ingresado correctamente.");
+			printf("\nEl usuario y contraseña se han ingresado correctamente.");
 			system("PAUSE");
 		}
 
@@ -293,7 +295,7 @@ void Reg_Veterinario()
 			if(val_in(op_2,0,1)==1)
 			{
 				error=0;
-			}else printf("\nIngrese una decision correcta.");system("PAUSE");
+			}else printf("\nIngrese una decisión correcta.");system("PAUSE");
 		}
 		
 	}
