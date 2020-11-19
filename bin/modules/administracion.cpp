@@ -10,9 +10,8 @@
 //DECLARACIONES DE LIBRERIAS
 #include<stdio.h>//Funciones de entrada
 #include<stdlib.h>//Funciones system
-//PARA HABILITAR EL USO DE CARACTERES ESPECIALES
-#include <wchar.h>
-#include <locale.h>
+//#include <wchar.h>
+#include <locale.h>// Añade paquete de idiomas
 //PARA HABILITAR FUNCIONES DE TEXTO
 #include <ctype.h>
 #include <string.h>
@@ -28,21 +27,23 @@ struct auth //ESTRUCTURA DEL USUARIO
 {
 	userlen	user;
 	passlen password;
-	
+	int		matricula;
 };
 
 //FUNCIONES de validacion
-int val_user(userlen usuario,passlen contrasenia);
-int val_in(int entrada,int lim_min, int lim_max);
+int val_user(userlen usuario, passlen contrasenia, int matricula);
+int val_in(int entrada, int lim_min, int lim_max);
 //FUNCIONES de registro
 void Reg_Veterinario();
 
 main()
 {
-	setlocale(LC_ALL, "spanish");
+	// Establecer el idioma a español
+    setlocale(LC_ALL, "spanish"); // Cambiar locale - Suficiente para máquinas Linux
+    SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
+    SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
+
 	system("CLS");
-
-
 	//SECCION DE DECLARACIONES 
 	int error,op_1;
 	//
@@ -75,7 +76,7 @@ main()
 	}
 }
 
-int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y contra es correcta
+int val_user(userlen usuario,passlen contrasenia,int matricula)//Verifica si el usuario y contra es correcta
 {
 	//ALTA
 	FILE*arch_admin;//Archivo donde se guardan el usuario y la constrasenia
@@ -224,6 +225,7 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 	{
 		fwrite(&usuario    , sizeof(userlen),1, arch_admin);
 		fwrite(&contrasenia, sizeof(userlen),1, arch_admin);
+		fwrite(&matricula,   sizeof(int)    ,1, arch_admin);
 		//BAJA
 		fclose(arch_admin);
 
@@ -236,7 +238,7 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 		return 0;//no se cumplieron todas
 	}
 }
-int val_in(int entrada,int lim_min, int lim_max)//Ingresa una entrada y verifica si esta entre los limites
+int val_in(int entrada,int lim_min, int lim_max)//Devuelve 1 si la entrada esta entre el lim_min y el lim_max
 {
 	if(lim_max>lim_min)
 	{
@@ -251,12 +253,11 @@ int val_in(int entrada,int lim_min, int lim_max)//Ingresa una entrada y verifica
 void Reg_Veterinario()
 {
 	system("CLS");
-	
-
 	//Llamada al registro
-	auth rv; //rv=registroveterinario
+	auth rv;
 	//Declaracion de Variables
 	int error;
+	int op_2;
 	//Inicio interfaz de ingresado
 	printf("Registrar Veterinario");
 	printf("\n=======================\n");
@@ -266,10 +267,11 @@ void Reg_Veterinario()
 		_flushall();
 		printf("Usuario:    "); 
 		gets(rv.user);
-		printf("\nContraseña: "); 
+		printf("\nContraseña: ");
 		gets(rv.password);
-
-		if(val_user(rv.user,rv.password)==0)
+		printf("Ingrese Matricula:");
+		scanf("%d",&rv.matricula);
+		if(val_user(rv.user,rv.password,rv.matricula)==0)
 		{
 			printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
 		}
@@ -277,8 +279,23 @@ void Reg_Veterinario()
 		{
 			
 			error=0;
-			printf("El usuario y contraseña se han ingresado correctamente.");
+			system("CLS");
+			printf("\nEl usuario y contraseña se han ingresado correctamente.");
+			system("PAUSE");
 		}
+
+		error=1;
+		while(error==1)
+		{
+			system("CLS");
+			printf("\nDesea Registrar otro veterinario? (1 para si y 0 para no)");
+			scanf("%d",&op_2);
+			if(val_in(op_2,0,1)==1)
+			{
+				error=0;
+			}else printf("\nIngrese una decision correcta.");system("PAUSE");
+		}
+		
 	}
 	
 }
