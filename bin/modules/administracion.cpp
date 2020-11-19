@@ -56,7 +56,7 @@ main()
 	 	printf("\n3.- Atenciones por Veterinarios");
 	 	printf("\n4.- Ranking de Veterinarios por Atenciones");
 	 	printf("\n\n5.- Cerrar la aplicacion.");
-	 	printf("\n\nIngrese una opcion: _");
+	 	printf("\n\nIngrese una opcion: ");
 	 	scanf("%d",&op_1);
 	 	
 	 	//Validacion de entrada
@@ -79,7 +79,7 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 {
 	//ALTA
 	FILE*arch_admin;//Archivo donde se guardan el usuario y la constrasenia
-	arch_admin=fopen("USERSinf.dat","a+b");
+	arch_admin=fopen("Usuarios.dat","a+b");
 	if(arch_admin==NULL)
 	{
 		system("CLS");
@@ -97,12 +97,14 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 	int lmin=0;//LETRAS MINUSCULAS
 	
 	int ccar=0;//CARACTERES
-	int calf=0;//Contador alfanumerico
+	
 
 	//BANDERAS DE LAS CONDICIONES
 	int buser=0;//usuario
 	int bpass=0;//contrasenia
-	int bccon=0;//3 caracteres consecutivos
+	int bdcon=0;//3 digitos consecutivos
+	int bccon=0;//2 caracteres consecutivos
+	int balf=0;//Contador alfanumerico
 
 
 
@@ -119,7 +121,7 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 					lmay++;
 				}
 			}
-			if(lmay>2)//verifica si tiene al menos 2 mayusculas
+			if(lmay>=2)//verifica si tiene al menos 2 mayusculas
 			{
 				for(int i=0;i<strlen(usuario);i++)//contador de digitos
 				{
@@ -148,15 +150,13 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 				}
 				else
 				{
-					buser=1;
+					buser = 1;
 				}
 			}
 			else
 			{
 				buser = 1;
 			}
-
-			
 		}
 		else
 		{
@@ -168,7 +168,7 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 		buser = 1;
 	}
 	//FIN DE VALIDACION DE USUARIO
-	
+
 	//REINICIO DE CONTADORES
 	lmay=0;
 	cdig=0;
@@ -195,31 +195,46 @@ int val_user(userlen usuario,passlen contrasenia)//Verifica si el usuario y cont
 					cdig++;
 					if((i>=3) && (((contrasenia[i])==(contrasenia[i-1]))==(contrasenia[i-2])))
 					{
-						bccon=1;
+						bdcon=1;
 					}
 				}
 				else
 				{
-					if(isalnum(contrasenia[i])==1)//verifica alfanumerico
+					if(isalnum(contrasenia[i])==0)//verifica alfanumerico
 					{
-						calf++;
-					}
-					else
-					{
-						printf("\n\n no se cumplio ninguna pa : %c",contrasenia[i]);
+						balf++;
 					}
 				}
 			}
-			//ACA
-		}	
+			
+		}
+		if(toupper(contrasenia[i])==toupper(contrasenia[i+1]))
+		{
+			bccon=1;
+		}
 	}
 
-	//BAJA
-	fclose(arch_admin);
-	if(buser==1 && bpass==1)//CONDICION FINAL
+	if(lmay>=1 && lmin>=1 && cdig>=1 && balf==0 && strlen(contrasenia)>=6 && strlen(contrasenia)<=32 && bdcon==0)//mayusculas,minusculas,numeros,solo alfanumericos,entre 6 y 32 caracteres, 3 caracteres numericos consecutivos,2 letras consecutivas ascendentes
 	{
+		bpass=1;
+	}
+
+	
+	if(buser==0 && bpass==1)//CONDICION FINAL e INGRESO AL ARCHIVO
+	{
+		fwrite(&usuario    , sizeof(userlen),1, arch_admin);
+		fwrite(&contrasenia, sizeof(userlen),1, arch_admin);
+		//BAJA
+		fclose(arch_admin);
+
+		return 1;//se cumplieron todas
+	}
+	else
+	{
+		//BAJA
+		fclose(arch_admin);
 		return 0;//no se cumplieron todas
-	}else return 1;//se cumplieron todas
+	}
 }
 int val_in(int entrada,int lim_min, int lim_max)//Ingresa una entrada y verifica si esta entre los limites
 {
@@ -249,9 +264,10 @@ void Reg_Veterinario()
 	while(error==1)
 	{
 		_flushall();
-		printf("Usuario:    "); gets(rv.user);
-		_flushall();
-		printf("\nContraseña: "); gets(rv.password);
+		printf("Usuario:    "); 
+		gets(rv.user);
+		printf("\nContraseña: "); 
+		gets(rv.password);
 
 		if(val_user(rv.user,rv.password)==0)
 		{
@@ -259,7 +275,9 @@ void Reg_Veterinario()
 		}
 		else
 		{
-			error=0;printf("El usuario y contraseña se han ingresado correctamente.");
+			
+			error=0;
+			printf("El usuario y contraseña se han ingresado correctamente.");
 		}
 	}
 	
