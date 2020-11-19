@@ -167,14 +167,3 @@ int val_user(userlen usuario,passlen contrasenia,int matricula, FILE*arch_admin)
 		return 0;//no se cumplieron todas
 	}
 }
-int val_in(int entrada,int lim_min, int lim_max)//Devuelve 1 si la entrada esta entre el lim_min y el lim_max
-{
-	if(lim_max>lim_min)
-	{
-		if(entrada >= lim_min && entrada <= lim_max)
-		{
-			return 1;
-		}else return 0;
-	}else printf("\nEl limite minimo no puede ser mayor al maximo.");
-	
-}
