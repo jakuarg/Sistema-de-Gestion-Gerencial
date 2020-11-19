@@ -4,6 +4,7 @@
 
 main()
 {
-	printf("ingrese");
-	scanf("%d",&)
+	printf("Bienvenido al software de la veterinaria\n");
+	printf("========================================\n");
+	scanf("%d",&);
 }
