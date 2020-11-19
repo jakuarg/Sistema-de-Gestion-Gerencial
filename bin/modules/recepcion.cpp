@@ -31,7 +31,7 @@ struct Turno{
 
 int matricula_de_veterinario; 
 fecha fec;       // fecha del turno
-int DNI_DUENIO; // dni dueño
+int DNI_DUENIO; // dni dueï¿½o
 char detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
 
 };
@@ -131,6 +131,35 @@ int menu_principal()
 
 }
 
+// Funcion para registrar Mascota
+
+void reg_pet(){
+
+    Datos_pet pet;
+
+    printf("\n\t\t\t================================"); 
+    printf("\n\t\t\t       REGISTRO DE MASCOTAS     ");
+    printf("\n\t\t\t================================");
+
+    printf("\nApellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):");
+    gets(pet.Apeynom_pet);
+
+    printf("\nLocalidad:"); gets(pet.localidad);
+    printf("\nDomicilio:"); gets(pet.domicilio);
+    printf("\nDni del dueÃ±o:"); scanf("%d", &pet.DNI_DUENIO);
+    printf("\nPeso en KG:"); scanf("%f", &pet.peso);
+    printf("\nTelefono"); gets(pet.telefono);
+
+    printf("\nFecha de nacimiento dd/mm/aaaa");
+    printf("\nDia:"); scanf("%2d", &pet.de_nacimiento.dia);
+    printf("\nMes:"); scanf("%2d", &pet.de_nacimiento.mes);
+    printf("\nAnio:"); scanf("%2d", &pet.de_nacimiento.anio);
+    
+}
+
+
+
+
 // Funcion para registrar Turno 
 
 void reg_turno(FILE *ArchTurno){
@@ -154,6 +183,5 @@ void reg_turno(FILE *ArchTurno){
 
     fseek(ArchTurno,0,2);
     fwrite(&reg, sizeof(Turno), 1, ArchTurno);
-
-       
+    
 }
