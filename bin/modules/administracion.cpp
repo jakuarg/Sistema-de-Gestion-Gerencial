@@ -19,15 +19,35 @@
 #include <windows.h>
 
 //DEFINICIONES DE LA LONGITUD DEL USUARIO Y CONTRASENIA
-typedef char userlen[12];//Longitud del n. usuario(10)
-typedef char passlen[34];//Longitud de la contrasenia(32)
+typedef char userlen[12];  //Longitud del n. usuario(10)
+typedef char passlen[34];  //Longitud de la contrasenia(32)
+typedef char ownerlen[60]; //Longitud de 60
 
 //ESTRUCTURAS
 struct auth //ESTRUCTURA DEL USUARIO
 {
 	userlen	user;
 	passlen password;
+	char	ApeyNomb[60];
 	int		matricula;
+};
+
+struct fecha//ESTRUCTURA DE FECHA
+{
+	int dia;
+	int mes;
+	int anio;
+};
+
+struct cliente//ESTRUCTURA DEL CLIENTE
+{
+	ownerlen	ApeyNomb;
+	ownerlen	Domicilio;
+	int			DNI;
+	ownerlen	Localidad;
+	fecha		fechadenac;
+	float		peso;
+	char		telefono[25];
 };
 
 //FUNCIONES de validacion
@@ -35,11 +55,12 @@ int val_user(userlen usuario, passlen contrasenia, int matricula);
 int val_in(int entrada, int lim_min, int lim_max);
 //FUNCIONES de registro
 void Reg_Veterinario();
+void Reg_UsuarioAsist();
 
 main()
 {
 	// Establecer el idioma a español
-    setlocale(LC_ALL, "es_ES.utf8"); // Cambiar locale - Suficiente para máquinas Linux
+    setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
 
@@ -50,29 +71,32 @@ main()
 	error=1;
 	while(error==1)
 	{
-		printf("Modulo Administraci�n");
+		printf("Modulo Administracion");
 		printf("\n=======================");
 		printf("\n1.- Registrar Veterinario");
 	 	printf("\n2.- Registrar Usuario Asistente");
 	 	printf("\n3.- Atenciones por Veterinarios");
 	 	printf("\n4.- Ranking de Veterinarios por Atenciones");
-	 	printf("\n\n5.- Cerrar la aplicaci�n.");
-	 	printf("\n\nIngrese una opci�n: ");
+	 	printf("\n\n5.- Cerrar la aplicacion.");
+	 	printf("\n\nIngrese una opcion: ");
 	 	scanf("%d",&op_1);
 	 	
 	 	//Validacion de entrada
 	 	if(val_in(op_1,1,5)==0)
 	 	{
-	 		printf("\nIngrese una opci�n correcta");
+	 		printf("\nIngrese una opcion correcta");
 	 		system("PAUSE");
 	 		system("CLS");
-	 	}else error=0;
+	 	}else printf("\nSe iniciara la opcion.");error=0;
 	}
 	switch(op_1)
 	{
 		case 1:
 			Reg_Veterinario();
 			break;//Reg_Vet();
+		case 2:
+			Reg_UsuarioAsist();
+			break;
 	}
 }
 
@@ -246,7 +270,7 @@ int val_in(int entrada,int lim_min, int lim_max)//Devuelve 1 si la entrada esta 
 		{
 			return 1;
 		}else return 0;
-	}else printf("\nEl limite minimo no puede ser mayor al m�ximo.");
+	}else printf("\nEl limite minimo no puede ser mayor al maximo.");
 	
 }
 
@@ -267,22 +291,22 @@ void Reg_Veterinario()
 		_flushall();
 		printf("Usuario:    "); 
 		gets(rv.user);
-		printf("\nContrase�a: ");
+		printf("\nContraseña: ");
 		gets(rv.password);
-		printf("\nIngrese Matricula:	");
+		printf("\nApellido y Nombre: ");
+		gets(rv.ApeyNomb);
+		printf("Ingrese Matricula:");
 		scanf("%d",&rv.matricula);
 		if(val_user(rv.user,rv.password,rv.matricula)==0)
 		{
-			system("CLS");
-			printf("Ingreso fallido. Nombre o Contrase�a no v�lido.\n");
-			system("PAUSE");
+			printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
 		}
 		else
 		{
 			
 			error=0;
 			system("CLS");
-			printf("\nEl usuario y contrase�a se han ingresado correctamente.");
+			printf("\nEl usuario y contraseña se han ingresado correctamente.");
 			system("PAUSE");
 		}
 
@@ -295,9 +319,55 @@ void Reg_Veterinario()
 			if(val_in(op_2,0,1)==1)
 			{
 				error=0;
-			}else printf("\nIngrese una decisi�n correcta.");system("PAUSE");
+			}else printf("\nIngrese una decision correcta.");system("PAUSE");
 		}
-		
 	}
-	
+}
+
+void Reg_UsuarioAsist()
+{
+	system("CLS");
+	//Llamada al registro
+	auth rv;
+	//Declaracion de Variables
+	int error;
+	int op_2;
+	//Inicio interfaz de ingresado
+	printf("Registrar Veterinario");
+	printf("\n=======================\n");
+	error=1;
+	while(error==1)
+	{
+		_flushall();
+		printf("Usuario:    "); 
+		gets(rv.user);
+		printf("\nContraseña: ");
+		gets(rv.password);
+		printf("Ingrese Matricula:");
+		scanf("%d",&rv.matricula);
+		if(val_user(rv.user,rv.password,rv.matricula)==0)
+		{
+			printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
+		}
+		else
+		{
+			
+			error=0;
+			system("CLS");
+			printf("\nEl usuario y contraseña se han ingresado correctamente.");
+			system("PAUSE");
+		}
+
+		error=1;
+		while(error==1)
+		{
+			system("CLS");
+			printf("\nDesea Registrar otro veterinario? (1 para si y 0 para no)");
+			scanf("%d",&op_2);
+			if(val_in(op_2,0,1)==1)
+			{
+				error=0;
+			}else printf("\nIngrese una decision correcta.");system("PAUSE");
+		}
+	}	
 }
