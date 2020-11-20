@@ -19,6 +19,8 @@
 //PARA HABILITAR FUNCIONES ESPECIALES DE MANIPULACION DE VENTANA,ETC
 #include <windows.h>
 
+/******** Estructuras *******/
+
 struct fecha{
 
 int dia;
@@ -52,6 +54,9 @@ char telefono[25];  //telefono celular/fijo del dueño
 /******** Funciones *******/
 
 int menu_principal();
+void reg_pet();
+void reg_turno(FILE *ArchTurno);
+
 
 main()
 {
@@ -137,6 +142,15 @@ void reg_pet(){
 
     Datos_pet pet;
 
+    FILE *archMascotas = fopen("Mascotas.dat", "a+b");
+    if(archMascotas == NULL){
+          
+          fclose(archMascotas);
+          printf("\nERROR");
+          system ("pause");
+    } 
+
+
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE MASCOTAS     ");
     printf("\n\t\t\t================================");
@@ -154,7 +168,11 @@ void reg_pet(){
     printf("\nDia:"); scanf("%2d", &pet.de_nacimiento.dia);
     printf("\nMes:"); scanf("%2d", &pet.de_nacimiento.mes);
     printf("\nAnio:"); scanf("%2d", &pet.de_nacimiento.anio);
-    
+
+    fseek(archMascotas,0,2);
+    fwrite(&pet, sizeof(Datos_pet), 1, archMascotas);
+    fclose(archMascotas);
+
 }
 
 
@@ -184,4 +202,18 @@ void reg_turno(FILE *ArchTurno){
     fseek(ArchTurno,0,2);
     fwrite(&reg, sizeof(Turno), 1, ArchTurno);
     
+}
+
+
+void listado(FILE *ArchTurno){
+
+   Turno list;
+
+    printf("\n\t\t\t================================"); 
+    printf("\n\t\t\t       LISTADO DE ATENCION      ");
+    printf("\n\t\t\t================================"); 
+
+    while(!feof(ArchTurno)){}
+
+
 }
