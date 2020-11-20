@@ -46,7 +46,6 @@ struct cliente//ESTRUCTURA DEL CLIENTE
 
 //FUNCIONES de validacion
 int val_user(userlen usuario, passlen contrasenia, int matricula);
-int val_in(int entrada, int lim_min, int lim_max);
 //FUNCIONES de registro
 void Reg_Veterinario(FILE*arch_admin);
 void Reg_UsuarioAsist();
@@ -88,9 +87,9 @@ main()
 	 	scanf("%d",&op_1);
 	 	
 	 	//Validacion de entrada
-	 	if(val_in(op_1,1,5)==0)
+	 	if(op_1<1 && op_1>5)
 	 	{
-	 		printf("\nIngrese una opcion correcta");
+	 		printf("\nIngrese una opcion correcta\n");
 	 		system("PAUSE");
 	 		system("CLS");
 	 	}else error=0;
@@ -130,7 +129,27 @@ void Reg_Veterinario(FILE*arch_admin)
 		gets(rv.ApeyNomb);
 		printf("\nIngrese Matricula:");
 		scanf("%d",&rv.matricula);
-		if(val_user(rv.user,rv.password,rv.matricula,arch_admin)==0)
+		while(error==1)
+		{
+			printf("\nIngrese Modulo al que pertenece:");
+			printf("\n 1-.Administrador");
+			printf("\n 2-.Veterinario");
+			printf("\n 3-.Asistente\n");
+			scanf("%d",&rv.mod);
+
+			if(rv.mod>0 && rv.mod<4)
+			{
+				error=0;
+			}
+			else 
+			{
+				error=1;
+				printf("\nIngrese un modulo correcto.\n");
+			}
+		}
+		
+
+		if(val_user(rv.user,rv.password,rv.matricula,arch_admin,rv.mod)==0)
 		{
 			system("CLS");
 			printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
@@ -141,7 +160,11 @@ void Reg_Veterinario(FILE*arch_admin)
 			
 			error=0;
 			system("CLS");
-			printf("\nEl usuario y contraseña se han ingresado correctamente.");
+			printf("\nEl usuario y contraseña se han ingresado correctamente.\n\n");
+			fwrite(&rv.user     , sizeof(userlen),1, arch_admin);
+			fwrite(&rv.password , sizeof(userlen),1, arch_admin);
+			fwrite(&rv.matricula, sizeof(int)    ,1, arch_admin);
+			fwrite(&rv.mod      , sizeof(int)    ,1, arch_admin);
 			system("PAUSE");
 		}
 

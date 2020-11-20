@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-//#include"bin/modules/functions/valuser.h"
+#include<locale.h>
 #include"bin/modules/functions/login.h"
 
 
@@ -10,11 +10,13 @@ main()
 	auth rv;
 	//Declaracion de Variables
 	int error,error_2;
-	int op_2;
+	int op_2,op_3;
+	int correct;
 	printf("Bienvenido al software de la veterinaria\n");
 	printf("========================================\n");
 	FILE*arch_admin;
 	arch_admin=fopen("bin\\modules\\Usuarios.dat","rb");
+	
 	if(arch_admin==NULL)
 	{
 		system("CLS");
@@ -47,9 +49,11 @@ main()
 			gets(rv.ApeyNomb);
 			printf("Ingrese Matricula:");
 			scanf("%d",&rv.matricula);
-			if(val_user(rv.user,rv.password,rv.matricula,arch_admin)==0)
+			rv.mod=1;
+			if(val_user(rv.user,rv.password,rv.matricula,arch_admin,rv.mod)==0)
 			{
 				printf("Ingreso fallido. Nombre o Contraseña no valido.\n");
+				correct=0;
 			}
 			else
 			{
@@ -58,30 +62,8 @@ main()
 				system("CLS");
 				printf("\nEl usuario y contraseña se han ingresado correctamente.");
 				system("PAUSE");
+				correct=1;
 			}
-
-			error_2=1;
-			while(error_2==1)
-			{
-				system("CLS");
-				printf("\nDesea Registrar otro veterinario? (1 para si y 0 para no)");
-				scanf("%d",&op_2);
-				if(op_2==1)
-				{
-					error_2=0;
-				}
-				else 
-				{
-					if(op_2==0)
-					{
-						error_2=0;
-						error=0;
-					}
-					else error_2=1;printf("\n\nINGRESE UNA OPCION CORRECTA");
-				}
-				
-			}
-			error=1;
 		}
 	}
 	
@@ -91,23 +73,44 @@ main()
 	while(error=1)
 	{
 		_flushall();
-		printf("Usuario:    "); 
+		printf("Usuario:"); 
 		gets(rv.user);
-		printf("\nContrase�a: ");
+		printf("\nContrasenia:");
 		gets(rv.password);
-		if(login(rv.user,rv.password,arch_admin)==1)
+		printf("%s",rv.user);
+		printf("%s",rv.password);
+		if( login(rv.user,rv.password,arch_admin)==1 )
 		{
 			system("CLS");
 			printf("\nLogin Suscess");
+			correct=1;
 			error=0;
 		}
 		else 
 		{
 			printf("\nLogin Failed\n");
+			correct=0;
 			system("PAUSE");
-			system("CLS");
+			exit(1);
 		}
 	}
 	fclose(arch_admin);
+	
 
+	if(correct==1)
+	{
+		op_3=searchmodule(rv.user,rv.password,arch_admin);
+		switch(op_3)
+		{
+			case 1:
+				system("bin\\module\\administracion.exe");
+				break;
+			case 2:
+				system("bin\\module\\consultorio.exe");
+				break;
+			case 3:
+				system("bin\\module\\recepcion.exe");
+				break;
+		};
+	}
 }

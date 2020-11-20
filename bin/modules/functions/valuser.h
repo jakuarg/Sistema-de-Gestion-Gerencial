@@ -14,13 +14,14 @@ typedef char passlen[34];  //Longitud de la contrasenia(32)
 //ESTRUCTURAS
 struct auth //ESTRUCTURA DEL USUARIO
 {
-	userlen	user;
-	passlen password;
-	char	ApeyNomb[60];
-	int		matricula;
+	userlen	user;//Usuario
+	passlen password;//Contrasenia
+	char	ApeyNomb[60];//Apellido y nombre
+	int		matricula;//No de matricula
+	int		mod;//Modulo
 };
 
-int val_user(userlen usuario,passlen contrasenia,int matricula, FILE*arch_admin)//Verifica si el usuario y contra es correcta
+int val_user(userlen usuario,passlen contrasenia,int matricula, FILE*arch_admin, int modulo)//Verifica si el usuario y contra es correcta
 {
 	// Establecer el idioma a español
     setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
@@ -156,10 +157,6 @@ int val_user(userlen usuario,passlen contrasenia,int matricula, FILE*arch_admin)
 	
 	if(buser==0 && bpass==1)//CONDICION FINAL e INGRESO AL ARCHIVO
 	{
-		fwrite(&usuario    , sizeof(userlen),1, arch_admin);
-		fwrite(&contrasenia, sizeof(userlen),1, arch_admin);
-		fwrite(&matricula,   sizeof(int)    ,1, arch_admin);
-
 		return 1;//se cumplieron todas
 	}
 	else
