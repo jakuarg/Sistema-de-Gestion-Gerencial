@@ -56,6 +56,7 @@ char telefono[25];  //telefono celular/fijo del dueño
 int menu_principal();
 void reg_pet();
 void reg_turno(FILE *ArchTurno);
+void listado(FILE *ArchTurno);
 
 
 main()
@@ -69,7 +70,7 @@ main()
           fclose(ArchTurno);
           ArchTurno = fopen("Turno.dat","w+b");
 
-    } 
+     } 
      
      do{
            menu = menu_principal();
@@ -85,19 +86,19 @@ main()
                 case 2:
                 {
                     system ("CLS");
-
+                     reg_pet();
                      break;
                 }
                 case 3: 
                 {   
                     system ("CLS");
-         
+                     reg_turno(ArchTurno);
                      break;
                 }
                 case 4: 
                 {   
                     system ("CLS");
-        
+                      listado(ArchTurno);
                       break;
                 }
                 case 5: 
@@ -114,8 +115,11 @@ main()
 
          }while (menu!=5);
 
+       fclose(ArchTurno);
+     
 }
 
+// Funcion para realizar menu
 
 int menu_principal()
 {
@@ -134,6 +138,12 @@ int menu_principal()
 	scanf("%d", &opcion);
     return opcion;
 
+}
+
+// Funcion para inicio de sesion
+
+void inicio_de_sesion(){
+    
 }
 
 // Funcion para registrar Mascota
@@ -172,6 +182,9 @@ void reg_pet(){
     fseek(archMascotas,0,2);
     fwrite(&pet, sizeof(Datos_pet), 1, archMascotas);
     fclose(archMascotas);
+    
+    printf("\n");
+    system("pause");
 
 }
 
@@ -201,19 +214,34 @@ void reg_turno(FILE *ArchTurno){
 
     fseek(ArchTurno,0,2);
     fwrite(&reg, sizeof(Turno), 1, ArchTurno);
+     
+    printf("\n");
+    system("pause");
     
 }
 
+// Funcion para listar la atencion de medico con fecha
 
 void listado(FILE *ArchTurno){
 
-   Turno list;
+     Turno reg;
+
+     rewind(ArchTurno);
+     fread(&reg, sizeof(Turno), 1,ArchTurno);
 
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       LISTADO DE ATENCION      ");
     printf("\n\t\t\t================================"); 
 
-    while(!feof(ArchTurno)){}
+    while(!feof(ArchTurno)){
 
+        printf("\nMatricula de medico:%d",reg.matricula_de_veterinario);
+        printf("\nFECHA:");
+        printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
 
+        fread(&reg, sizeof(Turno), 1,ArchTurno);
+    }
+      
+     printf("\n");
+     system("pause");
 }
