@@ -112,7 +112,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 	                    }
 	                    else
 	                    {
-	                    	if(useraux[i]=='+' || useraux[i]=='-' || useraux[i]=='*' || useraux[i]=='?' || useraux[i]=='ï¿½' || useraux[i]=='!' || useraux[i]=='ï¿½')
+	                    	if(useraux[i]=='+' || useraux[i]=='-' || useraux[i]=='*' || useraux[i]=='?' || useraux[i]=='¿' || useraux[i]=='!' || useraux[i]=='¿')
 		                    {
 		                        printf("\n#%d caracter admitido-",i);printf("\n\n");//DEPURACION
 		                    }
@@ -131,14 +131,17 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
                 if(umay>=2 && udig<=3 && usim==0)
                 {
                     ubandera=1;
-					printf("\n\nFAPROBADO USUARIO-");printf("\n\n");//DEPURACION
+					printf("\n\nFAPROBADO USUARIO-");
+					printf("\n\n");//DEPURACION
+					//break;
                 }
             }
         }
-        if(ubandera==1)
+        printf("c mamo xd %d",ubandera);
+		if(ubandera==1)
         {
             rewind(arch_admin);
-            fread(&reg, sizeof(reg.user), 1, arch_admin);
+            fread(&reg, sizeof(auth), 1, arch_admin);
             while(!feof(arch_admin))
             {
                 if(strcmp(useraux,reg.user)==0)
@@ -148,7 +151,8 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
                     fclose(arch_admin);
 					return 0;
                     break;
-                }else uexiste=0;
+                }else {uexiste=0;}
+                fread(&reg, sizeof(auth), 1, arch_admin);
             }
         }
         printf("\n\n");//DEPURACION
@@ -271,7 +275,7 @@ int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve
 
 
     
-    int found=0;//encontrado
+    int found=0,found_2=0;//encontrado
     _flushall();
 	printf("Usuario: ");
 	gets(useraux);
@@ -288,12 +292,13 @@ int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve
 		printf(",s2\n");
         printf("%s,%s\n",useraux,reg.user);
         printf("%s,%s\n",passaux,reg.password);
-		if(strcmp(useraux,reg.user)==0);
+		if(strcmp(useraux,reg.user)==0)
 		{
 			printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
             if(strcmp(passaux,reg.password)==0)
             {
-                return reg.modulo;
+                found=1;
+                found_2=reg.modulo;
             }
             else
             {
@@ -302,11 +307,20 @@ int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve
             
 		}
 		fread(&reg,sizeof(auth),1,arch);
+		
 	}
-    printf("\nEl usuario no fue encontrado o no existe\n");
-    system("PAUSE");
-    system("CLS");
-    return 0;
+    
+	if(found==1)
+    {
+    	return found_2;	
+	}
+	else
+	{
+			printf("\nEl usuario no fue encontrado o no existe\n");
+    	system("PAUSE");
+   	 	system("CLS");
+    	return 0;
+	}
 }
 /*
 int accexists(userlen  usuario,userlen contrasenia)//Determina si la cuenta existe o no. Devuelve un 1 si existe y un 0 si no.

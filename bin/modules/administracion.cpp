@@ -18,7 +18,7 @@
 //PARA HABILITAR FUNCIONES ESPECIALES DE MANIPULACION DE VENTANA,ETC
 #include <windows.h>
 //HABILITA LA LIBRERIA PROPIA
-#include "functions/admin.h/"
+#include "functions/admin.h"
 
 //DEFINICIONES DE LA LONGITUD DEL USUARIO Y CONTRASENIA
 
@@ -68,16 +68,21 @@ main()
 	switch(op_1)
 	{
 		case 1://Registrar Veterinario
-			system("CLS");
-			printf("Registro Veterinario");
-			printf("\n=======================\n");
-			SignUp(2);
+			
+			do
+			{
+				system("CLS");
+				printf("Registro Veterinario");
+				printf("\n=======================\n");
+			}while(SignUp(2)==0);
 			break;
 		case 2:
-			system("CLS");
-			printf("Registro Asistente");
-			printf("\n=======================\n");
-			SignUp(3);//Registrar Asistente
+			do
+			{
+				system("CLS");
+				printf("Registro Asistente");
+				printf("\n=======================\n");
+			}while(SignUp(3)==0);
 			break;
 	}
 	fclose(arch_admin);
