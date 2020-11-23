@@ -80,28 +80,22 @@ main()
                 case 1:
                 {
                     system ("CLS");
-         
-                     break;
-                }
-                case 2:
-                {
-                    system ("CLS");
                      reg_pet();
                      break;
                 }
-                case 3: 
+                case 2: 
                 {   
                     system ("CLS");
                      reg_turno(ArchTurno);
                      break;
                 }
-                case 4: 
+                case 3: 
                 {   
                     system ("CLS");
                       listado(ArchTurno);
                       break;
                 }
-                case 5: 
+                case 4: 
                 {
                      printf("Saliendo del Sistema.....");
                       break;
@@ -113,7 +107,7 @@ main()
                 break;
          }
 
-         }while (menu!=5);
+         }while (menu!=4);
 
        fclose(ArchTurno);
      
@@ -128,22 +122,15 @@ int menu_principal()
 	printf("\n\t\t\t    =============================================     ");
 	printf("\n\t\t\t               Modulo Del Asistente                   ");
 	printf("\n\t\t\t  	==============================================    ");
-	printf("\n\t\t\t  	1.- Iniciar Sesion                                ");
-	printf("\n\t\t\t    2.- Registrar Mascota                             ");
-	printf("\n\t\t\t  	3.- Registrar turno                               ");
-	printf("\n\t\t\t    4.- Listado de Atenciones por Veterinario y Fecha ");
-    printf("\n\t\t\t    5.- Cerrar la aplicacion.                         ");
+	printf("\n\t\t\t    1.- Registrar Mascota                             ");
+	printf("\n\t\t\t  	2.- Registrar turno                               ");
+	printf("\n\t\t\t    3.- Listado de Atenciones por Veterinario y Fecha ");
+    printf("\n\t\t\t    4.- Cerrar la aplicacion.                         ");
 	printf("\n\t\t\t =======================================");
-	printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
+	printf("\n\t\t\t\t 	 Ingrese una opcion: "); 
 	scanf("%d", &opcion);
     return opcion;
 
-}
-
-// Funcion para inicio de sesion
-
-void inicio_de_sesion(){
-    
 }
 
 // Funcion para registrar Mascota
@@ -187,8 +174,6 @@ void reg_pet(){
     system("pause");
 
 }
-
-
 
 
 // Funcion para registrar Turno 
