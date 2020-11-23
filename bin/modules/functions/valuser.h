@@ -73,6 +73,7 @@ int val_user(userlen usuario,passlen contrasenia,int matricula, FILE*arch_admin,
 					fread(&reg.user, sizeof(userlen), 1, arch_admin);
 					while(!feof(arch_admin))
 					{
+						printf("TU PROGRAMA ES UNA MIERDA");
 						if(strcmp(usuario,reg.user)==0)
 						{
 							buser=1;

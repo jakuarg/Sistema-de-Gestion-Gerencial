@@ -57,7 +57,10 @@ main()
 			}
 			else
 			{
-				
+				fwrite(&rv.user     , sizeof(userlen),1, arch_admin);
+				fwrite(&rv.password , sizeof(userlen),1, arch_admin);
+				fwrite(&rv.matricula, sizeof(int)    ,1, arch_admin);
+				fwrite(&rv.mod      , sizeof(int)    ,1, arch_admin);
 				error=0;
 				system("CLS");
 				printf("\nEl usuario y contraseña se han ingresado correctamente.");

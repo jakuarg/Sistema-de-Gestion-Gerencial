@@ -1,3 +1,5 @@
-bin/modules/administracion.exe
 menu.exe
-bin\modules\consultorio.exe
+bin/modules/administracion.exe
+bin/modules/consultorio.exe
+bin/modules/functions/login.h.gch
+bin/modules/functions/valuser.h.gch

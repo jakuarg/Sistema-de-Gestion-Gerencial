@@ -4,14 +4,14 @@
 
 int sus_user,sus_pass;
 
-int login(userlen loguser, userlen logpass,FILE*arch_admin)
+int login(userlen loguser, userlen logpass,FILE *adminarch)
 {
     auth reg;
-    rewind(arch_admin);
     //fseek (arch_admin,0*sizeof(userlen),SEEK_SET);
-	fread(&reg ,sizeof(auth),1,arch_admin);
+    rewind(adminarch);
+	fread(&reg ,sizeof(auth),1,adminarch);
 	printf("\nINICIADO");
-	while(!feof(arch_admin))//
+	while(feof(adminarch)==0)//
 	{
 		printf("\n\nstrcmp(%s,%s)",loguser,reg.user);
 		if(strcmp(loguser,reg.user)==0)
@@ -37,21 +37,21 @@ int login(userlen loguser, userlen logpass,FILE*arch_admin)
          	return 1;
     	}
 
-		fread(&reg ,sizeof(auth),1,arch_admin);
+		fread(&reg ,sizeof(auth),1,adminarch);
 	}
 	return 0;
 }
 
-int searchmodule(userlen suser, userlen spass,FILE*arch_admin)
+int searchmodule(userlen suser, userlen spass,FILE *adminarch)
 {
 	auth reg;
-	fread(&reg.user ,sizeof(userlen),1,arch_admin);
-	while(!feof(arch_admin))
+	fread(&reg.user ,sizeof(userlen),1,adminarch);
+	while(!feof(adminarch))
 	{
 		if(strcmp(reg.user,suser)==0)
 		{
 			return reg.mod;
 		}
-		fread(&reg.user ,sizeof(userlen),1,arch_admin);
+		fread(&reg.user ,sizeof(userlen),1,adminarch);
 	}
 }

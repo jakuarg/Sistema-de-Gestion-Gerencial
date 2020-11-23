@@ -129,7 +129,8 @@ void Reg_Veterinario(FILE*arch_admin)
 		gets(rv.ApeyNomb);
 		printf("\nIngrese Matricula:");
 		scanf("%d",&rv.matricula);
-		while(error==1)
+		error_2=1;
+		while(error_2==1)
 		{
 			printf("\nIngrese Modulo al que pertenece:");
 			printf("\n 1-.Administrador");
@@ -137,13 +138,13 @@ void Reg_Veterinario(FILE*arch_admin)
 			printf("\n 3-.Asistente\n");
 			scanf("%d",&rv.mod);
 
-			if(rv.mod>0 && rv.mod<4)
+			if(rv.mod>=1 && rv.mod<=3)
 			{
-				error=0;
+				error_2=0;
 			}
 			else 
 			{
-				error=1;
+				error_2=1;
 				printf("\nIngrese un modulo correcto.\n");
 			}
 		}
