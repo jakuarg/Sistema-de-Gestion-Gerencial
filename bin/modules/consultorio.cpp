@@ -47,10 +47,10 @@ main()
     SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
 	int opc; //variable declarada para acceder a las opciones 
-	FILE *archMascota = fopen("Mascotas.dat", "r+b");
+	FILE *archMascota = fopen("bin/modules/Mascotas.dat", "r+b");
 	if (archMascota == NULL)	{
 		fclose(archMascota);
-		archMascota = fopen("Mascotas.dat", "w+b");
+		archMascota = fopen("bin/modules/Mascotas.dat", "w+b");
 	}
 	do{
 		opc = menuprincipal();
@@ -64,11 +64,17 @@ main()
 				break;		
 			}
 			case 3:{
-			
+				system("PAUSE");
+				exit(1);
+				break;
+			}
+			default:{
+				printf ("El valor ingresado no es correcto ");
+				system("PAUSE");
 				break;
 			}
 		}
-	}while(opc!=4);
+	}while(opc!=3);
 
 
 }

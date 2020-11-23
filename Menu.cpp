@@ -4,13 +4,13 @@
 #include<ctype.h>
 #include<stdlib.h>
 #include<string.h>
-#include"bin\modules\functions\admin.h\"//Login,SignUp
+#include"bin/modules/functions/admin.h"//Login,SignUp
 
 main()
 {
     system("CLS");
     int m;//Guarda el modulo proveniente del login
-	arch_admin=fopen("bin\\modules\\Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
+	arch_admin=fopen("bin/modules/Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
 	printf("Bienvenido al menu principal.\n");
     printf("=============================\n");
 	if(arch_admin==NULL)//Si no existe el archivo...
@@ -25,7 +25,7 @@ main()
         m=1;
         system("CLS");
 		printf("\nPor ser primera sesion, se ejecutara el modulo de administracion para poder ingresar nuevos usuarios.");
-        //getch();
+        getch();
         system("CLS");
 		fclose(arch_admin);//...Lo cierra
     }
@@ -38,15 +38,15 @@ main()
     {
     	case 1:
     		printf("\nEjecutando Modulo de Administracion...\n");
-			system("start bin\\modules\\administracion.exe");
+			system("start bin/modules/administracion.exe");
 			break;
     	case 2:
     		printf("\nEjecutando Modulo de Consultorio\n");
-			system("start bin\\modules\\consultorio.exe");
+			system("start bin/modules/consultorio.exe");
     		break;
 		case 3:
 			printf("\nEjecutando Modulo de Asistente\n");
-			system("start bin\\modules\\asistente.exe");
+			system("start bin/modules/asistente.exe");
 			break;
 		default: break;	
 	};
