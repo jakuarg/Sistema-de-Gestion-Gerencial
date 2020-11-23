@@ -230,3 +230,5 @@ void listado(FILE *ArchTurno){
      printf("\n");
      system("pause");
 }
+
+//prueba
