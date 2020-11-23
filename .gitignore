@@ -3,3 +3,8 @@ bin/modules/administracion.exe
 bin/modules/consultorio.exe
 bin/modules/functions/login.h.gch
 bin/modules/functions/valuser.h.gch
+bin/modules/Usuarios.dat
+bin/modules/functions/admin.h.gch
+bin/modules/leer.cpp
+Usuarios.dat
+bin/modules/leer.exe

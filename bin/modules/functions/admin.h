@@ -3,7 +3,7 @@
   En esta libreria se encuentran las funciones:
   SignUp:
   		 Sirve para Registrar usuarios.(CON TIPO, devuelve 1 si se pudo registrar y 0 si no.)
-  		 Tiene una bandera llamada registrado que indica si es la primera vez que se ingresa. registrado=1 primera vez y registrado=0 ya existen registrados
+  		 Tiene una bandera llamada registrado que indica el tipo de modulo que se ingresara
   LogIn:
   		Sirve para logear usuarios.(CON TIPO, devuelve el modulo al que pertenece.)
   ChangePass:
@@ -111,7 +111,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 	                    }
 	                    else
 	                    {
-	                    	if(useraux[i]=='+' || useraux[i]=='-' || useraux[i]=='*' || useraux[i]=='?' || useraux[i]=='¿' || useraux[i]=='!' || useraux[i]=='¡')
+	                    	if(useraux[i]=='+' || useraux[i]=='-' || useraux[i]=='*' || useraux[i]=='?' || useraux[i]=='ï¿½' || useraux[i]=='!' || useraux[i]=='ï¿½')
 		                    {
 		                        //printf("\n#%d caracter admitido-",i);printf("\n\n");//DEPURACION
 		                    }
@@ -210,17 +210,26 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 
     if(aprobado==1)
     {
-        printf("\nApellido y Nombre:      ");
+        printf("Apellido y Nombre:      ");
         _flushall();
         gets(reg.names);
-        printf("\nMatricula:      ");
-        scanf("%d",&reg.matricula);
-        if(registrado==1)
+        
+        if(registrado==1)//Admin
         {
-        	printf("\nModulo:	1 (Se ingreso automaticamente debido a que el primer usuario debe ser un administrador)");
+        	//printf("\nModulo:	1 (Se ingreso automaticamente debido a que el primer usuario debe ser un administrador)");
+            reg.modulo=1;
 		}
-		else
-		{
+		if(registrado==2)//Veterinario
+        {
+            printf("Matricula:      ");
+            scanf("%d",&reg.matricula);
+            reg.modulo=2;
+        }
+        if(registrado==3)//Asistente
+        {
+            reg.modulo=3;
+        }
+        /*{
 			error=1;
 			while(error==1)
 			{
@@ -235,7 +244,15 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 					error=0;
 				}
 			}
-		}
+		}*/
+
+        strcpy(reg.user,useraux);
+        strcpy(reg.password,passaux);
+		/*printf("\nUSUARIO: %s",reg.user);
+		printf("\nCONTRASENIA: %s",reg.password);
+		printf("\nNOMBRES: %s",reg.names);
+		printf("\nMATRICULA: %s",reg.matricula);
+		printf("\nMODULO: %s",reg.modulo);*/
 		
         fwrite(&reg, sizeof(auth),1,arch_admin);
         fclose(arch_admin);
@@ -246,33 +263,48 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 
 int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve para logear
 {
-    //No hace falta abrir el archivo ya que lo abrimos en la funcion anterior.
+    //No hace falta abrir el archivo ya que lo abrimos en main.
 	//Declaramos auxiliares
 	userlen	useraux;
     passlen	passaux;
     //Abrimos registro
     auth reg;
     
+    int found=0;//encontrado
     _flushall();
 	printf("Usuario: ");
 	gets(useraux);
 	_flushall();
 	printf("Contrasenia:");
 	gets(passaux);
-	printf("EJECUTADO");
+	printf("s1");
 	
 	rewind(arch);
 	fread(&reg,sizeof(auth),1,arch);
-	while(feof(arch)==0)
+	while(!feof(arch))
 	{
-		printf("EJECUTADO");
-		if(strcmp(useraux,reg.user)==0)
+		printf(",s2\n");
+        printf("%s,%s\n",useraux,reg.user);
+        printf("%s,%s\n",passaux,reg.password);
+		if(strcmp(useraux,reg.user)==0);
 		{
-			printf("\nEl usuario pertenece al modulo %d",reg.modulo);
-			return reg.modulo;
+			printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
+            if(strcmp(passaux,reg.password)==0)
+            {
+                return reg.modulo;
+            }
+            else
+            {
+                printf ("\nLa contraseÃ±a ingresada es incorrecta.\n");
+            }
+            
 		}
 		fread(&reg,sizeof(auth),1,arch);
 	}
+    printf("\nEl usuario no fue encontrado o no existe\n");
+    system("PAUSE");
+    system("CLS");
+    return 0;
 }
 /*
 int accexists(userlen  usuario,userlen contrasenia)//Determina si la cuenta existe o no. Devuelve un 1 si existe y un 0 si no.

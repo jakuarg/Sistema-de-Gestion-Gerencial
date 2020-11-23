@@ -9,18 +9,18 @@ main()
 {
     system("CLS");
     int m;//Guarda el modulo proveniente del login
-	arch_admin=fopen("Usuarios.dat","rb");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
+	arch_admin=fopen("Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
 	printf("Bienvenido al menu principal.\n");
     printf("=============================\n");
 	if(arch_admin==NULL)//Si no existe el archivo...
 	{
 		fclose(arch_admin);//...Lo cierra...
 		system("CLS");
-		printf("ES LA PRIMERA SESION, POR LO TANTO SE CREARA EL PRIMER USUARIO ADMIN\n");
+		printf("ES LA PRIMERA SESION, POR LO TANTO SE CREARA EL PRIMER Y UNICO ADMINISTRADOR\n");
 		system("PAUSE");
 		system("CLS");
 		/****************PRIMER REGISTRO DE USUARIO ADMIN******************/
-        do{;}while(SignUp(1)==0);
+        do{printf("Primer Registro");printf("\n=======================");}while(SignUp(1)==0);
         m=1;
         system("CLS");
 		printf("\nPor ser primera sesion, se ejecutara el modulo de administracion para poder ingresar nuevos usuarios.");
@@ -36,13 +36,16 @@ main()
 	switch(m)
     {
     	case 1:
-    		printf("\nEjecutando Modulo de Administracion...");
+    		printf("\nEjecutando Modulo de Administracion...\n");
+			system("start bin\\modules\\administracion.exe");
 			break;
     	case 2:
-    		printf("\nEjecutando Modulo de Consultorio");
+    		printf("\nEjecutando Modulo de Consultorio\n");
+			system("start bin\\modules\\consultorio.exe");
     		break;
 		case 3:
-			printf("\nEjecutando Modulo de ...");
+			printf("\nEjecutando Modulo de Asistente\n");
+			system("start bin\\modules\\asistente.exe");
 			break;
 		default: break;	
 	};
