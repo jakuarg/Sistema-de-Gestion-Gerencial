@@ -20,7 +20,9 @@
 //HABILITA LA LIBRERIA PROPIA
 #include "functions/admin.h"
 
-//DEFINICIONES DE LA LONGITUD DEL USUARIO Y CONTRASENIA
+//Funciones
+int Atenciones();
+void Ranking();
 
 main()
 {
@@ -86,4 +88,18 @@ main()
 			break;
 	}
 	fclose(arch_admin);
+}
+
+int Atenciones()
+{
+	FILE*arch=fopen(&);
+	
+	int c;
+	rewind(arch_admin);
+	fread()
+	while(!feof())
+	{
+		c++;
+	}
+	return c;
 }
