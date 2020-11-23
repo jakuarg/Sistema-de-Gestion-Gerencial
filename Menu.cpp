@@ -1,5 +1,6 @@
 /*Menu Principal*/
 #include<stdio.h>
+#include<conio.h>
 #include<ctype.h>
 #include<stdlib.h>
 #include<string.h>
@@ -9,7 +10,7 @@ main()
 {
     system("CLS");
     int m;//Guarda el modulo proveniente del login
-	arch_admin=fopen("Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
+	arch_admin=fopen("bin\\modules\\Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
 	printf("Bienvenido al menu principal.\n");
     printf("=============================\n");
 	if(arch_admin==NULL)//Si no existe el archivo...
@@ -17,14 +18,14 @@ main()
 		fclose(arch_admin);//...Lo cierra...
 		system("CLS");
 		printf("ES LA PRIMERA SESION, POR LO TANTO SE CREARA EL PRIMER Y UNICO ADMINISTRADOR\n");
-		system("PAUSE");
+		getch();
 		system("CLS");
 		/****************PRIMER REGISTRO DE USUARIO ADMIN******************/
-        do{printf("Primer Registro");printf("\n=======================");}while(SignUp(1)==0);
+        do{printf("Primer Registro");printf("\n=======================\n");}while(SignUp(1)==0);
         m=1;
         system("CLS");
 		printf("\nPor ser primera sesion, se ejecutara el modulo de administracion para poder ingresar nuevos usuarios.");
-        system("PAUSE");
+        //getch();
         system("CLS");
 		fclose(arch_admin);//...Lo cierra
     }
