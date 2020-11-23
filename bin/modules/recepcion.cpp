@@ -18,7 +18,7 @@
 #include <string.h>
 //PARA HABILITAR FUNCIONES ESPECIALES DE MANIPULACION DE VENTANA,ETC
 #include <windows.h>
-
+#include "functions/admin.h"
 /******** Estructuras *******/
 
 struct fecha{
@@ -64,11 +64,11 @@ main()
     system ("colorF0");
    int menu; // Variable de ingreso al menu
     
-    FILE *ArchTurno = fopen("Turno.dat","r+b");
+    FILE *ArchTurno = fopen("bin/modules/Turno.dat","r+b");
     if(ArchTurno == NULL){
           
           fclose(ArchTurno);
-          ArchTurno = fopen("Turno.dat","w+b");
+          ArchTurno = fopen("bin/modules/Turno.dat","w+b");
 
      } 
      
