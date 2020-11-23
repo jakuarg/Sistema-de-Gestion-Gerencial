@@ -32,7 +32,7 @@ FILE*arch_admin;
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
 {
 	//ALTA DEL ARCHIVO
-	arch_admin=fopen("bin\\modules\\Usuarios.dat","a+b");
+	arch_admin=fopen("bin/modules/Usuarios.dat","a+b");
 	if(arch_admin==NULL)
 	{
 		system("CLS");

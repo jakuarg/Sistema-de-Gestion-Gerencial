@@ -18,6 +18,7 @@
 #include <string.h>
 //PARA HABILITAR FUNCIONES ESPECIALES DE MANIPULACION DE VENTANA,ETC
 #include <windows.h>
+#include "functions/admin.h"
 
 struct fecha{
 
@@ -29,12 +30,12 @@ int anio;
 
 struct documentacion{ // Documentacion del due�o del animal.
 
-char Apeynom[30];
-int dni;
-char Localidad[20];
-char informeMascota[380];
-bool borrado;
- fecha fec;
+	char Apeynom[30];
+	int dni;
+	char Localidad[20];
+	char informeMascota[380];
+	bool borrado;
+	 fecha fec;
 };
 
 int menuprincipal();
@@ -42,6 +43,9 @@ void evolucionMascota(FILE *archMascota);
 
 main()
 {
+	setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
+    SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
+    SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
 	int opc; //variable declarada para acceder a las opciones 
 	FILE *archMascota = fopen("Mascotas.dat", "r+b");
 	if (archMascota == NULL)	{
@@ -53,19 +57,14 @@ main()
 		switch(opc){
 			case 1:{
 				
-				break;
 			}
 			case 2:{
-
-				break;
+				evolucionMascota(archMascota);
+				system("PAUSE");						
+				break;		
 			}
 			case 3:{
-				evolucionMascota(archMascota);
-				system("PAUSE");				
-				break;
-			}
-			case 4:{
-				
+			
 				break;
 			}
 		}
@@ -74,10 +73,7 @@ main()
 
 }
 
-void iniciosesion(FILE *archMascota) // inicio de sesi�n.
-{
-	
-}
+
 int menuprincipal()
 {
 	int op;
@@ -85,16 +81,16 @@ int menuprincipal()
 	printf("\n\t\t\t    =============================================     ");
 	printf("\n\t\t\t            Modulo Consultorio Veterinario            ");
 	printf("\n\t\t\t  	==============================================    ");
-	printf("\n\t\t\t  	1.- Iniciar Sesi�n                                ");
-	printf("\n\t\t\t    2.- Visualizar Lista de Espera de Turnos (informe)");
-	printf("\n\t\t\t	3.- Registrar Evoluci�n de la Mascota             ");
-	printf("\n\t\t\t    4.- Cerrar la aplicaci�n.                         ");
+	printf("\n\t\t\t    1.- Visualizar Lista de Espera de Turnos (informe)");
+	printf("\n\t\t\t	2.- Registrar Evolucion de la Mascota             ");
+	printf("\n\t\t\t    3.- Cerrar la aplicacion.                         ");
 	printf("\n\t\t\t =======================================");
 	printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
 	scanf("%d", &op);
 	return op;
 
 }
+
 
 void evolucionMascota(FILE *archMascota)
 {
@@ -105,8 +101,7 @@ void evolucionMascota(FILE *archMascota)
 	scanf("%2d", &reg.fec.mes);
 	scanf("%4d", &reg.fec.anio);
 	edadDuenio = 2020 - reg.fec.anio;
-	printf ("\n La edad del duenio es %d ", edadDuenio); // Mostramos la edad del duenño de la mascota.
-	printf ("\nIngrese el Apellido y nombre de la mascota : ");
+	printf ("\n La edad del duenio es %d ", edadDuenio); // Mostramos la edad del duenño de la mascota.	printf ("\nIngrese el Apellido y nombre de la mascota : ");
 	_flushall();
 	gets(reg.Apeynom);
 	printf ("\nIngrese el dni del dueno de la mascota : ");

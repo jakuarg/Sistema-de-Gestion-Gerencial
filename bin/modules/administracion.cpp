@@ -30,7 +30,7 @@ main()
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
 
 	//ALTA
-	arch_admin=fopen("Usuarios.dat","a+b");
+	arch_admin=fopen("bin/modules/Usuarios.dat","r+b");
 	if(arch_admin==NULL)
 	{
 		system("CLS");
