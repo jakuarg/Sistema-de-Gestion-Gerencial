@@ -226,7 +226,8 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		}
 		if(registrado==2)//Veterinario
         {
-            printf("Matricula:      ");
+            _flushall();
+			printf("Matricula:      ");
             scanf("%d",&reg.matricula);
             reg.modulo=2;
         }
@@ -256,9 +257,9 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		printf("\nUSUARIO: %s",reg.user);
 		printf("\nCONTRASENIA: %s",reg.password);
 		printf("\nNOMBRES: %s",reg.names);
-		//printf("\nMATRICULA: %s",reg.matricula);
+		printf("\nMATRICULA: %d",reg.matricula);
 		printf("\nMODULO: %d",reg.modulo);
-		
+		system("PAUSE");
         fwrite(&reg, sizeof(auth),1,arch_admin);
         fclose(arch_admin);
         return 1;

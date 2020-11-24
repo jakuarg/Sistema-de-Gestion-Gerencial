@@ -20,6 +20,23 @@
 #include <windows.h>
 #include "functions/admin.h"
 
+struct fecha1{
+
+int dia;
+int mes;
+int anio;
+
+};
+
+struct Turno{ //turno
+
+int matricula_de_veterinario; 
+fecha1 fec;       // fecha del turno
+int DNI_DUENIO; // dni due�o
+char detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
+
+};
+
 struct fecha{
 
 int dia;
@@ -40,7 +57,7 @@ struct documentacion{ // Documentacion del due�o del animal.
 
 int menuprincipal();
 void evolucionMascota(FILE *archMascota);
-
+void Listaespera();
 main()
 {
 	setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
@@ -56,7 +73,9 @@ main()
 		opc = menuprincipal();
 		switch(opc){
 			case 1:{
-				
+				Listaespera();
+				system("PAUSE");
+				break;
 			}
 			case 2:{
 				evolucionMascota(archMascota);
@@ -121,3 +140,23 @@ void evolucionMascota(FILE *archMascota)
 	fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.
 
 }
+
+void Listaespera()
+{
+	FILE *ArchTurno = fopen("bin/modules/Turno.dat","r+b");
+	Turno reg;
+	rewind (ArchTurno);
+	fread(&reg,sizeof(Turno),1,ArchTurno);
+	while(!feof(ArchTurno))
+	{
+		printf("\nFecha de turno");
+   		printf("DIA: %2d", reg.fec.dia);
+    	printf("MES: %2d", reg.fec.mes);
+   		printf("ANIO: %4d", reg.fec.anio);
+ 	   printf("\nDNI del Dueño: %d", reg.DNI_DUENIO);
+ 	   printf("\nSituacion de la Mascota: %s \n", reg.detalle_de_atencion);
+ 	   fread(&reg,sizeof(Turno),1,ArchTurno);
+	}
+	
+}
+    

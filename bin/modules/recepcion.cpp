@@ -180,14 +180,31 @@ void reg_pet(){
 
 void reg_turno(FILE *ArchTurno){
     Turno reg;
-
-    
+	auth reg1;
+	int bandera;
+	
+    arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
+	rewind (arch_admin);
+	fread(&reg1,sizeof(auth),1,arch_admin);
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE TURNO        ");
-    printf("\n\t\t\t================================"); 
-    printf("\n\n\t\tMatricula de medico:");
-
+    printf("\n\t\t\t================================");
+   	printf("\n\n\t\tMatricula de medico:");
     scanf ("%d", &reg.matricula_de_veterinario);
+    bandera=0;
+    while(!feof(arch_admin) && bandera==0)
+    {
+ 
+		if (reg1.matricula==reg.matricula_de_veterinario)
+		{
+			bandera=1;
+			break;
+		}
+ 		fread(&reg1,sizeof(auth),1,arch_admin);
+	}
+    
+if (bandera == 1)
+{
     printf("\nFecha de turno");
     printf("DIA:"); scanf("%2d", &reg.fec.dia);
     printf("MES:"); scanf("%2d", &reg.fec.mes);
@@ -199,7 +216,7 @@ void reg_turno(FILE *ArchTurno){
 
     fseek(ArchTurno,0,2);
     fwrite(&reg, sizeof(Turno), 1, ArchTurno);
-     
+ }    
     printf("\n");
     system("pause");
     
@@ -210,7 +227,6 @@ void reg_turno(FILE *ArchTurno){
 void listado(FILE *ArchTurno){
 
      Turno reg;
-
      rewind(ArchTurno);
      fread(&reg, sizeof(Turno), 1,ArchTurno);
 
