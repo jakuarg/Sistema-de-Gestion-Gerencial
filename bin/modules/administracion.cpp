@@ -86,17 +86,20 @@ main()
 				printf("\n=======================\n");
 			}while(SignUp(3)==0);
 			break;
+		case 3:
+			Atenciones();
+			break;	
 	}
 	fclose(arch_admin);
 }
 
-int Atenciones()
+int Atenciones()// Listar Atenciones por Veterinarios
 {
-	FILE*arch=fopen(&);
+	FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
 	
 	int c;
 	rewind(arch_admin);
-	fread()
+	fread(&)
 	while(!feof())
 	{
 		c++;
