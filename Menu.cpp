@@ -46,9 +46,9 @@ main()
     		break;
 		case 3:
 			printf("\nEjecutando Modulo de Asistente\n");
-			system("start bin/modules/asistente.exe");
+			system("start bin/modules/recepcion.exe");
 			break;
-		default: break;	
+			default: break;	
 	};
     
 }

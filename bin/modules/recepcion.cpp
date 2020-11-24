@@ -19,37 +19,6 @@
 //PARA HABILITAR FUNCIONES ESPECIALES DE MANIPULACION DE VENTANA,ETC
 #include <windows.h>
 #include "functions/admin.h"
-/******** Estructuras *******/
-
-struct fecha{
-
-int dia;
-int mes;
-int anio;
-
-};
-
-struct Turno{
-
-int matricula_de_veterinario; 
-fecha fec;       // fecha del turno
-int DNI_DUENIO; // dni due�o
-char detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
-
-};
-
-struct Datos_pet{
-
-char Apeynom_pet[60];   // Apellido y Nombre de la mascota (El Apellido igual del dueño)
-char domicilio[60];
-int DNI_DUENIO;
-char localidad[60];
-fecha de_nacimiento;   //fecha de nacimiento de la mascota
-float peso; // Cantidad en kilogramos 
-char telefono[25];  //telefono celular/fijo del dueño
-
-};
-
 
 /******** Funciones *******/
 
@@ -153,18 +122,19 @@ void reg_pet(){
     printf("\n\t\t\t================================");
 
     printf("\nApellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):");
+    _flushall();
     gets(pet.Apeynom_pet);
 
     printf("\nLocalidad:"); gets(pet.localidad);
     printf("\nDomicilio:"); gets(pet.domicilio);
     printf("\nDni del dueño:"); scanf("%d", &pet.DNI_DUENIO);
     printf("\nPeso en KG:"); scanf("%f", &pet.peso);
-    printf("\nTelefono"); gets(pet.telefono);
+    printf("\nTelefono");_flushall(); gets(pet.telefono);
 
     printf("\nFecha de nacimiento dd/mm/aaaa");
     printf("\nDia:"); scanf("%2d", &pet.de_nacimiento.dia);
     printf("\nMes:"); scanf("%2d", &pet.de_nacimiento.mes);
-    printf("\nAnio:"); scanf("%2d", &pet.de_nacimiento.anio);
+    printf("\nAnio:"); scanf("%4d", &pet.de_nacimiento.anio);
 
     fseek(archMascotas,0,2);
     fwrite(&pet, sizeof(Datos_pet), 1, archMascotas);

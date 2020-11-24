@@ -20,40 +20,6 @@
 #include <windows.h>
 #include "functions/admin.h"
 
-struct fecha1{
-
-int dia;
-int mes;
-int anio;
-
-};
-
-struct Turno{ //turno
-
-int matricula_de_veterinario; 
-fecha1 fec;       // fecha del turno
-int DNI_DUENIO; // dni due�o
-char detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
-
-};
-
-struct fecha{
-
-int dia;
-int mes;
-int anio;
-
-};
-
-struct documentacion{ // Documentacion del due�o del animal.
-
-	char Apeynom[30];
-	int dni;
-	char Localidad[20];
-	char informeMascota[380];
-	bool borrado;
-	 fecha fec;
-};
 
 int menuprincipal();
 void evolucionMascota(FILE *archMascota);
@@ -122,35 +88,52 @@ int menuprincipal()
 
 void evolucionMascota(FILE *archMascota)
 {
+	Datos_pet pet;
 	documentacion reg;
+	Turno reg1;
 	int edadDuenio;
+	
+	//EDAD
+	rewind (archMascota);
+	fread(&reg1,sizeof(Turno),1,archMascota);
+	printf("%d",feof(archMascota));
+	do
+	{
+		printf ("\n La edad del duenio es %d ", 2020-reg1.fec.anio); // Mostramos la edad del duenño de la mascota.	
+		fread(&reg1,sizeof(Turno),1,archMascota);
+	}while(!feof(archMascota));
 
-	printf ("Ingrese la fecha de nacimiento del dueño : dd/mm/aaaa ");
-	scanf("%2d", &reg.fec.dia);
-	scanf("%2d", &reg.fec.mes);
-	scanf("%4d", &reg.fec.anio);
-	edadDuenio = 2020 - reg.fec.anio;
-	printf ("\n La edad del duenio es %d ", edadDuenio); // Mostramos la edad del duenño de la mascota.	printf ("\nIngrese el Apellido y nombre de la mascota : ");
-
+	//OTROS
+	rewind(archMascota);
+	fread(&pet,sizeof(Datos_pet),1,archMascota);
+	printf("%d",feof(archMascota));
+	printf ("\nIngrese el Apellido y nombre de la mascota : ");
 	_flushall();
 	gets(reg.Apeynom);
-	printf ("\nIngrese el dni del dueno de la mascota : ");
-	scanf ("%d", &reg.dni);
-	printf ("\nIngrese la localidad del dueno : ");
-	_flushall();
-	gets(reg.Localidad);
-	printf ("\nIngrese la evolucion de la mascota ");
-	gets(reg.informeMascota);
+	while(!feof(archMascota))
+	{
+		if(strcmp(pet.Apeynom_pet,reg.Apeynom)== 0)
+		{
+			printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
+			printf ("\nla localidad del dueno : ");
+			_flushall();
+			puts(pet.localidad);
+			printf ("\nIngrese la evolucion de la mascota : ");
+			gets(reg.informeMascota);
+			reg.borrado = true;
+			//fseek(archMascota,0,2); // Comienza desde el final del archivo
+			fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.		
+		}
+		fread(&pet,sizeof(Datos_pet),1,archMascota);
+	}
 	
-	fseek(archMascota,0,2); // Comienza desde el final del archivo
-	fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.
-
 }
 
 void Listaespera()
 {
 	FILE *ArchTurno = fopen("bin/modules/Turno.dat","r+b");
 	Turno reg;
+	
 	rewind (ArchTurno);
 	fread(&reg,sizeof(Turno),1,ArchTurno);
 	while(!feof(ArchTurno))

@@ -14,18 +14,7 @@
 #include<ctype.h>
 #include<stdlib.h>
 #include<string.h>
-
-typedef char userlen[12];
-typedef char passlen[34];
-
-struct auth
-{
-    userlen     user;
-    passlen     password;
-    char        names[60];
-    int         modulo;
-    int         matricula;
-};
+#include "Estructuras.h"
 
 FILE*arch_admin;
 
