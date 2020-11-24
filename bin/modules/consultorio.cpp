@@ -63,8 +63,11 @@ main()
 	setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
+
 	int opc; //variable declarada para acceder a las opciones 
+
 	FILE *archMascota = fopen("bin/modules/Mascotas.dat", "r+b");
+
 	if (archMascota == NULL)	{
 		fclose(archMascota);
 		archMascota = fopen("bin/modules/Mascotas.dat", "w+b");
@@ -121,12 +124,14 @@ void evolucionMascota(FILE *archMascota)
 {
 	documentacion reg;
 	int edadDuenio;
+
 	printf ("Ingrese la fecha de nacimiento del dueño : dd/mm/aaaa ");
 	scanf("%2d", &reg.fec.dia);
 	scanf("%2d", &reg.fec.mes);
 	scanf("%4d", &reg.fec.anio);
 	edadDuenio = 2020 - reg.fec.anio;
 	printf ("\n La edad del duenio es %d ", edadDuenio); // Mostramos la edad del duenño de la mascota.	printf ("\nIngrese el Apellido y nombre de la mascota : ");
+
 	_flushall();
 	gets(reg.Apeynom);
 	printf ("\nIngrese el dni del dueno de la mascota : ");
@@ -136,6 +141,7 @@ void evolucionMascota(FILE *archMascota)
 	gets(reg.Localidad);
 	printf ("\nIngrese la evolucion de la mascota ");
 	gets(reg.informeMascota);
+	
 	fseek(archMascota,0,2); // Comienza desde el final del archivo
 	fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.
 
