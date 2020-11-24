@@ -95,7 +95,7 @@ main()
 
 int Atenciones()// Listar Atenciones por Veterinarios
 {
-	FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
+	/*FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
 	
 	int c;
 	rewind(arch_admin);
@@ -104,5 +104,5 @@ int Atenciones()// Listar Atenciones por Veterinarios
 	{
 		c++;
 	}
-	return c;
+	return c;*/
 }

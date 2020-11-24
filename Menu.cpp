@@ -21,11 +21,18 @@ main()
 		getch();
 		system("CLS");
 		/****************PRIMER REGISTRO DE USUARIO ADMIN******************/
-        do{printf("Primer Registro");printf("\n=======================\n");}while(SignUp(1)==0);
+        do
+		{
+			printf("Primer Registro");
+			printf("\n=======================\n");
+		}while(SignUp(1)==0);
         m=1;
+        
         system("CLS");
+        
 		printf("\nPor ser primera sesion, se ejecutara el modulo de administracion para poder ingresar nuevos usuarios.");
-        getch();
+        
+		getch();
         system("CLS");
 		fclose(arch_admin);//...Lo cierra
     }
