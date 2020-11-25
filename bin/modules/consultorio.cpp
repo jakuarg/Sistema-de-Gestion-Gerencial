@@ -99,7 +99,7 @@ void evolucionMascota(FILE *archMascota)
 	printf("%d",feof(archMascota));
 	do
 	{
-		printf ("\n La edad del duenio es %d ", 2020-reg1.fec.anio); // Mostramos la edad del duenño de la mascota.	
+		printf ("\n La edad de la mascota es %d ", 2020-pet.de_nacimiento.anio); // Mostramos la edad del duenño de la mascota.	
 		fread(&reg1,sizeof(Turno),1,archMascota);
 	}while(!feof(archMascota));
 
@@ -143,7 +143,7 @@ void Listaespera()
     	printf("MES: %2d", reg.fec.mes);
    		printf("ANIO: %4d", reg.fec.anio);
  	   printf("\nDNI del Dueño: %d", reg.DNI_DUENIO);
- 	   printf("\nSituacion de la Mascota: %s \n", reg.detalle_de_atencion);
+ 	   puts(reg.detalle_de_atencion);
  	   fread(&reg,sizeof(Turno),1,ArchTurno);
 	}
 	

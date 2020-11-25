@@ -94,14 +94,19 @@ main()
 }
 
 int Atenciones()// Listar Atenciones por Veterinarios
-{
-	/*FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
+{/*
+	FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
+	auth reg;
+	int c,search_mat=0;
+	printf("Ingrese la matricula del medico: ");
+	scanf("%d",&search_mat);
 	
-	int c;
 	rewind(arch_admin);
-	fread(&)
+	fread(&reg,sizeof(auth),1,arch);
+	
 	while(!feof())
 	{
+		if(search_mat,reg.)
 		c++;
 	}
 	return c;*/

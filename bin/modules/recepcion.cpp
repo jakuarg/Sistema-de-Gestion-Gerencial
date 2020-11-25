@@ -106,16 +106,14 @@ int menu_principal()
 
 void reg_pet(){
 
-    Datos_pet pet;
-
-    FILE *archMascotas = fopen("Mascotas.dat", "a+b");
+    FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "a+b");
     if(archMascotas == NULL){
           
           fclose(archMascotas);
           printf("\nERROR");
           system ("pause");
     } 
-
+    Datos_pet pet;
 
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE MASCOTAS     ");
@@ -136,7 +134,6 @@ void reg_pet(){
     printf("\nMes:"); scanf("%2d", &pet.de_nacimiento.mes);
     printf("\nAnio:"); scanf("%4d", &pet.de_nacimiento.anio);
 
-    fseek(archMascotas,0,2);
     fwrite(&pet, sizeof(Datos_pet), 1, archMascotas);
     fclose(archMascotas);
     
@@ -151,8 +148,9 @@ void reg_pet(){
 void reg_turno(FILE *ArchTurno){
     Turno reg;
 	auth reg1;
+	Datos_pet pet;
 	int bandera;
-	
+    FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "r+b");
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
 	rewind (arch_admin);
 	fread(&reg1,sizeof(auth),1,arch_admin);
@@ -171,22 +169,43 @@ void reg_turno(FILE *ArchTurno){
 			break;
 		}
  		fread(&reg1,sizeof(auth),1,arch_admin);
+	
 	}
-    
+	fread(&pet,sizeof(Datos_pet),1,archMascotas);
+	  int salir = 1;
+do{
 if (bandera == 1)
 {
     printf("\nFecha de turno");
     printf("DIA:"); scanf("%2d", &reg.fec.dia);
     printf("MES:"); scanf("%2d", &reg.fec.mes);
     printf("ANIO:"); scanf("%4d", &reg.fec.anio);
-    printf("\nDNI del Dueño:");
-    scanf("%d", &reg.DNI_DUENIO);
+
+  
+    do{
+   		printf("\nDNI del Dueno:");
+  	  	scanf("%d", &reg.DNI_DUENIO);
+    	if (pet.DNI_DUENIO == reg.DNI_DUENIO)
+    	{
+    		printf ("\nSu mascota es %s ", pet.Apeynom_pet);
+    		salir = 0;
+    		break;
+		}
+		else
+		{
+			printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
+			salir = 1;
+		}
+	}while(salir==1);
+
+ }  
+ }while(!feof(archMascotas) and salir==1); 
     printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
-    scanf("%s", &reg.detalle_de_atencion);
+    _flushall();
+    gets(reg.detalle_de_atencion);
 
     fseek(ArchTurno,0,2);
-    fwrite(&reg, sizeof(Turno), 1, ArchTurno);
- }    
+    fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
     printf("\n");
     system("pause");
     
