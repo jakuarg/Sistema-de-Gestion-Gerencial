@@ -94,20 +94,51 @@ main()
 }
 
 int Atenciones()// Listar Atenciones por Veterinarios
-{/*
+{
+    auth reg1;
+	Turno reg;
+	int bandera;
+
 	FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
-	auth reg;
-	int c,search_mat=0;
+	int c=0,search_mat=0;
 	printf("Ingrese la matricula del medico: ");
 	scanf("%d",&search_mat);
+	bandera=0;
 	
 	rewind(arch_admin);
-	fread(&reg,sizeof(auth),1,arch);
+	fread(&reg1,sizeof(auth),1,arch);
 	
-	while(!feof())
+	while(!feof(arch))
 	{
-		if(search_mat,reg.)
-		c++;
+		if(search_mat==reg1.matricula){
+
+			bandera=1;
+            break;
+		}else{
+			fclose(arch);
+		}
+		fread(&reg1,sizeof(auth),1,arch);
 	}
-	return c;*/
+
+	rewind(arch);
+	fread(&reg,sizeof(Turno),1,arch);
+
+	if (bandera=1){
+
+
+        while(!feof(arch)){
+                
+             if(reg.fec.dia !=NULL && reg.fec.mes != NULL && reg.fec.anio != NULL){
+
+				 c++;
+			 }
+            fread(&reg,sizeof(Turno),1,arch);
+		}
+
+        return c;
+	}
+	else{
+			printf("NO hay turnos");
+	}
+	
 }
