@@ -87,7 +87,7 @@ main()
 			}while(SignUp(3)==0);
 			break;
 		case 3:
-			Atenciones();
+			printf("\n Antencion por el veterinario es :%d",Atenciones());
 			break;	
 	}
 	fclose(arch_admin);
@@ -141,4 +141,13 @@ int Atenciones()// Listar Atenciones por Veterinarios
 			printf("NO hay turnos");
 	}
 	
+}
+
+
+void Ranking(){ //Ranking por veterinario 
+
+FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
+
+
+
 }

@@ -236,4 +236,3 @@ void listado(FILE *ArchTurno){
      system("pause");
 }
 
-//cambio

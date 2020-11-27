@@ -99,11 +99,11 @@ void evolucionMascota(FILE *archMascota)
 	printf("%d",feof(archMascota));
 	do
 	{
-		printf ("\n La edad de la mascota es %d ", 2020-pet.de_nacimiento.anio); // Mostramos la edad del duenño de la mascota.	
+		printf ("\n La edad de la mascota es %d ", 2020-pet.de_nacimiento.anio); // Mostramos la edad de la mascota.	
 		fread(&reg1,sizeof(Turno),1,archMascota);
 	}while(!feof(archMascota));
 
-	//OTROS
+	//OTROS  
 	rewind(archMascota);
 	fread(&pet,sizeof(Datos_pet),1,archMascota);
 	printf("%d",feof(archMascota));
@@ -121,7 +121,6 @@ void evolucionMascota(FILE *archMascota)
 			printf ("\nIngrese la evolucion de la mascota : ");
 			gets(reg.informeMascota);
 			reg.borrado = true;
-			//fseek(archMascota,0,2); // Comienza desde el final del archivo
 			fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.		
 		}
 		fread(&pet,sizeof(Datos_pet),1,archMascota);

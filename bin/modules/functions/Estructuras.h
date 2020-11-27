@@ -23,7 +23,7 @@ struct fecha{
 
 struct Turno
 {
-
+	bool 	 ranking = false;
 	int		 matricula_de_veterinario; 
 	fecha	 fec;       // fecha del turno
 	int		 DNI_DUENIO; // dni due�o
@@ -49,5 +49,6 @@ struct documentacion{ // Documentacion del due�o del animal.
 	char	Localidad[20];
 	char	informeMascota[380];
 	bool	borrado=false;
+	bool    ranking=false;
 	fecha	fec;
 };
