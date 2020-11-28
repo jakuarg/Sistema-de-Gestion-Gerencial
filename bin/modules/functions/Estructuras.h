@@ -10,6 +10,8 @@ struct auth
     char        names[60];
     int         modulo;
     int         matricula;
+    int         veterinario;
+    int			atenciones;
 };
 
 //estructura de recepcion
@@ -23,7 +25,7 @@ struct fecha{
 
 struct Turno
 {
-	bool 	 ranking = false;
+	bool 	 ranking ;
 	int		 matricula_de_veterinario; 
 	fecha	 fec;       // fecha del turno
 	int		 DNI_DUENIO; // dni due�o
@@ -40,6 +42,7 @@ struct Datos_pet
 	fecha	 de_nacimiento;   //fecha de nacimiento de la mascota
 	float	 peso; // Cantidad en kilogramos 
 	char	 telefono[25];  //telefono celular/fijo del dueño
+	char	informeMascota[380];
 };
 // Estructura de consultorio
 struct documentacion{ // Documentacion del due�o del animal.
@@ -47,8 +50,7 @@ struct documentacion{ // Documentacion del due�o del animal.
 	char	Apeynom[30];
 	int		dni;
 	char	Localidad[20];
-	char	informeMascota[380];
-	bool	borrado=false;
-	bool    ranking=false;
+	bool	borrado;
+	bool    ranking;
 	fecha	fec;
 };

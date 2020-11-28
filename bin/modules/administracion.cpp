@@ -92,7 +92,7 @@ main()
 	}
 	fclose(arch_admin);
 }
-
+/*
 int Atenciones()// Listar Atenciones por Veterinarios
 {
     auth reg1;
@@ -141,13 +141,13 @@ int Atenciones()// Listar Atenciones por Veterinarios
 			printf("NO hay turnos");
 	}
 	
-}
+}*/
 
-
+/*
 void Ranking(){ //Ranking por veterinario 
 
 FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
 
 
 
-}
+}*/

@@ -21,33 +21,54 @@
 #include "functions/admin.h"
 
 
-int menuprincipal();
-void evolucionMascota(FILE *archMascota);
+int menuprincipal(int &pn);
+void evolucionMascota(FILE *archMascota,int &pn);
 void Listaespera();
+
 main()
 {
 	setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
-
-	int opc; //variable declarada para acceder a las opciones 
-
+	int matricula,pn;
+	int opc,aux; //variable declarada para acceder a las opciones 
+	auth reg;
 	FILE *archMascota = fopen("bin/modules/Mascotas.dat", "r+b");
 
 	if (archMascota == NULL)	{
 		fclose(archMascota);
 		archMascota = fopen("bin/modules/Mascotas.dat", "w+b");
 	}
+	FILE *Arch = fopen("bin/modules/Usuarios.dat","r+b");
+
+	fseek(Arch,sizeof(auth),1);
+	fread(&reg,sizeof(auth),1,Arch);
+	
+	printf ("Ingrese la matricula del veterinario : ");
+	scanf ("%d", &matricula);
+	for (int i = 0;i<=reg.veterinario;i++)
+	{
+		if (reg.matricula == matricula){
+			aux = 1;
+			pn = matricula;
+		}
+		fread(&reg,sizeof(auth),1,Arch);
+	}
+	printf ("\nMATRICULA = %d y REG.MATRICULA = %d  AUX = %d PN = %d\n",matricula,reg.matricula,aux,pn);
+
+	if (aux == 1)
+	{
 	do{
-		opc = menuprincipal();
+		opc = menuprincipal(pn);
 		switch(opc){
 			case 1:{
+
 				Listaespera();
 				system("PAUSE");
 				break;
 			}
 			case 2:{
-				evolucionMascota(archMascota);
+				evolucionMascota(archMascota,pn);
 				system("PAUSE");						
 				break;		
 			}
@@ -63,76 +84,110 @@ main()
 			}
 		}
 	}while(opc!=3);
-
-
+	}
+		else
+	{
+		printf ("La matricula ingresada no es valida...");
+	}
+	fclose(Arch);	
 }
 
 
-int menuprincipal()
+int menuprincipal(int &pn)
 {
-	int op;
-	system("CLS");
-	printf("\n\t\t\t    =============================================     ");
-	printf("\n\t\t\t            Modulo Consultorio Veterinario            ");
-	printf("\n\t\t\t  	==============================================    ");
-	printf("\n\t\t\t    1.- Visualizar Lista de Espera de Turnos (informe)");
-	printf("\n\t\t\t	2.- Registrar Evolucion de la Mascota             ");
-	printf("\n\t\t\t    3.- Cerrar la aplicacion.                         ");
-	printf("\n\t\t\t =======================================");
-	printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
-	scanf("%d", &op);
-	return op;
-
+	FILE *arch = fopen("bin/modules/Usuarios.dat","r+b");
+	auth reg;
+	rewind(arch);
+	fread(&reg,sizeof(auth),1,arch);	
+	int aux;
+	do{
+		if (reg.matricula == pn){
+			aux = 1;
+		}
+		else{fread(&reg,sizeof(auth),1,arch);}
+	}while(!feof(arch) and aux == 0);
+	fseek(arch,sizeof(auth),SEEK_CUR);
+	printf ("\n%d y matricula = %d aux = %d ",pn,reg.matricula,aux);
+	system("PAUSE");
+	if (aux == 1)
+	{
+		system("CLS");
+		int op;
+		system("CLS");
+		printf("\n\t\t\t    =============================================     ");
+		printf("\n\t\t\t          Modulo %d Consultorio Veterinario           ", reg.modulo);
+		printf("\n\t\t\t  	==============================================    ");
+		printf("\n  				    Veterinario a cargo : %s              ", reg.names);
+		printf("\n\t\t\t    1.- Visualizar Lista de Espera de Turnos (informe)");
+		printf("\n\t\t\t	2.- Registrar Evolucion de la Mascota             ");
+		printf("\n\t\t\t    3.- Cerrar la aplicacion.                         ");
+		printf("\n\t\t\t =======================================");
+		printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
+		fread(&reg,sizeof(auth),1,arch);
+		scanf("%d", &op);
+		return op;
+	}	
+	fclose(arch);
 }
 
 
-void evolucionMascota(FILE *archMascota)
+void evolucionMascota(FILE *archMascota,int &pn)
 {
 	Datos_pet pet;
-	documentacion reg;
 	Turno reg1;
 	int edadDuenio;
 	
-	//EDAD
-	rewind (archMascota);
-	fread(&reg1,sizeof(Turno),1,archMascota);
-	printf("%d",feof(archMascota));
-	do
-	{
-		printf ("\n La edad de la mascota es %d ", 2020-pet.de_nacimiento.anio); // Mostramos la edad de la mascota.	
-		fread(&reg1,sizeof(Turno),1,archMascota);
-	}while(!feof(archMascota));
-
-	//OTROS  
+	FILE *arch = fopen("bin/modules/Usuarios.dat","r+b");
+	auth reg;
+	rewind(arch);
+	fread(&reg,sizeof(auth),1,arch);	
+	int aux;
+	do{
+		if (reg.matricula == pn){
+			aux = 1;
+		}
+		else{fread(&reg,sizeof(auth),1,arch);}
+	}while(!feof(arch) and aux == 0);
+	
+	fseek(arch,sizeof(auth),SEEK_CUR);
+	
+	printf ("\n%d y matricula = %d aux = %d ",pn,reg.matricula,aux);
+	
+	system("PAUSE");
+	
+	
+ 	if (aux == 1){
+	printf("\n  				    Veterinario a cargo : %s              ", reg.names);
 	rewind(archMascota);
 	fread(&pet,sizeof(Datos_pet),1,archMascota);
+	char nom[60];
 	printf("%d",feof(archMascota));
 	printf ("\nIngrese el Apellido y nombre de la mascota : ");
 	_flushall();
-	gets(reg.Apeynom);
+	gets(nom);
 	while(!feof(archMascota))
 	{
-		if(strcmp(pet.Apeynom_pet,reg.Apeynom)== 0)
+		if(strcmp(pet.Apeynom_pet,nom)== 0)
 		{
 			printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
 			printf ("\nla localidad del dueno : ");
 			_flushall();
 			puts(pet.localidad);
 			printf ("\nIngrese la evolucion de la mascota : ");
-			gets(reg.informeMascota);
-			reg.borrado = true;
-			fwrite(&reg,sizeof(documentacion),1,archMascota); // Guarda desde donde quedo el puntero anterior.		
+			gets(pet.informeMascota);
+			reg.atenciones++;
+			fwrite(&reg,sizeof(auth),1,arch);
+			fwrite(&pet,sizeof(Datos_pet),1,archMascota); // Guarda desde donde quedo el puntero anterior.		
 		}
 		fread(&pet,sizeof(Datos_pet),1,archMascota);
 	}
-	
+	}	
 }
 
 void Listaespera()
 {
 	FILE *ArchTurno = fopen("bin/modules/Turno.dat","r+b");
 	Turno reg;
-	
 	rewind (ArchTurno);
 	fread(&reg,sizeof(Turno),1,ArchTurno);
 	while(!feof(ArchTurno))

@@ -15,7 +15,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include "Estructuras.h"
-
+#include <windows.h>
 FILE*arch_admin;
 
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
@@ -219,7 +219,9 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 			printf("Matricula:      ");
             scanf("%d",&reg.matricula);
             reg.modulo=2;
+            reg.veterinario = reg.veterinario + 1;
         }
+        
         if(registrado==3)//Asistente
         {
             reg.modulo=3;
@@ -312,6 +314,14 @@ int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve
     	return 0;
 	}
 }
+ void gotoxy(int x,int y){  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos);  
+ }  
 /*
 int accexists(userlen  usuario,userlen contrasenia)//Determina si la cuenta existe o no. Devuelve un 1 si existe y un 0 si no.
 {

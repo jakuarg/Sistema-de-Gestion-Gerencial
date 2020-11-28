@@ -64,6 +64,8 @@ void mascotadat(){
     	printf("\nDia: %2d", reg2.de_nacimiento.dia);
     	printf("\nMes: %2d", reg2.de_nacimiento.mes);
     	printf("\nAnio:%4d", reg2.de_nacimiento.anio);
+    	printf ("\n Evolucion de la mascota : ");
+    	puts(reg2.informeMascota);
 		fread(&reg2,sizeof(Datos_pet),1,arch1);
 	}	
 }
@@ -83,6 +85,7 @@ void usuariosdat()
 		puts(reg.user);
 		puts(reg.password);	
 		puts(reg.names);
+		printf ("Reg veterinario : %d\n", reg.veterinario);
 		printf ("Modulo : %d \n", reg.modulo);	
 		printf ("Matricula : %d \n", reg.matricula);
 		printf ("\n");

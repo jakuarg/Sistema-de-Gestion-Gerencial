@@ -149,21 +149,21 @@ void reg_turno(FILE *ArchTurno){
     Turno reg;
 	auth reg1;
 	Datos_pet pet;
-	int bandera;
+	int bandera,matricula;
     FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "r+b");
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
-	rewind (arch_admin);
-	fread(&reg1,sizeof(auth),1,arch_admin);
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE TURNO        ");
     printf("\n\t\t\t================================");
    	printf("\n\n\t\tMatricula de medico:");
-    scanf ("%d", &reg.matricula_de_veterinario);
+    scanf ("%d", &matricula);
+	rewind (arch_admin);
+	fread(&reg1,sizeof(auth),1,arch_admin);
     bandera=0;
     while(!feof(arch_admin) && bandera==0)
     {
  
-		if (reg1.matricula==reg.matricula_de_veterinario)
+		if (reg1.matricula==matricula)
 		{
 			bandera=1;
 			break;
@@ -214,21 +214,23 @@ if (bandera == 1)
 // Funcion para listar la atencion de medico con fecha
 
 void listado(FILE *ArchTurno){
-
+	
+    arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
      Turno reg;
      rewind(ArchTurno);
      fread(&reg, sizeof(Turno), 1,ArchTurno);
-
+	auth reg1;
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       LISTADO DE ATENCION      ");
     printf("\n\t\t\t================================"); 
-
-    while(!feof(ArchTurno)){
+    rewind (arch_admin);
+	fread(&reg1,sizeof(auth),1,arch_admin);
+    while(!feof(ArchTurno) and !feof(arch_admin)){
 
         printf("\nMatricula de medico:%d",reg.matricula_de_veterinario);
         printf("\nFECHA:");
         printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
-
+		fread(&reg1,sizeof(auth),1,arch_admin);
         fread(&reg, sizeof(Turno), 1,ArchTurno);
     }
       
