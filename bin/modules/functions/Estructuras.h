@@ -31,6 +31,7 @@ struct Turno
 	int		 DNI_DUENIO; // dni due�o
 	char	 detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
 	bool	 borradoTurno;
+	
 };
 
 struct Datos_pet

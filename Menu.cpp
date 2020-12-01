@@ -38,18 +38,24 @@ main()
     }
     else//Si existe el archivo...
     {
-    	m=LogIn(arch_admin);//Se ejecuta el login
-    	fclose(arch_admin);
+	archaux1=fopen("bin/modules/Auxiliar.dat","w+b");
+	if (archaux1 != NULL)
+	{
+			m=LogIn(arch_admin,archaux1);//Se ejecuta el login
+	    	fclose(arch_admin);
+			fclose(archaux1);
+	}			    	
 	}
 	switch(m)
     {
     	case 1:
-    		printf("\nEjecutando Modulo de Administracion...\n");
-			system("start bin/modules/administracion.exe");
+			printf("\nEjecutando Modulo de Administracion...\n");
+			system("start bin/modules/administracion.exe");		
 			break;
     	case 2:
+    		
     		printf("\nEjecutando Modulo de Consultorio\n");
-			system("start bin/modules/consultorio.exe");
+			 system("start bin/modules/consultorio.exe");
     		break;
 		case 3:
 			printf("\nEjecutando Modulo de Asistente\n");

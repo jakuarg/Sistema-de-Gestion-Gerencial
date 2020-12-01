@@ -38,10 +38,8 @@ main()
           
           fclose(ArchTurno);
           ArchTurno = fopen("bin/modules/Turno.dat","w+b");
-
      } 
-     
-     
+       
      do{
            menu = menu_principal();
          
@@ -67,11 +65,14 @@ main()
                 }
                 case 4: 
                 {
+					system("PAUSE");              	
+                	remove("Auxiliar.dat");
+                	exit(1);
                      printf("Saliendo del Sistema.....");
                       break;
                 }
 
-               default:
+          	    default:
                 printf("\n\n El valor ingresado no es valido");
                 system ("PAUSE");
                 break;
@@ -111,9 +112,9 @@ int menu_principal()
      int opcion;
      system("CLS");
 	printf("\n\t\t\t    =============================================     ");
-	printf("\n\t\t\t               Modulo %d Del Asistente                   ", reg.modulo);
+	printf("\n\t\t\t               Modulo %d Del Asistente", auxiliar.modulo);
 	printf("\n\t\t\t  	==============================================    ");
-    printf("\n\t\t\t           Asistente:%s                               ", auxiliar.names);
+    printf("\n\t\t\t           Asistente:%s               ", auxiliar.names);
 	printf("\n\t\t\t    1.- Registrar Mascota                             ");
 	printf("\n\t\t\t  	2.- Registrar turno                               ");
 	printf("\n\t\t\t    3.- Listado de Atenciones por Veterinario y Fecha ");
@@ -122,13 +123,35 @@ int menu_principal()
 	printf("\n\t\t\t\t 	 Ingrese una opcion: "); 
 	scanf("%d", &opcion);
     return opcion;
-
+	fclose(archaux1);  
 }
 
 // Funcion para registrar Mascota
 
 void reg_pet(){
-
+	
+	int auxx = 1;
+	aux auxiliar;
+	auth reg;
+	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
+	arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
+	rewind (archaux1);
+	rewind (arch_admin);
+	fread(&reg,sizeof(auth),1,arch_admin);
+	fread(&auxiliar,sizeof(aux),1,archaux1);
+	do{
+		if (reg.modulo == auxiliar.modulo)	
+		{
+			auxx = 0;
+		}
+		else
+		{
+			fread(&reg,sizeof(auth),1,arch_admin);
+			fread(&auxiliar,sizeof(aux),1,archaux1);
+		}
+		
+	}while(!feof(arch_admin) and !feof(archaux1) and auxx == 1);
+	
     FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "a+b");
     if(archMascotas == NULL){
           
@@ -141,6 +164,7 @@ void reg_pet(){
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE MASCOTAS     ");
     printf("\n\t\t\t================================");
+    printf("\n\t\t\ASISTENTE A CARGO DEL TURNO : %s ",auxiliar.names);
 
     printf("\nApellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):");
     _flushall();
@@ -189,6 +213,8 @@ void reg_turno(FILE *ArchTurno){
  
 		if (reg1.matricula==matricula and reg1.modulo == 2)
 		{
+			reg.matricula_de_veterinario = reg1.matricula;
+			fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
 			bandera=1;
 			break;
 		}
@@ -198,14 +224,15 @@ void reg_turno(FILE *ArchTurno){
 	}
 	fread(&pet,sizeof(Datos_pet),1,archMascotas);
 	  int salir = 1;
-do{
-if (bandera == 1)
-{
-    printf("\nFecha de turno");
-    printf("DIA:"); scanf("%2d", &reg.fec.dia);
-    printf("MES:"); scanf("%2d", &reg.fec.mes);
-    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
-	reg.borradoTurno = false;
+	do{
+	if (bandera == 1)
+	{
+		printf ("El veterinario que atendera el turno es : %s", reg1.names);
+	    printf("\nFecha de turno");
+	    printf("DIA:"); scanf("%2d", &reg.fec.dia);
+	    printf("MES:"); scanf("%2d", &reg.fec.mes);
+	    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
+		reg.borradoTurno = false;
 	
   
     do{
@@ -241,6 +268,7 @@ if (bandera == 1)
         fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
         printf("\n");
         system("pause");
+        break;
  } 
    
  }while(!feof(archMascotas) or salir == 2); 
@@ -268,8 +296,7 @@ void listado(FILE *ArchTurno){
         printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
 		fread(&reg1,sizeof(auth),1,arch_admin);
         fread(&reg, sizeof(Turno), 1,ArchTurno);
-    }
-      
+    }    
      printf("\n");
      system("pause");
 }

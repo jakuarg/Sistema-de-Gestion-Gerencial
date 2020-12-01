@@ -162,7 +162,10 @@ void evolucionMascota(FILE *archMascota,int &pn)
 			puts(pet.localidad);
 			printf ("\nIngrese la evolucion de la mascota : ");
 			gets(pet.informeMascota);
-			fwrite(&pet,sizeof(Datos_pet),1,archMascota); // Guarda desde donde quedo el puntero anterior.		
+			fwrite(&pet,sizeof(Datos_pet),1,archMascota); // Guarda desde donde quedo el puntero anterior.	
+			printf ("%s", reg.names);
+			reg.atenciones++;	
+			fwrite(&reg,sizeof(auth),1,arch_admin);
 		}
 		fread(&pet,sizeof(Datos_pet),1,archMascota);
 	}	
