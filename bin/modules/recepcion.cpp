@@ -113,6 +113,7 @@ int menu_principal()
 	printf("\n\t\t\t    =============================================     ");
 	printf("\n\t\t\t               Modulo %d Del Asistente                   ", reg.modulo);
 	printf("\n\t\t\t  	==============================================    ");
+    printf("\n\t\t\t           Asistente:%s                               ", auxiliar.names);
 	printf("\n\t\t\t    1.- Registrar Mascota                             ");
 	printf("\n\t\t\t  	2.- Registrar turno                               ");
 	printf("\n\t\t\t    3.- Listado de Atenciones por Veterinario y Fecha ");
@@ -218,22 +219,31 @@ if (bandera == 1)
     		break;
 		}
 		else
-		{
+		{    
+            if(reg.DNI_DUENIO == NULL){
+
+                printf("DNI del dueño inexistente, prfavor registrar un Dueño");
+                salir = 2;
+            }
 			printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
 			salir = 1;
 		}
 	}while(salir==1);
 
  }  
- }while(!feof(archMascotas) and salir==0); 
-    printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
-    _flushall();
-    gets(reg.detalle_de_atencion);
+    if(salir == 0){
+ 
+        printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
+        _flushall();
+        gets(reg.detalle_de_atencion);
 
-    fseek(ArchTurno,0,2);
-    fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
-    printf("\n");
-    system("pause");
+        fseek(ArchTurno,0,2);
+        fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
+        printf("\n");
+        system("pause");
+ } 
+   
+ }while(!feof(archMascotas) or salir == 2); 
     
 }
 
