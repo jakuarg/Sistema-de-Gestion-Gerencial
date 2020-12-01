@@ -1,4 +1,4 @@
-/*
+ /*
   ***********************************
   *** Trabajo Practico Grupal No2 ***
   **  Grupo N 					   **
@@ -21,9 +21,10 @@
 #include "functions/admin.h"
 
 //Funciones
+/*
 int Atenciones();
 void Ranking();
-
+*/
 main()
 {
 	// Establecer el idioma a español
@@ -87,7 +88,7 @@ main()
 			}while(SignUp(3)==0);
 			break;
 		case 3:
-			printf("\n Antencion por el veterinario es :%d",Atenciones());
+		//	printf("\n Antencion por el veterinario es :%d",Atenciones());
 			break;	
 	}
 	fclose(arch_admin);

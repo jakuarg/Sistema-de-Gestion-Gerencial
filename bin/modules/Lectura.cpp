@@ -5,6 +5,7 @@ int menuprincipal();
 void mascotadat();
 void usuariosdat();
 void regturno();
+void auxiliar();
 main()
 {
 	int menu;
@@ -26,8 +27,13 @@ main()
 				system("PAUSE");
 				break;
 			}
+			case 4:{
+				auxiliar();
+				system("PAUSE");
+				break;
+			}
 		}
-	}while(menu!=4);
+	}while(menu!=5);
 }
 
 int menuprincipal(){
@@ -39,6 +45,7 @@ int menuprincipal(){
 	printf("\n\t\t\t    1- Usuarios.dat lectura                ");
 	printf("\n\t\t\t    2- Mascota.dat lectura                ");
 	printf("\n\t\t\t    3- Turno.dat lectura                ");
+	printf("\n\t\t\t    3- auxiliar.dat lectura                ");
 	printf("\n\t\t\t =======================================");
 	printf("\n\t\t\t\t Ingrese o Selecione opcion: "); 
 	scanf("%d", &op);
@@ -115,4 +122,22 @@ void regturno()
     }
       
      printf("\n");
+}
+
+void auxiliar()
+{
+	FILE *archaux1=fopen("Auxiliar.dat","r+b");
+	aux auxiliar;
+	rewind(archaux1);
+	fread(&auxiliar,sizeof(aux),1,archaux1);
+	while(!feof(archaux1))
+	{
+		printf ("%d", auxiliar.modulo);
+		puts(auxiliar.user);
+		puts(auxiliar.password);
+		puts(auxiliar.names);
+		printf ("%d", auxiliar.matricula);		
+		fread(&auxiliar,sizeof(aux),1,archaux1);
+	}
+
 }

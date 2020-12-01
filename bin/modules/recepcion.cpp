@@ -41,6 +41,7 @@ main()
 
      } 
      
+     
      do{
            menu = menu_principal();
          
@@ -71,7 +72,7 @@ main()
                 }
 
                default:
-                printf("\n\n El valor ingrsado no es valido");
+                printf("\n\n El valor ingresado no es valido");
                 system ("PAUSE");
                 break;
          }
@@ -86,10 +87,31 @@ main()
 
 int menu_principal()
 {
+	int auxx = 1;
+	aux auxiliar;
+	auth reg;
+	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
+	arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
+	rewind (archaux1);
+	rewind (arch_admin);
+	fread(&reg,sizeof(auth),1,arch_admin);
+	fread(&auxiliar,sizeof(aux),1,archaux1);
+	do{
+		if (reg.modulo == auxiliar.modulo)	
+		{
+			auxx = 0;
+		}
+		else
+		{
+			fread(&reg,sizeof(auth),1,arch_admin);
+			fread(&auxiliar,sizeof(aux),1,archaux1);
+		}
+		
+	}while(!feof(arch_admin) and !feof(archaux1) and auxx == 1);
      int opcion;
      system("CLS");
 	printf("\n\t\t\t    =============================================     ");
-	printf("\n\t\t\t               Modulo Del Asistente                   ");
+	printf("\n\t\t\t               Modulo %d Del Asistente                   ", reg.modulo);
 	printf("\n\t\t\t  	==============================================    ");
 	printf("\n\t\t\t    1.- Registrar Mascota                             ");
 	printf("\n\t\t\t  	2.- Registrar turno                               ");
@@ -147,6 +169,7 @@ void reg_pet(){
 
 void reg_turno(FILE *ArchTurno){
     Turno reg;
+    reg.borradoTurno = false;
 	auth reg1;
 	Datos_pet pet;
 	int bandera,matricula;
@@ -163,11 +186,12 @@ void reg_turno(FILE *ArchTurno){
     while(!feof(arch_admin) && bandera==0)
     {
  
-		if (reg1.matricula==matricula)
+		if (reg1.matricula==matricula and reg1.modulo == 2)
 		{
 			bandera=1;
 			break;
 		}
+		
  		fread(&reg1,sizeof(auth),1,arch_admin);
 	
 	}
@@ -180,12 +204,14 @@ if (bandera == 1)
     printf("DIA:"); scanf("%2d", &reg.fec.dia);
     printf("MES:"); scanf("%2d", &reg.fec.mes);
     printf("ANIO:"); scanf("%4d", &reg.fec.anio);
-
+	reg.borradoTurno = false;
+	
   
     do{
    		printf("\nDNI del Dueno:");
   	  	scanf("%d", &reg.DNI_DUENIO);
-    	if (pet.DNI_DUENIO == reg.DNI_DUENIO)
+  	  	
+    	if (pet.DNI_DUENIO == reg.DNI_DUENIO and reg.DNI_DUENIO != NULL)
     	{
     		printf ("\nSu mascota es %s ", pet.Apeynom_pet);
     		salir = 0;
@@ -199,7 +225,7 @@ if (bandera == 1)
 	}while(salir==1);
 
  }  
- }while(!feof(archMascotas) and salir==1); 
+ }while(!feof(archMascotas) and salir==0); 
     printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
     _flushall();
     gets(reg.detalle_de_atencion);

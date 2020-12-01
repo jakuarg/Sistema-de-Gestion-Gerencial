@@ -30,7 +30,7 @@ struct Turno
 	fecha	 fec;       // fecha del turno
 	int		 DNI_DUENIO; // dni due�o
 	char	 detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
-
+	bool	 borradoTurno;
 };
 
 struct Datos_pet
@@ -53,4 +53,14 @@ struct documentacion{ // Documentacion del due�o del animal.
 	bool	borrado;
 	bool    ranking;
 	fecha	fec;
+};
+
+struct aux{
+	userlen     user;
+    passlen     password;
+    char        names[60];
+    int         modulo;
+    int         matricula;
+    int         veterinario;
+    int			atenciones;
 };

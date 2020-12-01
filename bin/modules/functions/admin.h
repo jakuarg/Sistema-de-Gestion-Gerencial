@@ -17,7 +17,7 @@
 #include "Estructuras.h"
 #include <windows.h>
 FILE*arch_admin;
-
+FILE *archaux1;
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
 {
 	//ALTA DEL ARCHIVO
@@ -29,6 +29,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		system("PAUSE");
 		return 0;
 	}
+
 	//FIN DE ALTA DEL ARCHIVO
 
     /*---Seccion de Declaraciones.---*/
@@ -68,6 +69,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		aprobado=0,i=0;
         udig=0,umay=0,usim=0,uexiste=0,ubandera=0;
 		cmay=0,cmin=0,cdig=0,calfa=0,cleng=0,cccon=0,calfc=0,cbandera=0;
+		reg.matricula = 0;
 		//INGRESO
         _flushall();
         printf("Usuario: ");
@@ -223,8 +225,17 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
         }
         
         if(registrado==3)//Asistente
-        {
-            reg.modulo=3;
+        {	
+        	reg.matricula = 0;
+        	if (reg.matricula == 0)
+        	{
+        	    reg.modulo=3;
+			}
+			else
+			{
+				reg.matricula = 0;
+				printf ("%d", reg.matricula);
+			}
         }
         /*{
 			error=1;
@@ -258,15 +269,13 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 
 }
 
-int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve para logear
+int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve para logear
 {
     //No hace falta abrir el archivo ya que lo abrimos en main.
 	//Declaramos auxiliares
 	userlen	useraux;
     passlen	passaux;
-
-
-    
+	aux auxiliar;	
     int found=0,found_2=0;//encontrado
     _flushall();
 	printf("Usuario: ");
@@ -288,9 +297,49 @@ int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve
 		{
 			printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
             if(strcmp(passaux,reg.password)==0)
-            {
-                found=1;
-                found_2=reg.modulo;
+            { 
+                if (reg.modulo == 2)
+                {
+                	strcpy(auxiliar.password,reg.password);
+                	strcpy(auxiliar.user,reg.user);
+                	auxiliar.modulo = reg.modulo;
+                	strcpy(auxiliar.names,reg.names);
+                	auxiliar.matricula = reg.matricula;
+                	printf ("COPIADO CON EXITO !! ");
+                	puts(auxiliar.password);
+                	puts(auxiliar.user);
+                	printf ("%d", auxiliar.modulo);
+                	puts(auxiliar.names);
+                	printf ("%d", auxiliar.matricula);
+                	system("PAUSE");
+     	           	fseek(archaux,0,2);
+					fwrite(&auxiliar, sizeof(aux), 1, archaux);
+                	found=1;
+                	found_2=reg.modulo;
+				}
+				if (reg.modulo == 1)
+				{
+                	found=1;
+                	found_2=reg.modulo;				
+				}
+				if (reg.modulo == 3)
+				{
+					strcpy(auxiliar.password,reg.password);
+                	strcpy(auxiliar.user,reg.user);
+                	auxiliar.modulo = reg.modulo;
+                	strcpy(auxiliar.names,reg.names);
+                	printf ("COPIADO CON EXITO EL ASISTENTE !! ");
+                	puts(auxiliar.password);
+                	puts(auxiliar.user);
+                	printf ("%d", auxiliar.modulo);
+                	puts(auxiliar.names);
+                	printf ("%d", auxiliar.matricula);
+                	system("PAUSE");
+     	           	fseek(archaux,0,2);
+					fwrite(&auxiliar, sizeof(aux), 1, archaux);
+					found=1;
+                	found_2=reg.modulo;
+				}
             }
             else
             {
@@ -321,7 +370,9 @@ int LogIn(FILE *arch)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve
       dwPos.X = x;  
       dwPos.Y= y;  
       SetConsoleCursorPosition(hcon,dwPos);  
- }  
+ }
+ 
+   
 /*
 int accexists(userlen  usuario,userlen contrasenia)//Determina si la cuenta existe o no. Devuelve un 1 si existe y un 0 si no.
 {
