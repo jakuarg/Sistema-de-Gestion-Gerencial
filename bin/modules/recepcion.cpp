@@ -219,9 +219,12 @@ void reg_turno(FILE *ArchTurno){
 		}
 		else
 		{
-	 		bandera=2;
+	 		fread(&reg1,sizeof(auth),1,arch_admin);	
 		}
-		fread(&reg1,sizeof(auth),1,arch_admin);	
+       if (bandera != 1 and feof(arch_admin)==-1)
+        {
+            bandera = 2;
+        }
 	}
 	if (bandera == 2)
 	{
