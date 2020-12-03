@@ -220,6 +220,7 @@ void reg_turno(FILE *ArchTurno){
  		fread(&reg1,sizeof(auth),1,arch_admin);
 	
 	}
+    rewind (archMascotas);
 	fread(&pet,sizeof(Datos_pet),1,archMascotas);
 	  int salir = 1;
 	do{
@@ -244,15 +245,21 @@ void reg_turno(FILE *ArchTurno){
     		salir = 0;
     		break;
 		}
-		else if(pet.DNI_DUENIO == NULL){
-
-                printf("DNI del dueño inexistente, prfavor registrar un Dueño");
+		else
+		printf ("%d", pet.DNI_DUENIO);
+		system("CLS");
+        if(pet.DNI_DUENIO == 0){
+                printf("\nDNI del dueño inexistente, prfavor registrar un Dueño");
+                system("PAUSE");
                 salir = 2;
-            }else{
+                break;
+            }
+            else
+            {
                 printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
 			    salir = 1;
             }
-        
+            fread(&pet,sizeof(Datos_pet),1,archMascotas);
 		
 	}while(salir==1);
 
@@ -270,7 +277,7 @@ void reg_turno(FILE *ArchTurno){
         break;
  } 
    
- }while(!feof(archMascotas) or salir == 2); 
+ }while(!feof(archMascotas) and salir != 2); 
     
 }
 
