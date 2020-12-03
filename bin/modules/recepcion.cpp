@@ -203,6 +203,7 @@ void reg_turno(FILE *ArchTurno){
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE TURNO        ");
     printf("\n\t\t\t================================");
+    int salir = 1;
    	printf("\n\n\t\tMatricula de medico:");
     scanf ("%d", &matricula);
 	rewind (arch_admin);
@@ -216,13 +217,21 @@ void reg_turno(FILE *ArchTurno){
 			bandera=1;
 			break;
 		}
-		
- 		fread(&reg1,sizeof(auth),1,arch_admin);
-	
+		else
+		{
+	 		bandera=2;
+		}
+		fread(&reg1,sizeof(auth),1,arch_admin);	
+	}
+	if (bandera == 2)
+	{
+		printf ("La matricula ingresada no coincide con ningun veterinario...");
+		system("PAUSE");
+		salir = 2;
 	}
     rewind (archMascotas);
 	fread(&pet,sizeof(Datos_pet),1,archMascotas);
-	  int salir = 1;
+
 	do{
 	if (bandera == 1)
 	{

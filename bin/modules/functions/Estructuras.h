@@ -11,7 +11,6 @@ struct auth
     int         modulo;
     int         matricula;
     int         veterinario;
-    int			atenciones;
 };
 
 //estructura de recepcion
@@ -25,7 +24,7 @@ struct fecha{
 
 struct Turno
 {
-	bool 	 ranking ;
+	int		atenciones;
 	int		 matricula_de_veterinario; 
 	fecha	 fec;       // fecha del turno
 	int		 DNI_DUENIO; // dni due�o

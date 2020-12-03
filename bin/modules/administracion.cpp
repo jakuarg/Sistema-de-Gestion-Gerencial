@@ -23,7 +23,7 @@
 //Funciones
 
 int Atenciones();
-void Ranking();
+//void Ranking();
 
 main()
 {
@@ -131,13 +131,12 @@ int Atenciones()// Listar Atenciones por Veterinarios
         while(!feof(arch)){
                 
              if(reg.fec.dia !=NULL && reg.fec.mes != NULL && reg.fec.anio != NULL){
-
-				 c++;
+				 reg.atenciones++;
 			 }
             fread(&reg,sizeof(Turno),1,arch);
 		}
 
-        return c;
+        return reg.atenciones;
 	}
 	else{
 			printf("NO hay turnos");
@@ -145,11 +144,11 @@ int Atenciones()// Listar Atenciones por Veterinarios
 	
 }
 
-
+/*
 void Ranking(){ //Ranking por veterinario 
 
 FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
 
 
 
-}
+}*/

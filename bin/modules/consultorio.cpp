@@ -121,9 +121,6 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	Datos_pet pet;
 	Turno reg1;
 	int edadDuenio;
-	FILE *arch = fopen("bin/modules/Usuarios.dat","r+b");
-	
-	
 	aux auxiliar;
 	auth reg;
 	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
@@ -164,7 +161,6 @@ void evolucionMascota(FILE *archMascota,int &pn)
 			gets(pet.informeMascota);
 			fwrite(&pet,sizeof(Datos_pet),1,archMascota); // Guarda desde donde quedo el puntero anterior.	
 			printf ("%s", reg.names);
-			reg.atenciones++;	
 			fwrite(&reg,sizeof(auth),1,arch_admin);
 		}
 		fread(&pet,sizeof(Datos_pet),1,archMascota);
