@@ -8,3 +8,8 @@ bin/modules/functions/admin.h.gch
 bin/modules/leer.cpp
 Usuarios.dat
 bin/modules/leer.exe
+bin/modules/Lectura.exe
+bin/modules/Mascotas.dat
+bin/modules/Auxiliar.dat
+bin/modules/recepcion.exe
+
