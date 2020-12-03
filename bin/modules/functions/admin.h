@@ -20,6 +20,7 @@ FILE*arch_admin;
 FILE *archaux1;
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
 {
+	bool debug=1;//0 des 1 act
 	//ALTA DEL ARCHIVO
 	arch_admin=fopen("bin/modules/Usuarios.dat","a+b");
 	if(arch_admin==NULL)
@@ -77,42 +78,43 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
         _flushall();
         printf("Contrasenia: ");
         gets(passaux);
-        printf("inicia-");printf("\n\n");//DEPURACION
+        //printf("inicia-");printf("\n\n");//DEPURACION
+        
         //Validacion de usuario
 		if(strlen(useraux)>=6 && strlen(useraux)<=10)
         {
-            printf("cond1-");printf("\n\n");//DEPURACION
+            //printf("cond1-");printf("\n\n");//DEPURACION
             if(islower(useraux[0])!=0)
             {
-                printf("cond2-");printf("\n\n");//DEPURACION
-				printf("\n****%d****\n",strlen(useraux));printf("\n\n");//DEPURACION
+                //printf("cond2-");printf("\n\n");//DEPURACION
+				//printf("\n****%d****\n",strlen(useraux));printf("\n\n");//DEPURACION
 				for(i=0 ; i < strlen(useraux) ; i++)
                 {
-                    printf("\n#%d for[%c]-",i,useraux[i]);
+                    //printf("\n#%d for[%c]-",i,useraux[i]);
 					if(isupper(useraux[i])!=0)
                     {
-                        printf("\n#%d Fcond3-",i);printf("\n\n");//DEPURACION
+                        //printf("\n#%d Fcond3-",i);printf("\n\n");//DEPURACION
 						umay++;
                     }
                     else
                     {
                     	if(isdigit(useraux[i])!=0)
 	                    {
-	                        printf("\n#%d Fcond4-",i);printf("\n\n");//DEPURACION
+	                        //printf("\n#%d Fcond4-",i);printf("\n\n");//DEPURACION
 							udig++;
 	                    }
 	                    else
 	                    {
 	                    	if(useraux[i]=='+' || useraux[i]=='-' || useraux[i]=='*' || useraux[i]=='?' || useraux[i]=='¿' || useraux[i]=='!' || useraux[i]=='¿')
 		                    {
-		                        printf("\n#%d caracter admitido-",i);printf("\n\n");//DEPURACION
+		                        ;//printf("\n#%d caracter admitido-",i);printf("\n\n");//DEPURACION
 		                    }
 		                    else 
 							{
 								if(isalnum(useraux[i])==0)
 								{
 									usim++;
-									printf("\n#%d Fcond5-",i);printf("\n\n");//DEPURACION
+									//printf("\n#%d Fcond5-",i);printf("\n\n");//DEPURACION
 								}
 							}
 						}
@@ -122,13 +124,13 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
                 if(umay>=2 && udig<=3 && usim==0)
                 {
                     ubandera=1;
-					printf("\n\nFAPROBADO USUARIO-");
-					printf("\n\n");//DEPURACION
+					//printf("\n\nFAPROBADO USUARIO-");
+					//printf("\n\n");//DEPURACION
 					//break;
                 }
             }
         }
-        printf("c mamo xd %d",ubandera);
+        //printf("c mamo xd %d",ubandera);
 		if(ubandera==1)
         {
             rewind(arch_admin);
@@ -146,51 +148,103 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
                 fread(&reg, sizeof(auth), 1, arch_admin);
             }
         }
-        printf("\n\n");//DEPURACION
-        printf("\nINICIA CONTRASENIA %d - %d",uexiste,ubandera);//DEPURACION
-        if(uexiste==0 && ubandera==1)
+        if(debug==1)
+        {
+        	printf("CONDICIONES USUARIO:\n");
+			if(uexiste==1){
+	        	printf("a. Ser único para cada usuario registrado.(NO CUMPLIDO)\n");
+			}else printf("a. Ser único para cada usuario registrado.\n");
+			
+			if(islower(useraux[0])==0){
+	        		printf("b. Comenzar con una letra minúscula.(NO CUMPLIDO)\n");
+			}else printf("b. Comenzar con una letra minúscula.\n");
+			
+			if(umay<2){
+	        	printf("c. Tener al menos 2 letras mayúsculas.(NO CUMPLIDO)\n");	
+			}else printf("c. Tener al menos 2 letras mayúsculas.\n");
+			
+			if(udig>3){
+	        	printf("d. Tener como máximo 3 dígitos.(NO CUMPLIDO)\n");
+			}else printf("d. Tener como máximo 3 dígitos.\n");
+		}
+		
+			
+		//printf("\n\n");//DEPURACION
+        //printf("\nINICIA CONTRASENIA %d - %d",uexiste,ubandera);//DEPURACION
+        if(uexiste==0 && ubandera==1 && strlen(passaux)>=6 && strlen(passaux) <=32)
         {
             //Validacion de contrasenia
             for(i=0;i<strlen(passaux);i++)
             {
-                printf("\nFor (%d) [%c]",i,passaux[i]);//DEPURACION
+                //printf("\nFor (%d) [%c]",i,passaux[i]);//DEPURACION
 				if(isupper(passaux[i])!=0)
                 {
-                    printf("\nMAY");//DEPURACION
+                    //printf("\nMAY");//DEPURACION
 					cmay++;
                 }
                 if(islower(passaux[i])!=0)
                 {
-                    printf("\nes minuscula");//DEPURACION
+                    //printf("\nes minuscula");//DEPURACION
 					cmin++;
                 }
                 if(isdigit(passaux[i])!=0)
                 {
-                    printf("\nes digito");//DEPURACION
+                    //printf("\nes digito");//DEPURACION
 					cdig++;
                 }
                 if(isalnum(passaux[i])==0)
                 {
-                    printf("\n no es alfanumerico");//DEPURACION
+                    //printf("\n no es alfanumerico");//DEPURACION
 					calfa++;
                 }
                 if(passaux[i]==passaux[i+1]-1 && passaux[i]==passaux[i+2]-2)
                 {
-                    printf("\nnumeros consecutivos");//DEPURACION
+                    //printf("\nnumeros consecutivos");//DEPURACION
 					cccon++;
                 }
                 if(passaux[i]+1==passaux[i+1] && passaux[i+1]+1==passaux[i+2])
                 {
                     calfc++;
-                    printf("\n [%d]=%c,[%d]=%c,[%d]=%c",i,passaux[i],i+1,passaux[i+1]+1,i+2,passaux[i+2]+2);//DEPURACION
+                    //printf("\n [%d]=%c,[%d]=%c,[%d]=%c",i,passaux[i],i+1,passaux[i+1]+1,i+2,passaux[i+2]+2);//DEPURACION
                 }
             }
-            if(cmay>=1 && cmin>=1 && cdig>=1 && calfa==0 && cccon==0 && calfc==0)
+            if(cmay>=1 && cmin>=1 && cdig>=1)
             {
                 cbandera=1;
             }
         }
-
+		if(debug==1)
+        {
+        	printf("CONDICIONES CONTRASENIA:\n");
+			if(cmay>=1 && cmin>=1 && cdig>=1 && calfa==0 && cccon==0 && calfc==0)
+			{
+				printf("a. Deberá contener al menos una letra mayúscula, una letra minúscula y un número.\n");
+			}else printf("a. Deberá contener al menos una letra mayúscula, una letra minúscula y un número.(NO CUMPLIDO)\n");
+			
+			if(calfa==0){
+				printf("b. No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.\n");
+			}else printf("b. No podrá contener ningún carácter de puntuación, ni acentos, ni espacios. Sólo caracteres alfanuméricos.(NO CUMPLIDO)\n");
+			
+			if(strlen(passaux)>=6 && strlen(passaux) <=32){
+				printf("c. Deberá tener entre 6 y 32 caracteres.\n");
+			}else printf("c. Deberá tener entre 6 y 32 caracteres.(NO CUMPLIDO)\n");
+			
+			if(cccon==0)
+			{
+				printf("d. No debe tener más de 3 caracteres numéricos consecutivos.\n");
+			}else printf("d. No debe tener más de 3 caracteres numéricos consecutivos.(NO CUMPLIDO)\n");
+			
+			if(calfc==0)
+			{
+				printf("e. No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamenteconsecutivas (ascendentemente).\n");
+				printf("Este criterio es válido tanto para letras mayúsculas,minúsculas o combinación de ambas.\n");
+			}
+			else{
+				printf("e. No debe tener 2 caracteres consecutivos que refieran a letras alfabéticamenteconsecutivas (ascendentemente).\n");
+				printf("Este criterio es válido tanto para letras mayúsculas,minúsculas o combinación de ambas.(NO CUMPLIDO)\n");
+			}
+    	}
+		
         //Validacion final
 
         if(cbandera==1 && ubandera==1)
@@ -206,7 +260,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 
     if(aprobado==1)
     {
-        printf("Apellido y Nombre:      ");
+        printf("Apellido y Nombre:\n");
         _flushall();
         gets(reg.names);
         
@@ -218,7 +272,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		if(registrado==2)//Veterinario
         {
             _flushall();
-			printf("Matricula:      ");
+			printf("Matricula:\n");
             scanf("%d",&reg.matricula);
             reg.modulo=2;
             reg.veterinario = reg.veterinario + 1;
@@ -272,27 +326,33 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 0 si no. Sirve para logear
 {
     //No hace falta abrir el archivo ya que lo abrimos en main.
+    
 	//Declaramos auxiliares
 	userlen	useraux;
     passlen	passaux;
-	aux auxiliar;	
+    
+	//Abrimos registro
+    auth reg;
+    aux auxiliar;
+    
     int found=0,found_2=0;//encontrado
+    
     _flushall();
 	printf("Usuario: ");
 	gets(useraux);
+	
 	_flushall();
 	printf("Contrasenia:");
 	gets(passaux);
-	printf("s1");
-    //Abrimos registro
-    auth reg;
+	//printf("s1");
+    
 	rewind(arch);
 	fread(&reg,sizeof(auth),1,arch);
 	while(!feof(arch))
 	{
-		printf(",s2\n");
-        printf("%s,%s\n",useraux,reg.user);
-        printf("%s,%s\n",passaux,reg.password);
+		//printf(",s2\n");
+        //printf("%s,%s\n",useraux,reg.user);
+        //printf("%s,%s\n",passaux,reg.password);
 		if(strcmp(useraux,reg.user)==0)
 		{
 			printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
@@ -306,11 +366,13 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	strcpy(auxiliar.names,reg.names);
                 	auxiliar.matricula = reg.matricula;
                 	printf ("COPIADO CON EXITO !! ");
-                	puts(auxiliar.password);
+                	
+                	/*puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);
+                	printf ("%d", auxiliar.matricula);*/
+                	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
 					fwrite(&auxiliar, sizeof(aux), 1, archaux);
@@ -328,12 +390,14 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	strcpy(auxiliar.user,reg.user);
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
-                	printf ("COPIADO CON EXITO EL ASISTENTE !! ");
+                	
+                	/*printf ("COPIADO CON EXITO EL ASISTENTE !! ");
                 	puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);
+                	printf ("%d", auxiliar.matricula);*/
+                	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
 					fwrite(&auxiliar, sizeof(aux), 1, archaux);
@@ -343,7 +407,7 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
             }
             else
             {
-                printf ("\nLa contraseÃ±a ingresada es incorrecta.\n");
+                printf ("\nLa contrasenia ingresada es incorrecta.\n");
             }
             
 		}
@@ -357,7 +421,7 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
 	}
 	else
 	{
-			printf("\nEl usuario no fue encontrado o no existe\n");
+		printf("\nEl usuario no fue encontrado o no existe\n");
     	system("PAUSE");
    	 	system("CLS");
     	return 0;
