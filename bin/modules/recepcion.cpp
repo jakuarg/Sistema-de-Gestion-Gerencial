@@ -213,8 +213,6 @@ void reg_turno(FILE *ArchTurno){
  
 		if (reg1.matricula==matricula and reg1.modulo == 2)
 		{
-			reg.matricula_de_veterinario = reg1.matricula;
-			fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
 			bandera=1;
 			break;
 		}
@@ -232,6 +230,7 @@ void reg_turno(FILE *ArchTurno){
 	    printf("DIA:"); scanf("%2d", &reg.fec.dia);
 	    printf("MES:"); scanf("%2d", &reg.fec.mes);
 	    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
+        reg.matricula_de_veterinario = reg1.matricula;
 		reg.borradoTurno = false;
 	
   
@@ -239,22 +238,22 @@ void reg_turno(FILE *ArchTurno){
    		printf("\nDNI del Dueno:");
   	  	scanf("%d", &reg.DNI_DUENIO);
   	  	
-    	if (pet.DNI_DUENIO == reg.DNI_DUENIO and reg.DNI_DUENIO != NULL)
+    	if (pet.DNI_DUENIO == reg.DNI_DUENIO and pet.DNI_DUENIO != NULL)
     	{
     		printf ("\nSu mascota es %s ", pet.Apeynom_pet);
     		salir = 0;
     		break;
 		}
-		else
-		{    
-            if(reg.DNI_DUENIO == NULL){
+		else if(pet.DNI_DUENIO == NULL){
 
                 printf("DNI del dueño inexistente, prfavor registrar un Dueño");
                 salir = 2;
+            }else{
+                printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
+			    salir = 1;
             }
-			printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
-			salir = 1;
-		}
+        
+		
 	}while(salir==1);
 
  }  

@@ -21,10 +21,10 @@
 #include "functions/admin.h"
 
 //Funciones
-/*
+
 int Atenciones();
 void Ranking();
-*/
+
 main()
 {
 	// Establecer el idioma a español
@@ -145,11 +145,11 @@ int Atenciones()// Listar Atenciones por Veterinarios
 	
 }
 
-/*
+
 void Ranking(){ //Ranking por veterinario 
 
 FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
 
 
 
-}*/
+}
