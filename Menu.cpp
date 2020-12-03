@@ -8,8 +8,6 @@
 
 main()
 {
-    do
-	{
 		system("CLS");
 	    int m;//Guarda el modulo proveniente del login
 		arch_admin=fopen("bin/modules/Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
@@ -43,6 +41,7 @@ main()
 		archaux1=fopen("bin/modules/Auxiliar.dat","w+b");
 		if (archaux1 != NULL)
 		{
+			
 				m=LogIn(arch_admin,archaux1);//Se ejecuta el login
 		    	fclose(arch_admin);
 				fclose(archaux1);
@@ -65,5 +64,4 @@ main()
 				break;
 				default: break;	
 		};
-    }while(1);
 }

@@ -66,8 +66,7 @@ main()
                 case 4: 
                 {
 					system("PAUSE");              	
-                	remove("Auxiliar.dat");
-                	exit(1);
+                	remove("Auxiliar.dat");	
                      printf("Saliendo del Sistema.....");
                       break;
                 }
