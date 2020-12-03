@@ -220,7 +220,7 @@ void reg_turno(FILE *ArchTurno){
 		{
 	 		fread(&reg1,sizeof(auth),1,arch_admin);	
 		}
-       if (bandera != 1 and feof(arch_admin)==-1)
+       if (!feof(arch_admin)==0)
         {
             bandera = 2;
         }
@@ -253,6 +253,7 @@ void reg_turno(FILE *ArchTurno){
     	if (pet.DNI_DUENIO == reg.DNI_DUENIO and pet.DNI_DUENIO != NULL)
     	{
     		printf ("\nSu mascota es %s ", pet.Apeynom_pet);
+            strcpy(reg.mascota,pet.Apeynom_pet);
     		salir = 0;
     		break;
 		}
@@ -280,7 +281,7 @@ void reg_turno(FILE *ArchTurno){
         printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
         _flushall();
         gets(reg.detalle_de_atencion);
-
+        strcpy(reg.veterinario,reg1.names);
         fseek(ArchTurno,0,2);
         fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
         printf("\n");
@@ -298,16 +299,25 @@ void listado(FILE *ArchTurno){
 	
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
      Turno reg;
-     rewind(ArchTurno);
-     fread(&reg, sizeof(Turno), 1,ArchTurno);
 	auth reg1;
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       LISTADO DE ATENCION      ");
     printf("\n\t\t\t================================"); 
     rewind (arch_admin);
+    rewind(ArchTurno);
+    fread(&reg, sizeof(Turno), 1,ArchTurno);
 	fread(&reg1,sizeof(auth),1,arch_admin);
-    while(!feof(ArchTurno) and !feof(arch_admin)){
-
+    while(!feof(ArchTurno) and !feof(arch_admin) and reg.borradoTurno==false){
+        printf("El turno pertenece al veterinario : ");puts(reg.veterinario);
+        printf ("Mascota a atender : ");puts(reg.mascota);
+        if (reg.borradoTurno == 0)
+        {
+            printf ("La mascota no fue atendida");
+        }
+        else
+        {
+            printf ("La mascota fue atendida");
+        }
         printf("\nMatricula de medico:%d",reg.matricula_de_veterinario);
         printf("\nFECHA:");
         printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);

@@ -113,11 +113,13 @@ void regturno()
     printf("\n\t\t\t================================"); 
 
     while(!feof(arch)){
-
-        printf("\nMatricula de medico:%d",reg.matricula_de_veterinario);
+		puts(reg.veterinario);
+        printf("\nMatricula de veterinario:%d",reg.matricula_de_veterinario);
         printf("\nFECHA:");
         printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
-
+		printf ("Borrado turno = %d", reg.borradoTurno);
+		printf ("Atenciones realizadas : %d ", reg.atenciones);
+		printf("detalle de atencion : ");puts(reg.detalle_de_atencion);
         fread(&reg, sizeof(Turno), 1,arch);
     }
       

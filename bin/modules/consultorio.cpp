@@ -55,15 +55,12 @@ main()
 			}
 			case 3:{
 				system("PAUSE");
-				remove("Auxiliar.dat");
-				exit(1);
+				remove("Auxiliar.dat");	
 				break;
 				
 			}
 			default:{
-				printf ("El valor ingresado no es correcto ");
-				system("PAUSE");
-				break;
+				exit(1);
 			}
 		}
 	}while(opc!=3);
@@ -120,24 +117,29 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	int auxx = 1;
 	Datos_pet pet;
 	Turno reg1;
+	reg1.atenciones = 0;
 	int edadDuenio;
 	aux auxiliar;
 	auth reg;
 	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
 	arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
+	FILE *archturno = fopen("bin/modules/Turno.dat", "r+b");
+	rewind(archturno);
 	rewind (archaux1);
 	rewind (arch_admin);
 	fread(&reg,sizeof(auth),1,arch_admin);
 	fread(&auxiliar,sizeof(aux),1,archaux1);
+	fread(&reg1,sizeof(Turno),1,archturno);
 	do{
-		if (reg.modulo == auxiliar.modulo)	
+		if (reg.modulo == auxiliar.modulo and reg.matricula == reg1.matricula_de_veterinario)	
 		{
-			auxx = 0;
+			auxx = 0;	
 		}
 		else
 		{
 			fread(&reg,sizeof(auth),1,arch_admin);
 			fread(&auxiliar,sizeof(aux),1,archaux1);
+			fread(&reg1,sizeof(Turno),1,archturno);
 		}
 		
 	}while(!feof(arch_admin) and !feof(archaux1) and auxx == 1);
@@ -160,8 +162,9 @@ void evolucionMascota(FILE *archMascota,int &pn)
 			printf ("\nIngrese la evolucion de la mascota : ");
 			gets(pet.informeMascota);
 			fwrite(&pet,sizeof(Datos_pet),1,archMascota); // Guarda desde donde quedo el puntero anterior.	
-			printf ("%s", reg.names);
-			fwrite(&reg,sizeof(auth),1,arch_admin);
+			reg1.borradoTurno = true;
+			reg1.atenciones++;
+			fwrite(&reg1,sizeof(Turno),1,archturno);
 		}
 		fread(&pet,sizeof(Datos_pet),1,archMascota);
 	}	
@@ -175,6 +178,8 @@ void Listaespera()
 	fread(&reg,sizeof(Turno),1,ArchTurno);
 	while(!feof(ArchTurno) and reg.borradoTurno==false)
 	{
+		printf ("El nombre del veterinario a cargo del turno: ");
+		puts(reg.veterinario);
 		printf("\nFecha de turno");
    		printf("DIA: %2d", reg.fec.dia);
     	printf("MES: %2d", reg.fec.mes);

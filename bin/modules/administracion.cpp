@@ -112,7 +112,7 @@ main()
 	}while(1);
 	fclose(arch_admin);
 }
-
+/*
 int Atenciones()// Listar Atenciones por Veterinarios
 {
     auth reg1;
@@ -162,7 +162,7 @@ int Atenciones()// Listar Atenciones por Veterinarios
 	}
 	
 }
-
+*/
 /*
 void Ranking(){ //Ranking por veterinario 
 
