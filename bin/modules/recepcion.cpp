@@ -107,7 +107,7 @@ int menu_principal()
 			fread(&auxiliar,sizeof(aux),1,archaux1);
 		}
 		
-	}while(!feof(arch_admin) and !feof(archaux1) and auxx == 1);
+	}while(!feof(arch_admin) && !feof(archaux1) && auxx == 1);
      int opcion;
      system("CLS");
 	printf("\n\t\t\t    =============================================     ");
@@ -149,7 +149,7 @@ void reg_pet(){
 			fread(&auxiliar,sizeof(aux),1,archaux1);
 		}
 		
-	}while(!feof(arch_admin) and !feof(archaux1) and auxx == 1);
+	}while(!feof(arch_admin) && !feof(archaux1) && auxx == 1);
 	
     FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "a+b");
     if(archMascotas == NULL){
@@ -163,7 +163,7 @@ void reg_pet(){
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       REGISTRO DE MASCOTAS     ");
     printf("\n\t\t\t================================");
-    printf("\n\t\t\ASISTENTE A CARGO DEL TURNO : %s ",auxiliar.names);
+    printf("\n\t\tASISTENTE A CARGO DEL TURNO : %s ",auxiliar.names);
 
     printf("\nApellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):");
     _flushall();
@@ -211,7 +211,7 @@ void reg_turno(FILE *ArchTurno){
     while(!feof(arch_admin) && bandera==0)
     {
  
-		if (reg1.matricula==matricula and reg1.modulo == 2)
+		if (reg1.matricula==matricula && reg1.modulo == 2)
 		{
 			bandera=1;
 			break;
@@ -246,11 +246,12 @@ void reg_turno(FILE *ArchTurno){
 		reg.borradoTurno = false;
 	
   
-    do{
+    do
+	{
    		printf("\nDNI del Dueno:");
   	  	scanf("%d", &reg.DNI_DUENIO);
   	  	
-    	if (pet.DNI_DUENIO == reg.DNI_DUENIO and pet.DNI_DUENIO != NULL)
+    	if (pet.DNI_DUENIO == reg.DNI_DUENIO && pet.DNI_DUENIO != NULL)
     	{
     		printf ("\nSu mascota es %s ", pet.Apeynom_pet);
             strcpy(reg.mascota,pet.Apeynom_pet);
@@ -258,20 +259,24 @@ void reg_turno(FILE *ArchTurno){
     		break;
 		}
 		else
-		printf ("%d", pet.DNI_DUENIO);
-		system("CLS");
-        if(pet.DNI_DUENIO == 0){
-                printf("\nDNI del dueño inexistente, prfavor registrar un Dueño");
-                system("PAUSE");
-                salir = 2;
-                break;
-            }
-            else
-            {
-                printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
-			    salir = 1;
-            }
-            fread(&pet,sizeof(Datos_pet),1,archMascotas);
+		{
+			printf ("%d", pet.DNI_DUENIO);
+			system("CLS");
+	        if(pet.DNI_DUENIO == 0 and feof(archMascotas)==-1){
+	                printf("\nDNI del dueño inexistente, prfavor registrar un Dueño");
+	                system("PAUSE");
+	                salir = 2;
+	                break;
+	        }
+			else
+	        {
+			 	printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
+				salir = 1;
+	        }
+	        fread(&pet,sizeof(Datos_pet),1,archMascotas);
+		}
+		
+        
 		
 	}while(salir==1);
 
@@ -289,8 +294,7 @@ void reg_turno(FILE *ArchTurno){
         break;
  } 
    
- }while(!feof(archMascotas) and salir != 2); 
-    
+ }while(!feof(archMascotas) && salir != 2);
 }
 
 // Funcion para listar la atencion de medico con fecha
@@ -298,7 +302,7 @@ void reg_turno(FILE *ArchTurno){
 void listado(FILE *ArchTurno){
 	
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
-     Turno reg;
+    Turno reg;
 	auth reg1;
     printf("\n\t\t\t================================"); 
     printf("\n\t\t\t       LISTADO DE ATENCION      ");
@@ -307,7 +311,7 @@ void listado(FILE *ArchTurno){
     rewind(ArchTurno);
     fread(&reg, sizeof(Turno), 1,ArchTurno);
 	fread(&reg1,sizeof(auth),1,arch_admin);
-    while(!feof(ArchTurno) and !feof(arch_admin) and reg.borradoTurno==false){
+    while(!feof(ArchTurno) && !feof(arch_admin) && reg.borradoTurno==false){
         printf("El turno pertenece al veterinario : ");puts(reg.veterinario);
         printf ("Mascota a atender : ");puts(reg.mascota);
         if (reg.borradoTurno == 0)
@@ -324,7 +328,7 @@ void listado(FILE *ArchTurno){
 		fread(&reg1,sizeof(auth),1,arch_admin);
         fread(&reg, sizeof(Turno), 1,ArchTurno);
     }    
-     printf("\n");
-     system("pause");
+    printf("\n");
+    system("PAUSE");
 }
 

@@ -48,11 +48,10 @@ main()
 			archaux1=fopen("bin/modules/Auxiliar.dat","w+b");
 			if (archaux1 != NULL)
 			{
-				
-					m=LogIn(arch_admin,archaux1);//Se ejecuta el login
-			    	fclose(arch_admin);
-					fclose(archaux1);
-			}			    	
+				m=LogIn(arch_admin,archaux1);//Se ejecuta el login
+			    fclose(arch_admin);
+				fclose(archaux1);
+			}
 		}
 		
 		switch(m)

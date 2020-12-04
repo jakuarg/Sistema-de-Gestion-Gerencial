@@ -22,8 +22,8 @@
 
 //Funciones
 
-int Atenciones();
-//void Ranking();
+int Atenciones(int mes);
+void Ranking();
 
 main()
 {
@@ -45,14 +45,16 @@ main()
 
 	system("CLS");
 	//SECCION DE DECLARACIONES 
-	int error,op_1,seguir=1;
+	int error,op_1,seguir=1,smes;
 	//
 	error=1;
 	do
 	{
+		system("CLS");
 		error=1;
 		while(error==1)
 		{
+			system("CLS");
 			printf("Modulo Administracion");
 			printf("\n=======================");
 			printf("\n1.- Registrar Veterinario");
@@ -95,7 +97,9 @@ main()
 				}while(SignUp(3)==0);
 				break;
 			case 3:
-				printf("\nAntencion por el veterinario es :%d",Atenciones());
+				printf("Ingrese el mes que desea buscar:");
+				scanf("%d",&smes);
+				Atenciones(smes);
 				break;
 			case 4:
 				printf("\nRanking:");
@@ -109,65 +113,54 @@ main()
 				break;
 			default: break;
 		}
-	}while(1);
+	}while(seguir==1);
 	fclose(arch_admin);
 }
-/*
-int Atenciones()// Listar Atenciones por Veterinarios
+
+int Atenciones(int mes)// Listar Atenciones por Veterinarios
 {
-    auth reg1;
-	Turno reg;
-	int bandera;
-
-	FILE*arch = fopen("bin/modules/Mascotas.dat", "r+b");
-	int c=0,search_mat=0;
-	printf("Ingrese la matricula del medico: ");
-	scanf("%d",&search_mat);
-	bandera=0;
-	
-	rewind(arch_admin);
-	fread(&reg1,sizeof(auth),1,arch);
-	
-	while(!feof(arch))
+    arch_admin=fopen("bin/modules/Usuarios.dat","rb");
+    FILE *arch_turno=fopen("bin/modules/Turnos.dat","rb");
+	if(arch_turno==NULL)
 	{
-		if(search_mat==reg1.matricula && reg1.modulo == 2){
-
-			bandera=1;
-            break;
-		}else{
-			bandera=0;
-			fclose(arch);
-		}
-		fread(&reg1,sizeof(auth),1,arch);
+		printf("\nNo hay turnos registrados.");
+		exit(1);
 	}
-
-	rewind(arch);
-	fread(&reg,sizeof(Turno),1,arch);
-
-	if (bandera=1){
-
-
-        while(!feof(arch)){
-                
-             if(reg.fec.dia !=NULL && reg.fec.mes != NULL && reg.fec.anio != NULL){
-				 reg.atenciones++;
-			 }
-            fread(&reg,sizeof(Turno),1,arch);
-		}
-
-        return reg.atenciones;
-	}
-	else{
-			printf("NO hay turnos");
-	}
+	Turno reg;
+	auth reg1;
 	
+	int c=0,c2=0;
+	
+    printf("\nLISTADO DE ATENCION DEL MES %d",mes);
+    printf("\n===================");
+    
+    rewind(arch_admin);
+    rewind(arch_turno);
+    fread(&reg, sizeof(Turno), 1,arch_turno);
+	fread(&reg1,sizeof(auth),1,arch_admin);
+	
+    while(!feof(arch_admin))
+	{
+        c=0;
+		while(!feof(arch_turno) && reg.borradoTurno==false)
+        {
+        	if(reg.fec.mes==mes && strcmp(reg1.names,reg.veterinario)==0 && reg.borradoTurno!=0 && reg1.modulo==2)
+			{
+			 	c++;
+			}
+		}
+		printf("%s: %d",reg1.veterinario,c);
+		
+		fread(&reg1,sizeof(auth) , 1,arch_admin);
+        fread(&reg ,sizeof(Turno), 1,arch_turno);
+    } 
+    fclose(arch_turno);
+    fclose(arch_admin);
+    printf("\n");
+    system("pause");
 }
-*/
-/*
-void Ranking(){ //Ranking por veterinario 
 
-FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
-
-
-
-}*/
+void Ranking()//Ranking por veterinario 
+{
+	FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
+}

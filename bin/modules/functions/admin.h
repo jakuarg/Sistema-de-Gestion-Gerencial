@@ -216,7 +216,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		if(debug==1)
         {
         	printf("CONDICIONES CONTRASENIA:\n");
-			if(cmay>=1 && cmin>=1 && cdig>=1 && calfa==0 && cccon==0 && calfc==0)
+			if(cmay>=1 && cmin>=1 && cdig>=1)
 			{
 				printf("a. Deberá contener al menos una letra mayúscula, una letra minúscula y un número.\n");
 			}else printf("a. Deberá contener al menos una letra mayúscula, una letra minúscula y un número.(NO CUMPLIDO)\n");
@@ -310,12 +310,12 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 
         strcpy(reg.user,useraux);
         strcpy(reg.password,passaux);
-		printf("\nUSUARIO: %s",reg.user);
+		/*printf("\nUSUARIO: %s",reg.user);
 		printf("\nCONTRASENIA: %s",reg.password);
 		printf("\nNOMBRES: %s",reg.names);
 		printf("\nMATRICULA: %d",reg.matricula);
-		printf("\nMODULO: %d",reg.modulo);
-		system("PAUSE");
+		printf("\nMODULO: %d",reg.modulo);*/
+		//system("PAUSE");
         fwrite(&reg, sizeof(auth),1,arch_admin);
         fclose(arch_admin);
         return 1;
@@ -355,7 +355,7 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
         //printf("%s,%s\n",passaux,reg.password);
 		if(strcmp(useraux,reg.user)==0)
 		{
-			printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
+			//printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
             if(strcmp(passaux,reg.password)==0)
             { 
                 if (reg.modulo == 2)
@@ -365,9 +365,9 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
                 	auxiliar.matricula = reg.matricula;
-                	printf ("COPIADO CON EXITO !! ");
                 	
-                	/*puts(auxiliar.password);
+                	/*printf ("COPIADO CON EXITO !! ");
+                	puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);

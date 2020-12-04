@@ -19,19 +19,18 @@ struct fecha{
 	int		 dia;
 	int		 mes;
 	int		 anio;
-
 };
 
 struct Turno
 {
-	int		atenciones;
-	int		 matricula_de_veterinario;
-	char	 veterinario[50]; 
-	fecha	 fec;       // fecha del turno
-	int		 DNI_DUENIO; // dni due�o
-	char	 detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
-	bool	 borradoTurno;
-	char	mascota[50];
+	int			atenciones;
+	int			matricula_de_veterinario;
+	char		veterinario[60]; 
+	fecha		fec;       // fecha del turno
+	int			DNI_DUENIO; // dni due�o
+	char		detalle_de_atencion[380];     //pronostico de lo que le sucede a la mascota
+	bool		borradoTurno;
+	char		mascota[50];
 };
 
 struct Datos_pet
