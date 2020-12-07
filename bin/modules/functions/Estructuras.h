@@ -64,3 +64,8 @@ struct aux{
     int         veterinario;
     int			atenciones;
 };
+
+struct ranking{
+	char nom[50];
+	int atencion;
+};

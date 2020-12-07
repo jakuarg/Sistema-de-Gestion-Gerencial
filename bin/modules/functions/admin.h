@@ -16,7 +16,7 @@
 #include<string.h>
 #include "Estructuras.h"
 #include <windows.h>
-FILE*arch_admin;
+FILE *arch_admin;
 FILE *archaux1;
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
 {
@@ -366,12 +366,12 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	strcpy(auxiliar.names,reg.names);
                 	auxiliar.matricula = reg.matricula;
                 	
-                	/*printf ("COPIADO CON EXITO !! ");
+                	printf ("COPIADO CON EXITO !! ");
                 	puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);*/
+                	printf ("%d", auxiliar.matricula);
                 	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
@@ -391,12 +391,12 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
                 	
-                	/*printf ("COPIADO CON EXITO EL ASISTENTE !! ");
+                	printf ("COPIADO CON EXITO EL ASISTENTE !! ");
                 	puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);*/
+                	printf ("%d", auxiliar.matricula);
                 	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);

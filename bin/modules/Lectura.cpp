@@ -6,6 +6,7 @@ void mascotadat();
 void usuariosdat();
 void regturno();
 void auxiliar();
+void ranking1();
 main()
 {
 	int menu;
@@ -32,8 +33,12 @@ main()
 				system("PAUSE");
 				break;
 			}
+			case 5:{
+				ranking1();
+				break;
+			}
 		}
-	}while(menu!=5);
+	}while(menu!=6);
 }
 
 int menuprincipal(){
@@ -45,7 +50,8 @@ int menuprincipal(){
 	printf("\n\t\t\t    1- Usuarios.dat lectura                ");
 	printf("\n\t\t\t    2- Mascota.dat lectura                ");
 	printf("\n\t\t\t    3- Turno.dat lectura                ");
-	printf("\n\t\t\t    3- auxiliar.dat lectura                ");
+	printf("\n\t\t\t    4- auxiliar.dat lectura                ");
+	printf("\n\t\t\t    5- ranking.dat lectura                ");
 	printf("\n\t\t\t =======================================");
 	printf("\n\t\t\t\t Ingrese o Selecione opcion: "); 
 	scanf("%d", &op);
@@ -114,6 +120,7 @@ void regturno()
 
     while(!feof(arch)){
 		puts(reg.veterinario);
+		puts(reg.mascota);
         printf("\nMatricula de veterinario:%d",reg.matricula_de_veterinario);
         printf("\nFECHA:");
         printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
@@ -142,6 +149,23 @@ void auxiliar()
 		fread(&auxiliar,sizeof(aux),1,archaux1);
 	}
 
+}
+
+void ranking1()
+{
+	ranking reg;
+	FILE *arch;
+	arch = fopen ("Turno.dat", "r+b");
+	rewind (arch);
+	fread(&reg,sizeof(ranking),1,arch);
+	while(!feof(arch))
+	{
+		printf ("atencion : %d", reg.atencion);
+		printf ("nombre : %s", reg.nom);
+		fread(&reg,sizeof(ranking),1,arch);	
+	}
+	system("PAUSE");
+	
 }
 
 

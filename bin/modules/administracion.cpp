@@ -101,9 +101,13 @@ main()
 				scanf("%d",&smes);
 				Atenciones(smes);
 				break;
-			case 4:
+			case 4:{
 				printf("\nRanking:");
+				_flushall();
+				Ranking();
+				system("PAUSE");	
 				break;
+			}
 			case 5:
 				seguir=0;
 				break;
@@ -162,5 +166,58 @@ int Atenciones(int mes)// Listar Atenciones por Veterinarios
 
 void Ranking()//Ranking por veterinario 
 {
-	FILE*Arch = fopen("bin/modules/Mascotas.dat", "r+b");  
+	FILE*Arch = fopen("bin/modules/Turnos.dat", "r+b"); 
+	FILE*Arch2 = fopen("bin/modules/Usuarios.dat","r+b");
+	FILE *arch = fopen("bin/modules/ranking.dat", "r+b");
+	if (arch == NULL)
+	{
+		fclose(arch);
+		arch = fopen("ranking.dat","w+b");
+	}
+	
+	auth reg; // registro.
+	Turno reg1; // turno
+	ranking guardar;
+	rewind (Arch);
+	rewind (Arch2);
+	fread (&reg,sizeof(auth),1,Arch2);
+	fread (&reg1,sizeof(Turno),1,Arch);
+	printf ("%d y %d",feof(Arch),feof(Arch2));	
+	int salir = 1,aux;
+	do
+	{
+		printf ("matricula vet : %d, matricula : %d", reg1.matricula_de_veterinario,reg.matricula);
+		if (reg1.matricula_de_veterinario == reg.matricula)
+		{
+			rewind(Arch);
+			while(!feof(Arch))
+			{
+			if (reg1.borradoTurno == true)
+				{
+					strcpy(guardar.nom,reg1.veterinario);
+					aux = guardar.atencion + 1;
+					guardar.atencion = aux;
+					fwrite(&guardar,sizeof(ranking),1,arch);
+				}
+				else
+				{
+					fread(&reg1,sizeof(Turno),1,Arch);			
+				}			
+			}
+
+		}
+		else
+		{
+			fread (&reg,sizeof(auth),1,Arch2);
+			fread (&reg1,sizeof(Turno),1,Arch);			
+		}
+		if (feof(Arch)==0 and feof(Arch2)==0)
+		{
+			salir = 0;
+		}
+		
+	}while (salir == 1);
+	system("PAUSE");
+	printf ("SALIII!!!! %d ", salir);
+	system("PAUSE");
 }

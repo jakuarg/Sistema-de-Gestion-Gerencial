@@ -233,7 +233,7 @@ void reg_turno(FILE *ArchTurno){
 	}
     rewind (archMascotas);
 	fread(&pet,sizeof(Datos_pet),1,archMascotas);
-
+	
 	do{
 	if (bandera == 1)
 	{
@@ -244,7 +244,6 @@ void reg_turno(FILE *ArchTurno){
 	    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
         reg.matricula_de_veterinario = reg1.matricula;
 		reg.borradoTurno = false;
-	
   
     do
 	{
@@ -262,8 +261,8 @@ void reg_turno(FILE *ArchTurno){
 		{
 			printf ("%d", pet.DNI_DUENIO);
 			system("CLS");
-	        if(pet.DNI_DUENIO == 0 and feof(archMascotas)==-1){
-	                printf("\nDNI del dueño inexistente, prfavor registrar un Dueño");
+	        if(pet.DNI_DUENIO == 0 and feof(archMascotas)==0){
+	                printf("\nDNI del dueño inexistente, porfavor registrar un Dueño");
 	                system("PAUSE");
 	                salir = 2;
 	                break;

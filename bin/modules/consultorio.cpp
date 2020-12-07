@@ -116,7 +116,6 @@ int menuprincipal()
 
 }
 
-
 void evolucionMascota(FILE *archMascota,int &pn)
 {
 	
@@ -125,58 +124,73 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	aux auxiliar;
 	auth reg;
 	
-	reg1.atenciones = 0;
 	int edadDuenio;
 	int auxx = 1;
-	
+	char nom[60];
 	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
 	arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
 	FILE *archturno = fopen("bin/modules/Turno.dat", "r+b");
 	rewind(archturno);
 	rewind (archaux1);
 	rewind (arch_admin);
+	rewind(archMascota);
+	fread(&pet,sizeof(Datos_pet),1,archMascota);	
 	fread(&reg,sizeof(auth),1,arch_admin);
 	fread(&auxiliar,sizeof(aux),1,archaux1);
 	fread(&reg1,sizeof(Turno),1,archturno);
 	do{
+		printf ("%d , %d, %d, %d",reg.modulo,auxiliar.modulo,reg.matricula,reg1.matricula_de_veterinario);
 		if (reg.modulo == auxiliar.modulo and reg.matricula == reg1.matricula_de_veterinario)	
 		{
-			auxx = 0;	
+				rewind(archMascota);
+				printf ("\nIngrese el Apellido y nombre de la mascota : ");
+				_flushall();
+				gets(nom);
+				while(!feof(archMascota))
+				{
+					if(strcmp(pet.Apeynom_pet,nom)== 0)
+					{
+						printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
+						printf ("\nla localidad del dueno : ");
+						_flushall(); 
+						puts(pet.localidad);
+						printf ("\nIngrese la evolucion de la mascota : ");
+						gets(pet.informeMascota);
+						reg1.borradoTurno = true;	
+						if (reg1.borradoTurno == true)
+						{
+							auxx = 0;	
+						}
+					}
+					fread(&pet,sizeof(Datos_pet),1,archMascota);
+				}	
 		}
 		else
 		{
+			fread(&pet,sizeof(Datos_pet),1,archMascota);	
 			fread(&reg,sizeof(auth),1,arch_admin);
 			fread(&auxiliar,sizeof(aux),1,archaux1);
 			fread(&reg1,sizeof(Turno),1,archturno);
 		}
-		
-	}while(!feof(arch_admin) and !feof(archaux1) and auxx == 1);
-
-	rewind(archMascota);
-	fread(&pet,sizeof(Datos_pet),1,archMascota);
-	char nom[60];
-	printf("%d",feof(archMascota));
-	printf ("\nIngrese el Apellido y nombre de la mascota : ");
-	_flushall();
-	gets(nom);
-	while(!feof(archMascota))
-	{
-		if(strcmp(pet.Apeynom_pet,nom)== 0)
-		{
-			printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
-			printf ("\nla localidad del dueno : ");
-			_flushall(); 
-			puts(pet.localidad);
-			printf ("\nIngrese la evolucion de la mascota : ");
-			gets(pet.informeMascota);
-			fwrite(&pet,sizeof(Datos_pet),1,archMascota); // Guarda desde donde quedo el puntero anterior.	
-			reg1.borradoTurno = true;
-			reg1.atenciones++;
-			fwrite(&reg1,sizeof(Turno),1,archturno);
+		if (!feof(arch_admin) and !feof(archaux1) and !feof(archturno) and !feof(archMascota)){
+			auxx == 0;
 		}
-		fread(&pet,sizeof(Datos_pet),1,archMascota);
-	}	
+	}while(auxx == 1);
+	printf ("salio re piola aux = %d", auxx);
+	system("PAUSE");
+	if (auxx == 0){
+		fwrite(&pet,sizeof(Datos_pet),1,archMascota); 	
+		fwrite(&reg1,sizeof(Turno),1,archturno);	
+	}
+
+	printf("%d",feof(archMascota));
+
 }
+
+
+
+
+
 
 void Listaespera()
 {
@@ -191,8 +205,8 @@ void Listaespera()
 		printf("\nFecha de turno");
    		printf("DIA: %2d", reg.fec.dia);
     	printf("MES: %2d", reg.fec.mes);
-   		printf("AÑO: %4d", reg.fec.anio);
- 	   printf("\nDNI del Dueño: %d", reg.DNI_DUENIO);
+   		printf("Aï¿½O: %4d", reg.fec.anio);
+ 	   printf("\nDNI del Dueï¿½o: %d", reg.DNI_DUENIO);
  	   puts(reg.detalle_de_atencion);
  	   fread(&reg,sizeof(Turno),1,ArchTurno);
 	}
