@@ -150,16 +150,18 @@ void evolucionMascota(FILE *archMascota,int &pn)
 				{
 					if(strcmp(pet.Apeynom_pet,nom)== 0)
 					{
-						printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
-						printf ("\nla localidad del dueno : ");
-						_flushall(); 
-						puts(pet.localidad);
-						printf ("\nIngrese la evolucion de la mascota : ");
-						gets(pet.informeMascota);
 						reg1.borradoTurno = true;	
 						if (reg1.borradoTurno == true)
 						{
+							printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
+							printf ("\nla localidad del dueno : ");
+							_flushall(); 
+							puts(pet.localidad);
+							printf ("\nIngrese la evolucion de la mascota : ");
+							gets(pet.informeMascota);				
+							reg1.atenciones = reg1.atenciones + 1;
 							auxx = 0;	
+							break;
 						}
 					}
 					fread(&pet,sizeof(Datos_pet),1,archMascota);

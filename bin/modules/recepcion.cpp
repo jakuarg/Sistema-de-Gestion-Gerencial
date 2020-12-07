@@ -196,7 +196,7 @@ void reg_turno(FILE *ArchTurno){
     reg.borradoTurno = false;
 	auth reg1;
 	Datos_pet pet;
-	int bandera,matricula;
+	int bandera,matricula,aux1 = 0;
     FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "r+b");
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
     printf("\n\t\t\t================================"); 
@@ -243,6 +243,10 @@ void reg_turno(FILE *ArchTurno){
 	    printf("MES:"); scanf("%2d", &reg.fec.mes);
 	    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
         reg.matricula_de_veterinario = reg1.matricula;
+        reg.atenciones = aux1 ;
+        if (reg.atenciones != 0){
+        	reg.atenciones = reg.atenciones + aux1;
+		}
 		reg.borradoTurno = false;
   
     do

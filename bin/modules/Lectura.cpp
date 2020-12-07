@@ -155,7 +155,7 @@ void ranking1()
 {
 	ranking reg;
 	FILE *arch;
-	arch = fopen ("Turno.dat", "r+b");
+	arch = fopen ("ranking.dat", "r+b");
 	rewind (arch);
 	fread(&reg,sizeof(ranking),1,arch);
 	while(!feof(arch))
