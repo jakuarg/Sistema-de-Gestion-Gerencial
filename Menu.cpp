@@ -59,20 +59,20 @@ main()
 	    	case 1:
 				printf("\nEjecutando Modulo de Administracion...\n");
 				system("start bin/modules/administracion.exe");
-				system("PAUSE");
+				
 				break;
 	    	case 2:
 	    		
 	    		printf("\nEjecutando Modulo de Consultorio...\n");
 				system("start bin/modules/consultorio.exe");
-				system("PAUSE");
+				
 	    		break;
 			case 3:
 				printf("\nEjecutando Modulo de Asistente...\n");
 				system("start bin/modules/recepcion.exe");
-				system("PAUSE");
+				
 				break;
-			default: system("PAUSE");break;	
+			default: break;	
 		};
 		
 		error=1;

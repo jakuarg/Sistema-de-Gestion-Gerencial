@@ -15,7 +15,7 @@ Nombre:		Gallegos Martin
 /////////////////////VETERINARIOS//////////////////////
 ***********************************************************
 Usuario:		joseMAR123
-Pass:		mAR1a
+Pass:		mAR1a3
 Nombre:		Robledo Jose Maria
 Matricula:	885597
 ***********************************************************
@@ -48,12 +48,6 @@ Nombre:		Hamilton Simon
 Matricula:	1010227
 ***********************************************************
 
-
-
-
-
-
-
 //////////////////////ASISTENTES///////////////////////
 
 ***********************************************************
@@ -71,5 +65,86 @@ Nombre:		Luna Ignacio Eduardo
 ////////////////////////MASCOTAS///////////////////////
 
 ***********************************************************
+Apellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):Jacas guauguau
+
+Localidad:tucuman
+
+Domicilio:a lucero 259
+
+Dni del due├▒o:43291490
+
+Peso en KG:100
+
+Telefono38031351321
+
+Fecha de nacimiento dd/mm/aaaa
+Dia:17
+
+Mes:04
+
+Anio:2001
+***********************************************************
 
 ***********************************************************
+Apellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):bobo pishito
+
+Localidad:santiago
+
+Domicilio:peron 2222
+
+Dni del due├▒o:10910097
+
+Peso en KG:100
+
+Telefono2121212
+
+Fecha de nacimiento dd/mm/aaaa
+Dia:17
+
+Mes:12
+
+Anio:2000
+***********************************************************
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+TURNOS
+
+***********************************************************
+Matricula de medico:885597
+El veterinario que atendera el turno es : Robledo Jose Maria
+Fecha de turnoDIA:22
+MES:08
+ANIO:2020
+
+DNI del Dueno:43291490
+
+Su mascota es Jacas guauguau
+Situacion de la Mascota:CANCER
+***********************************************************
+Matricula de medico:885597
+El veterinario que atendera el turno es : Robledo Jose Maria
+Fecha de turnoDIA:22
+MES:08
+ANIO:2020
+
+DNI del Dueno:43291490
+
+Su mascota es Jacas guauguau
+Situacion de la Mascota:tos de perro xdxd
+***********************************************************
+El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....
+DNI del Dueno:
+10910097
+
+Su mascota es bobo pishito
+Situacion de la Mascota:mucho cel
+
+***********************************************************
+
+***********************************************************
+
+

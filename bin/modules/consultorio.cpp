@@ -189,11 +189,6 @@ void evolucionMascota(FILE *archMascota,int &pn)
 
 }
 
-
-
-
-
-
 void Listaespera()
 {
 	FILE *ArchTurno = fopen("bin/modules/Turno.dat","r+b");
@@ -207,7 +202,7 @@ void Listaespera()
 		printf("\nFecha de turno");
    		printf("DIA: %2d", reg.fec.dia);
     	printf("MES: %2d", reg.fec.mes);
-   		printf("A�O: %4d", reg.fec.anio);
+   		printf("AniO: %4d", reg.fec.anio);
  	   printf("\nDNI del Due�o: %d", reg.DNI_DUENIO);
  	   puts(reg.detalle_de_atencion);
  	   fread(&reg,sizeof(Turno),1,ArchTurno);

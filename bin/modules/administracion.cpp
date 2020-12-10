@@ -21,8 +21,52 @@
 #include "functions/admin.h"
 
 //Funciones
+int Atenciones(int mes)// Listar Atenciones por Veterinarios
+{
+    printf("\n/ENTRO/\n");
+	arch_admin=fopen("bin/modules/Usuarios.dat","rb");
+	printf("\n/ENTRO2/\n");
+    FILE *arch_turno=fopen("bin/modules/Turnos.dat","rb");
+    printf("\n/ENTRO3/\n");
+	if(arch_turno==NULL)
+	{
+		printf("\nNo hay turnos registrados.");
+		exit(1);
+	}
+	Turno reg;
+	auth reg1;
+	
+	int c=0,c2=0;
+	
+    printf("\nLISTADO DE ATENCION DEL MES %d",mes);
+    printf("\n===================");
+    
+    rewind(arch_admin);
+    rewind(arch_turno);
+    fread(&reg, sizeof(Turno), 1,arch_turno);
+	fread(&reg1,sizeof(auth),1,arch_admin);
+	
+    while(!feof(arch_admin))
+	{
+        c=0;
+		while(!feof(arch_turno) && reg.borradoTurno==false)
+        {
+        	if(reg.fec.mes==mes && strcmp(reg1.names,reg.veterinario)==0 && reg.borradoTurno!=0 && reg1.modulo==2)
+			{
+			 	c++;
+			}
+		}
+		printf("%s: %d",reg1.veterinario,c);
+		
+		fread(&reg1,sizeof(auth) , 1,arch_admin);
+        fread(&reg ,sizeof(Turno), 1,arch_turno);
+    } 
+    fclose(arch_turno);
+    fclose(arch_admin);
+    printf("\n");
+    system("pause");
+}
 
-int Atenciones(int mes);
 void Ranking(FILE *Arch,FILE *Arch2,FILE *arch);
 
 main()
@@ -101,6 +145,7 @@ main()
 				printf("Ingrese el mes que desea buscar:");
 				scanf("%d",&smes);
 				Atenciones(smes);
+				system("PAUSE");
 				break;
 			case 4:{
 				fclose(arch_admin);
@@ -151,51 +196,9 @@ main()
 	fclose(arch_admin);
 }
 
-int Atenciones(int mes)// Listar Atenciones por Veterinarios
+void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario 
 {
-    arch_admin=fopen("bin/modules/Usuarios.dat","rb");
-    FILE *arch_turno=fopen("bin/modules/Turnos.dat","rb");
-	if(arch_turno==NULL)
-	{
-		printf("\nNo hay turnos registrados.");
-		exit(1);
-	}
-	Turno reg;
-	auth reg1;
 	
-	int c=0,c2=0;
-	
-    printf("\nLISTADO DE ATENCION DEL MES %d",mes);
-    printf("\n===================");
-    
-    rewind(arch_admin);
-    rewind(arch_turno);
-    fread(&reg, sizeof(Turno), 1,arch_turno);
-	fread(&reg1,sizeof(auth),1,arch_admin);
-	
-    while(!feof(arch_admin))
-	{
-        c=0;
-		while(!feof(arch_turno) && reg.borradoTurno==false)
-        {
-        	if(reg.fec.mes==mes && strcmp(reg1.names,reg.veterinario)==0 && reg.borradoTurno!=0 && reg1.modulo==2)
-			{
-			 	c++;
-			}
-		}
-		printf("%s: %d",reg1.veterinario,c);
-		
-		fread(&reg1,sizeof(auth) , 1,arch_admin);
-        fread(&reg ,sizeof(Turno), 1,arch_turno);
-    } 
-    fclose(arch_turno);
-    fclose(arch_admin);
-    printf("\n");
-    system("pause");
-}
-
-void Ranking(FILE *Arch,FILE *Arch2,FILE *arch)//Ranking por veterinario 
-{
 	int salir = 1,aux,contador,num=0;
 	auth reg; // registro.
 	Turno reg1; // turno
@@ -235,52 +238,64 @@ void Ranking(FILE *Arch,FILE *Arch2,FILE *arch)//Ranking por veterinario
 		fread(&reg,sizeof(auth),1,Arch2);
 		fread (&reg1,sizeof(Turno),1,Arch);	
 	}
-	system("PAUSE");
-	printf ("SALIII!!!! %d ", salir);
-	system("PAUSE");
-	/*
-	fread (&reg1,sizeof(Turno),1,Arch);
-	printf ("%d y %d",feof(Arch),feof(Arch2));	
-	int salir = 1,aux;
+	
+	int b,i=0,n;
+	ranking v[99],regaux;
+	
+	fclose(arch);
+	arch=fopen("ranking.dat","rb");
+	rewind (arch);
+	
+	//1. Pasa los registros a un array
+	
+	fread(&guardar,sizeof(ranking),1,arch);	
+	while(feof(arch)==0)
+	{
+		v[i]=guardar;
+		i++;
+		fread(&guardar,sizeof(ranking),1,arch);	
+	}
+	n=i;
+	
+	//2.Ordena los registros del array
 	do
 	{
-		printf ("matricula vet : %d, matricula : %d", reg1.matricula_de_veterinario,reg.matricula);
-		if (reg1.matricula_de_veterinario == reg.matricula)
+		b=0;
+		for (i=0;i<n-1;i++)
 		{
-			rewind(Arch);
-			fread(&reg1,sizeof(Turno),1,Arch);		
-			while(!feof(Arch))
+			if (v[i].atencion>v[i+1].atencion)
 			{
-			if (reg1.borradoTurno == true)
-				{
-					strcpy(guardar.nom,reg1.veterinario);
-					aux = guardar.atencion + 1;
-					guardar.atencion = aux;
-					fwrite(&guardar,sizeof(ranking),1,arch);
-				}
-				else
-				{
-					fread(&reg1,sizeof(Turno),1,Arch);			
-				}			
+				regaux=v[i];
+				v[i]=v[i+1];
+				v[i+1]=regaux;
+				b=1;
 			}
-
 		}
-		else
-		{
-			fread (&reg,sizeof(auth),1,Arch2);
-			fread (&reg1,sizeof(Turno),1,Arch);			
-		}
-		if (!feof(arch) and !feof(Arch) and !feof(Arch2))
-		{
-			salir = 0;
-		}
-		else
-		{
-			salir = 1;
-		}
-		
-	}while (salir == 1);
-	system("PAUSE");
-	printf ("SALIII!!!! %d ", salir);
-	system("PAUSE");*/
+	}while (b==1);
+	fclose(arch);
+	
+	//3. Pasa los registros del array al archivo//
+	arch=fopen("ranking.dat","rb");
+	
+	for (i=0;i<n;i++)
+	{
+		guardar=v[i];
+		fread(&guardar,sizeof(ranking),1,arch);	
+	}
+	fclose(arch);
+	
+	system("CLS");
+	
+	//4. Muestra el ranking ordenado
+	printf("\n\nArch Ordenado\n\n");
+	arch=fopen("ranking.dat","rb");
+	fread(&guardar,sizeof(ranking),1,arch);	
+	printf("|ATENCIONES| NOMBRES");
+	while(!feof(arch))
+	{
+		printf("|    %d    | %s",guardar.atencion);
+		printf("Apellido y Nombre: %s\n",guardar.nom);
+		fread(&guardar,sizeof(ranking),1,arch);	
+	}
+	fclose(arch);
 }

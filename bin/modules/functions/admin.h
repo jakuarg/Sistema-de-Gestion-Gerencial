@@ -20,7 +20,7 @@ FILE *arch_admin;
 FILE *archaux1;
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
 {
-	bool debug=1;//0 des 1 act
+	bool debug=0;//0 des 1 act
 	//ALTA DEL ARCHIVO
 	arch_admin=fopen("bin/modules/Usuarios.dat","a+b");
 	if(arch_admin==NULL)
@@ -366,12 +366,12 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	strcpy(auxiliar.names,reg.names);
                 	auxiliar.matricula = reg.matricula;
                 	
-                	printf ("COPIADO CON EXITO !! ");
+                	/*printf ("COPIADO CON EXITO !! ");
                 	puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);
+                	printf ("%d", auxiliar.matricula);*/
                 	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
@@ -391,12 +391,12 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
                 	
-                	printf ("COPIADO CON EXITO EL ASISTENTE !! ");
+                	/*printf ("COPIADO CON EXITO EL ASISTENTE !! ");
                 	puts(auxiliar.password);
                 	puts(auxiliar.user);
                 	printf ("%d", auxiliar.modulo);
                 	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);
+                	printf ("%d", auxiliar.matricula);*/
                 	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
@@ -423,7 +423,6 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
 	{
 		printf("\nEl usuario no fue encontrado o no existe\n");
     	system("PAUSE");
-   	 	system("CLS");
     	return 0;
 	}
 }
