@@ -68,6 +68,7 @@ void mascotadat(){
 	printf ("Los datos ingresados 2: \n");
 	while (!feof(arch1))
 	{
+		printf ("\n");
 		puts(reg2.Apeynom_pet);
    		puts(reg2.localidad);
    		puts(reg2.domicilio);
@@ -95,6 +96,7 @@ void usuariosdat()
 	printf ("Los datos ingresados : \n");
 	while (!feof(arch))
 	{
+		printf ("\n");
 		puts(reg.user);
 		puts(reg.password);	
 		puts(reg.names);
@@ -118,7 +120,9 @@ void regturno()
     printf("\n\t\t\t       LISTADO DE ATENCION      ");
     printf("\n\t\t\t================================"); 
 
-    while(!feof(arch)){
+    while(!feof(arch))
+    {
+    	printf ("\n");
 		puts(reg.veterinario);
 		puts(reg.mascota);
         printf("\nMatricula de veterinario:%d",reg.matricula_de_veterinario);
@@ -128,9 +132,9 @@ void regturno()
 		printf ("Atenciones realizadas : %d ", reg.atenciones);
 		printf("detalle de atencion : ");puts(reg.detalle_de_atencion);
         fread(&reg, sizeof(Turno), 1,arch);
-    }
+        	
+	}
       
-     printf("\n");
 }
 
 void auxiliar()
@@ -141,6 +145,7 @@ void auxiliar()
 	fread(&auxiliar,sizeof(aux),1,archaux1);
 	while(!feof(archaux1))
 	{
+		printf ("\n");
 		printf ("%d", auxiliar.modulo);
 		puts(auxiliar.user);
 		puts(auxiliar.password);
@@ -160,6 +165,7 @@ void ranking1()
 	fread(&reg,sizeof(ranking),1,arch);
 	while(!feof(arch))
 	{
+		printf ("\n");
 		printf ("atencion : %d", reg.atencion);
 		printf ("nombre : %s", reg.nom);
 		fread(&reg,sizeof(ranking),1,arch);	

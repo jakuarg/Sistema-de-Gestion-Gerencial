@@ -1,6 +1,6 @@
 /*
   ***********************************
-  *** Trabajo Practico Grupal No2 ***
+  *** Trabajo Practico Grupal No2 ***s
   **  Grupo N 					   **
   *   Veterinaria					*
   ***********************************
@@ -239,7 +239,7 @@ void reg_turno(FILE *ArchTurno){
 	{
 		printf ("El veterinario que atendera el turno es : %s", reg1.names);
 	    printf("\nFecha de turno");
-	    printf("DIA:"); scanf("%2d", &reg.fec.dia);
+	    printf("\nDIA:"); scanf("%2d", &reg.fec.dia);
 	    printf("MES:"); scanf("%2d", &reg.fec.mes);
 	    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
         reg.matricula_de_veterinario = reg1.matricula;
@@ -248,14 +248,16 @@ void reg_turno(FILE *ArchTurno){
         	reg.atenciones = reg.atenciones + aux1;
 		}
 		reg.borradoTurno = false;
-  
+		
+     	printf("\nDNI del Dueno:");
+     	
+  	  	scanf("%d", &reg.DNI_DUENIO);
     do
 	{
-   		printf("\nDNI del Dueno:");
-  	  	scanf("%d", &reg.DNI_DUENIO);
   	  	
     	if (pet.DNI_DUENIO == reg.DNI_DUENIO && pet.DNI_DUENIO != NULL)
     	{
+            system("CLS");
     		printf ("\nSu mascota es %s ", pet.Apeynom_pet);
             strcpy(reg.mascota,pet.Apeynom_pet);
     		salir = 0;
@@ -273,16 +275,17 @@ void reg_turno(FILE *ArchTurno){
 	        }
 			else
 	        {
-			 	printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
 				salir = 1;
-	        }
-	        fread(&pet,sizeof(Datos_pet),1,archMascotas);
+	        } 
+            if(salir!=0 && reg.DNI_DUENIO != pet.DNI_DUENIO)
+            {
+                printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
+            } 
 		}
-		
+		fread(&pet,sizeof(Datos_pet),1,archMascotas);
         
 		
 	}while(salir==1);
-
  }  
     if(salir == 0){
  

@@ -21,51 +21,8 @@
 #include "functions/admin.h"
 
 //Funciones
-int Atenciones(int mes)// Listar Atenciones por Veterinarios
-{
-    printf("\n/ENTRO/\n");
-	arch_admin=fopen("bin/modules/Usuarios.dat","rb");
-	printf("\n/ENTRO2/\n");
-    FILE *arch_turno=fopen("bin/modules/Turnos.dat","rb");
-    printf("\n/ENTRO3/\n");
-	if(arch_turno==NULL)
-	{
-		printf("\nNo hay turnos registrados.");
-		exit(1);
-	}
-	Turno reg;
-	auth reg1;
-	
-	int c=0,c2=0;
-	
-    printf("\nLISTADO DE ATENCION DEL MES %d",mes);
-    printf("\n===================");
-    
-    rewind(arch_admin);
-    rewind(arch_turno);
-    fread(&reg, sizeof(Turno), 1,arch_turno);
-	fread(&reg1,sizeof(auth),1,arch_admin);
-	
-    while(!feof(arch_admin))
-	{
-        c=0;
-		while(!feof(arch_turno) && reg.borradoTurno==false)
-        {
-        	if(reg.fec.mes==mes && strcmp(reg1.names,reg.veterinario)==0 && reg.borradoTurno!=0 && reg1.modulo==2)
-			{
-			 	c++;
-			}
-		}
-		printf("%s: %d",reg1.veterinario,c);
-		
-		fread(&reg1,sizeof(auth) , 1,arch_admin);
-        fread(&reg ,sizeof(Turno), 1,arch_turno);
-    } 
-    fclose(arch_turno);
-    fclose(arch_admin);
-    printf("\n");
-    system("pause");
-}
+void Atenciones(int mes);// Listar Atenciones por Veterinarios
+
 
 void Ranking(FILE *Arch,FILE *Arch2,FILE *arch);
 
@@ -222,6 +179,7 @@ void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario
 						aux = guardar.atencion + 1;
 						guardar.atencion = aux;
 						fwrite(&guardar,sizeof(ranking),1,arch);
+						fread(&reg1,sizeof(Turno),1,Arch);		
 						if (!feof(Arch)){
 							salir = 0;
 						}
@@ -238,12 +196,12 @@ void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario
 		fread(&reg,sizeof(auth),1,Arch2);
 		fread (&reg1,sizeof(Turno),1,Arch);	
 	}
-	
+/*	
 	int b,i=0,n;
 	ranking v[99],regaux;
 	
 	fclose(arch);
-	arch=fopen("ranking.dat","rb");
+	arch=fopen("bin/modules/ranking.dat","rb");
 	rewind (arch);
 	
 	//1. Pasa los registros a un array
@@ -275,7 +233,7 @@ void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario
 	fclose(arch);
 	
 	//3. Pasa los registros del array al archivo//
-	arch=fopen("ranking.dat","rb");
+	arch=fopen("bin/modules/ranking.dat","rb");
 	
 	for (i=0;i<n;i++)
 	{
@@ -288,7 +246,7 @@ void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario
 	
 	//4. Muestra el ranking ordenado
 	printf("\n\nArch Ordenado\n\n");
-	arch=fopen("ranking.dat","rb");
+	arch=fopen("bin/modules/ranking.dat","rb");
 	fread(&guardar,sizeof(ranking),1,arch);	
 	printf("|ATENCIONES| NOMBRES");
 	while(!feof(arch))
@@ -297,5 +255,105 @@ void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario
 		printf("Apellido y Nombre: %s\n",guardar.nom);
 		fread(&guardar,sizeof(ranking),1,arch);	
 	}
-	fclose(arch);
+	fclose(arch);*/
 }
+void Atenciones(int mes)// Listar Atenciones por Veterinarios
+{
+    FILE *arch_turno;
+	printf("Ejecuto pa.");
+	arch_admin=fopen("bin/modules/Usuarios.dat","rb");
+	if(arch_admin==NULL)
+	{
+		printf("No hay usuarios registrados");
+		exit(1);
+	}
+	else
+	{
+		arch_turno=fopen("bin/modules/Usuarios.dat","rb");
+		if(arch_turno==NULL)
+		{
+			printf("No hay turnos registrados");
+			exit(1);
+		}
+	}
+
+	Turno regtur;
+	auth  regus;
+	int c=0,c2=0;
+	system("CLS");
+	printf("LISTADO DE ATENCION DEL MES %d",mes);
+	printf("\n===============================");
+
+	rewind(arch_admin);
+	rewind(arch_turno);
+	fread(&regtur, sizeof(Turno), 1,arch_turno);
+	fread(&regus,sizeof(auth),1,arch_admin);
+
+	while(!feof(arch_admin))
+	{
+		c=0;
+		rewind(arch_turno);
+		fread(&regus,sizeof(Turno), 1,arch_turno);	
+		while(!feof(arch_turno) && regtur.borradoTurno==false)
+        {
+        	if(regtur.fec.mes==mes && strcmp(regus.names,regtur.veterinario)==0 && regtur.borradoTurno!=0 && regus.modulo==2)
+			{
+			 	c++;
+			}
+			fread(&regus ,sizeof(Turno), 1,arch_turno);
+		}
+		printf("%s: %d\n",regus.user,c);
+		fread(&regtur,sizeof(auth) , 1,arch_admin);
+    } 
+    fclose(arch_turno);
+    fclose(arch_admin);
+    printf("\n");
+    system("PAUSE");
+
+}
+
+/*
+printf("\n/ENTRO/\n");
+	arch_admin=fopen("bin/modules/Usuarios.dat","rb");
+	printf("\n/ENTRO2/\n");
+    FILE *arch_turno=fopen("bin/modules/Turno.dat","rb");
+    printf("\n/ENTRO3/\n");
+	if(arch_turno==NULL)
+	{
+		printf("\nNo hay turnos registrados.");
+		exit(1);
+	}
+	Turno reg;
+	auth reg1;
+	
+	int c=0,c2=0;
+	
+    printf("\nLISTADO DE ATENCION DEL MES %d",mes);
+    printf("\n===================");
+    
+    rewind(arch_admin);
+    rewind(arch_turno);
+    fread(&reg, sizeof(Turno), 1,arch_turno);
+	fread(&reg1,sizeof(auth),1,arch_admin);
+	
+    while(!feof(arch_admin))
+	{
+        c=0;
+		while(!feof(arch_turno) && reg.borradoTurno==false)
+        {
+        	if(reg.fec.mes==mes && strcmp(reg1.names,reg.veterinario)==0 && reg.borradoTurno!=0 && reg1.modulo==2)
+			{
+			 	c++;
+			}
+		}
+		printf("%s: %d",reg1.veterinario,c);
+		
+		fread(&reg1,sizeof(auth) , 1,arch_admin);
+        fread(&reg ,sizeof(Turno), 1,arch_turno);
+    } 
+    fclose(arch_turno);
+    fclose(arch_admin);
+    printf("\n");
+    system("pause");
+
+*/
