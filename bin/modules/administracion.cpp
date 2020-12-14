@@ -257,10 +257,12 @@ void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario
 	}
 	fclose(arch);*/
 }
+
 void Atenciones(int mes)// Listar Atenciones por Veterinarios
 {
-    FILE *arch_turno;
-	printf("Ejecuto pa.");
+    //Listado Final
+    
+	FILE *arch_turno;
 	arch_admin=fopen("bin/modules/Usuarios.dat","rb");
 	if(arch_admin==NULL)
 	{
@@ -292,68 +294,30 @@ void Atenciones(int mes)// Listar Atenciones por Veterinarios
 	while(!feof(arch_admin))
 	{
 		c=0;
-		rewind(arch_turno);
-		fread(&regus,sizeof(Turno), 1,arch_turno);	
-		while(!feof(arch_turno) && regtur.borradoTurno==false)
-        {
-        	if(regtur.fec.mes==mes && strcmp(regus.names,regtur.veterinario)==0 && regtur.borradoTurno!=0 && regus.modulo==2)
-			{
-			 	c++;
+		if (regus.modulo == 2)
+		{
+			
+			rewind(arch_turno);
+			fread(&regtur,sizeof(Turno), 1,arch_turno);	
+			while(!feof(arch_turno) && regtur.borradoTurno==true)
+	        {
+		        printf("eNTRO");
+		        printf ("regtur.fec.mes =  %d ,mes  = %d regtur.borradoTurno== %d regus.names = %sregtur.veterinario = %s",regtur.fec.mes,mes,regtur.borradoTurno,regus.names,regtur.veterinario);
+				if(regtur.fec.mes==mes && regtur.borradoTurno==1 && strcmp(regus.names,regtur.veterinario)==0)
+				{
+					printf("%s  %s",regus.names,regtur.veterinario);
+					
+					c++;
+				}
+				fread(&regtur ,sizeof(Turno), 1,arch_turno);
 			}
-			fread(&regus ,sizeof(Turno), 1,arch_turno);
+			printf("\n%s: %d\n",regus.names,c);
 		}
-		printf("%s: %d\n",regus.user,c);
-		fread(&regtur,sizeof(auth) , 1,arch_admin);
-    } 
+		fread(&regus,sizeof(auth) , 1,arch_admin);
+    }
     fclose(arch_turno);
     fclose(arch_admin);
     printf("\n");
     system("PAUSE");
 
 }
-
-/*
-printf("\n/ENTRO/\n");
-	arch_admin=fopen("bin/modules/Usuarios.dat","rb");
-	printf("\n/ENTRO2/\n");
-    FILE *arch_turno=fopen("bin/modules/Turno.dat","rb");
-    printf("\n/ENTRO3/\n");
-	if(arch_turno==NULL)
-	{
-		printf("\nNo hay turnos registrados.");
-		exit(1);
-	}
-	Turno reg;
-	auth reg1;
-	
-	int c=0,c2=0;
-	
-    printf("\nLISTADO DE ATENCION DEL MES %d",mes);
-    printf("\n===================");
-    
-    rewind(arch_admin);
-    rewind(arch_turno);
-    fread(&reg, sizeof(Turno), 1,arch_turno);
-	fread(&reg1,sizeof(auth),1,arch_admin);
-	
-    while(!feof(arch_admin))
-	{
-        c=0;
-		while(!feof(arch_turno) && reg.borradoTurno==false)
-        {
-        	if(reg.fec.mes==mes && strcmp(reg1.names,reg.veterinario)==0 && reg.borradoTurno!=0 && reg1.modulo==2)
-			{
-			 	c++;
-			}
-		}
-		printf("%s: %d",reg1.veterinario,c);
-		
-		fread(&reg1,sizeof(auth) , 1,arch_admin);
-        fread(&reg ,sizeof(Turno), 1,arch_turno);
-    } 
-    fclose(arch_turno);
-    fclose(arch_admin);
-    printf("\n");
-    system("pause");
-
-*/

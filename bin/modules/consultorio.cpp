@@ -129,9 +129,6 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	int edadDuenio;
 	int auxx = 1,salir=0;
 	char nom[60],nombreaux[50];
-	_flushall();
-	printf ("\nIngrese el Apellido y nombre de la mascota : ");
-	gets(nom);	
 	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
 	arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
 	FILE *archturno = fopen("bin/modules/Turno.dat", "r+b"); 
@@ -141,18 +138,29 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	fread(&reg,sizeof(auth),1,arch_admin);
 	fread(&auxiliar,sizeof(aux),1,archaux1);
 	fread(&reg1,sizeof(Turno),1,archturno);
-	do{
-		printf ("%d , %d, %d, %d",reg.modulo,auxiliar.modulo,reg.matricula,reg1.matricula_de_veterinario);
-		if (reg.modulo == auxiliar.modulo && reg.matricula == reg1.matricula_de_veterinario)	
+	while(!feof(archturno)){
+		printf ("reg.modulo = %d ,auxiliar.modulo = %d,reg.matricula =  %d,auxiliar.matricula =  %d\n",reg.modulo,auxiliar.modulo,reg.matricula,auxiliar.matricula);
+		if (reg.modulo == auxiliar.modulo && reg.matricula == auxiliar.matricula)	
 		{
+			rewind(archturno);
+			fread(&reg1,sizeof(Turno),1,archturno);
+			while(!feof(archturno)){
+			printf ("auxiliar matricula = %d reg1.matricula_de_veterinario = %d",auxiliar.matricula,reg1.matricula_de_veterinario);
+			if (auxiliar.matricula == reg1.matricula_de_veterinario){
+				printf ("ENTRO?");
+				system("PAUSE");
+				_flushall();
+				printf ("\nIngrese el Apellido y nombre de la mascota : ");
+				gets(nom);	
 				rewind(archMascota);
 				rewind(archturno);
 				fread(&reg1,sizeof(Turno),1,archturno);
 				fread(&pet,sizeof(Datos_pet),1,archMascota);
 				do
-				{	
-					printf ("primera condicion : %s y %s, segunda condicion = %d y %d, tercera condicion %s %s",nom,pet.Apeynom_pet,reg1.matricula_de_veterinario,auxiliar.matricula,pet.Apeynom_pet,reg1.mascota);	
-					if(strcmp(pet.Apeynom_pet,nom)== 0 && reg1.matricula_de_veterinario == auxiliar.matricula && strcmp(pet.Apeynom_pet,reg1.mascota)==0)
+				{
+					while(!feof(archturno)){
+					printf ("primera condicion : %s y %s",nom,pet.Apeynom_pet);	
+					if(strcmp(pet.Apeynom_pet,nom)== 0 )
 					{
 						printf ("entro? nashe");
 						if (reg1.borradoTurno == false && strcmp(pet.Apeynom_pet,nom)== 0)
@@ -184,20 +192,30 @@ void evolucionMascota(FILE *archMascota,int &pn)
 							auxx = 2;
 						}
 					}
-					fread(&pet,sizeof(Datos_pet),1,archMascota);
-					fread(&reg1,sizeof(Turno),1,archturno);							
-				}while(auxx==1);	
+					else
+					{
+						fread(&pet,sizeof(Datos_pet),1,archMascota);
+						fread(&reg1,sizeof(Turno),1,archturno);				
+					}
+					if (strcmp(pet.Apeynom_pet,nom)!=0 and feof(archturno)){
+						auxx= 2;
+					}
+									
+					}	
+
+				}while(auxx==1);									
+			}else
+			{
+				fread(&reg1,sizeof(Turno),1,archturno);
+			}		
+			}
 		}
 		else
 		{
 			fread(&reg,sizeof(auth),1,arch_admin);
-			fread(&auxiliar,sizeof(aux),1,archaux1);
 			fread(&reg1,sizeof(Turno),1,archturno);
 		}
-		if (!feof(arch_admin) && !feof(archaux1) && !feof(archturno) && !feof(archMascota)){
-			auxx == 2;
-		}
-	}while(auxx == 1);
+	}
 	if (auxx==2)
 	{
 		printf ("\nNo se encontro ninguna mascota ");
@@ -230,19 +248,18 @@ void Listaespera()
 	rewind (ArchTurno);
 	fread(&auxiliar,sizeof(aux),1,archaux1);
 	fread(&reg,sizeof(Turno),1,ArchTurno);		
-	printf ("ESTOY ACA %d %d", feof(archaux1),feof(ArchTurno));
-	system("PAUSE");
-	do
-	{	
+	while(!feof(ArchTurno))
+	{		
 		printf ("ENTRO AL WHILE");
 		printf ("%d y  %d", reg.matricula_de_veterinario, auxiliar.matricula);
 		if (reg.matricula_de_veterinario == auxiliar.matricula)	
 		{
 			printf ("Entro ?? ");
+			system("PAUSE");
 			rewind (ArchTurno);
 			fread(&reg,sizeof(Turno),1,ArchTurno);		
 			while (!feof(ArchTurno) and reg.borradoTurno==false){
-				if (reg.matricula_de_veterinario == auxiliar.matricula){
+				if (reg.matricula_de_veterinario == auxiliar.matricula)	{
 					printf ("\nEl nombre del veterinario a cargo del turno: ");
 					puts(reg.veterinario);
 					printf("\nFecha de turno");
@@ -252,24 +269,14 @@ void Listaespera()
 					printf("\nDNI del Due�o: %d", reg.DNI_DUENIO);
 					printf ("\nDetalle de atencion : ");
 					puts(reg.detalle_de_atencion);
-					fread(&reg,sizeof(Turno),1,ArchTurno);
+					fread(&reg,sizeof(Turno),1,ArchTurno);	
 				}
-				else
-				{
-					break;
-				}
-
+				fread(&reg,sizeof(Turno),1,ArchTurno);	
 		}
-		}else {
-			fread(&auxiliar,sizeof(aux),1,archaux1);	
+		}	
 			fread(&reg,sizeof(Turno),1,ArchTurno);		
-		}
-		if (!feof(ArchTurno) and !feof(archaux1))
-		{
-			salgo=0;
-			break;
-		}			
-	}while(salgo == 1);
+		
+	}
 	if (salgo == 0)
 	{			
 		printf("\nNo existen turnos para este veterinario ");
