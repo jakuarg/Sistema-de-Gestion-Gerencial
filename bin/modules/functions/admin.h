@@ -347,34 +347,52 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
 	passlen passaux_1;
 	i=0;
 	
-	while(passaux_1[i]!=13)
-	{
-		passaux_1[i]=getch();
-		if(passaux_1[i]>32)
+
+	//	char pass[20],nom[20];
+	//	gets(nom);
+		
+		
+	//	printf("\n\tPass: ");
+		int conta=0;
+		i=0;
+		   
+		 //Se piden caracteres hasta que se introduca enter
+		while(passaux_1[i]!=13)
 		{
-			printf("*"); 
-			i++; 
+		
+		     //Capturamos carácter
+		    passaux_1[i]=getch();
+		   
+		    //Si es un carácter válido y no se ha sobrepasado el límite de 20 caracteres se imprime un asterisco
+		    if(passaux_1[i]>32 && i<20)
+		            {
+		              putchar('*');
+		              i++;
+		            }
+		    //Si se pulsa la tecla RETROCESO, se retrocede un carácter, se imprime un espacio para eliminar el asterisco y se vuelve a retroceder para que el siguiente asterisco se coloque a continuación del anterior.
+		    else if(passaux_1[i]==8 && i>0)
+		            {
+		              putchar(8);
+		              putchar(' ');
+		              putchar(8);
+		              i--; 
+		            }
+		               
 		}
-		else if(passaux_1[i]==8)
-		{
-			putchar(8); 
-			putchar(' '); 
-			putchar(8); 
-			i--; 
-		}
-		else if(passaux_1[i]==13)
-		{
-			passaux_1[i]=='\0';
-			break;
-		}
-	}
-	
+		   
+		passaux_1[i]='\0';
+		   
+		/*if(strcmp(passaux_1,nom)==0)
+		    printf("\n\n\n\n\n\t\tACCESO PERMITIDO");
+		else
+		    printf("\n\n\n\n\n\t\t**ACCESO DENEGADO**");*/
+		getch();
+	strcpy(passaux,passaux_1);
+	printf("%s",passaux);
 	rewind(arch);
 	fread(&reg,sizeof(auth),1,arch);
 	while(!feof(arch))
 	{
-	strcpy(passaux,passaux_1);
-	printf("%s",passaux);
 		printf("\nusuario: %s = %s",useraux,reg.user);
 		if(strcmp(useraux,reg.user)==0)
 		{
