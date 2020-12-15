@@ -11,6 +11,7 @@
 
 */
 #include<stdio.h>
+#include<conio.h>
 #include<ctype.h>
 #include<stdlib.h>
 #include<string.h>
@@ -18,6 +19,11 @@
 #include <windows.h>
 FILE *arch_admin;
 FILE *archaux1;
+
+int SignUp(int registrado);
+int LogIn(FILE *arch,FILE *archaux);
+void gotoxy(int x,int y);
+
 int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si no. Sirve para registrar
 {
 	bool debug=0;//0 des 1 act
@@ -266,7 +272,6 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
         
         if(registrado==1)//Admin
         {
-        	//printf("\nModulo:	1 (Se ingreso automaticamente debido a que el primer usuario debe ser un administrador)");
             reg.modulo=1;
 		}
 		if(registrado==2)//Veterinario
@@ -291,31 +296,10 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 				printf ("%d", reg.matricula);
 			}
         }
-        /*{
-			error=1;
-			while(error==1)
-			{
-				printf("\n	Modulo\n");
-				printf("		1.-Administracion.\n");
-				printf("		2.-Consultorio.\n");
-				printf("		3.-Asistente.\n");
-        		scanf("%d",&reg.modulo);
-        		if(reg.modulo==1 || reg.modulo==2 || reg.modulo==3)
-        		{
-        			printf("\nIngrese una opcion correcta.");
-					error=0;
-				}
-			}
-		}*/
 
         strcpy(reg.user,useraux);
         strcpy(reg.password,passaux);
-		/*printf("\nUSUARIO: %s",reg.user);
-		printf("\nCONTRASENIA: %s",reg.password);
-		printf("\nNOMBRES: %s",reg.names);
-		printf("\nMATRICULA: %d",reg.matricula);
-		printf("\nMODULO: %d",reg.modulo);*/
-		//system("PAUSE");
+
         fwrite(&reg, sizeof(auth),1,arch_admin);
         fclose(arch_admin);
         return 1;
@@ -335,43 +319,76 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
     auth reg;
     aux auxiliar;
     
-    int found=0,found_2=0;//encontrado
+    int found=0,found_2=0, i;//encontrado
     
-    _flushall();
+    /*int x=0;
+	for(x=1;x<=80;x++)
+	{
+	   gotoxy(x,1);printf(".");
+	   gotoxy(x,44);printf(".");
+	   gotoxy(4,48);printf("Grupo 2: Fortuny-Gallegos-Jacas-Juarez  Programa: Sistema de Gestion Gerencial(Veterinaria) Comision: 1k3     ");
+	   gotoxy(x,48);printf(".");
+	   if(x<=48)
+	   {
+		   gotoxy(1,x);printf(".");
+		   gotoxy(140,x);printf(".");
+	   }
+	}
+  	getch();*/
+  	_flushall();
 	printf("Usuario: ");
+	//gotoxy(80,5);
 	gets(useraux);
-	
+	//printf("¦¦");
+	//gotoxy(80,6);
 	_flushall();
-	printf("Contrasenia:");
-	gets(passaux);
-	//printf("s1");
-    
+	printf("Contraseña: ");
+	
+	passlen passaux_1;
+	i=0;
+	
+	while(passaux_1[i]!=13)
+	{
+		passaux_1[i]=getch();
+		if(passaux_1[i]>32)
+		{
+			printf("*"); 
+			i++; 
+		}
+		else if(passaux_1[i]==8)
+		{
+			putchar(8); 
+			putchar(' '); 
+			putchar(8); 
+			i--; 
+		}
+		else if(passaux_1[i]==13)
+		{
+			passaux_1[i]=='\0';
+			break;
+		}
+	}
+	
 	rewind(arch);
 	fread(&reg,sizeof(auth),1,arch);
 	while(!feof(arch))
 	{
-		//printf(",s2\n");
-        //printf("%s,%s\n",useraux,reg.user);
-        //printf("%s,%s\n",passaux,reg.password);
+	strcpy(passaux,passaux_1);
+	printf("%s",passaux);
+		printf("\nusuario: %s = %s",useraux,reg.user);
 		if(strcmp(useraux,reg.user)==0)
 		{
-			//printf("\nEl usuario pertenece al modulo %d\n",reg.modulo);
-            if(strcmp(passaux,reg.password)==0)
+            printf("\ncontra: %s = %s",passaux,reg.password);
+			if(strcmp(passaux,reg.password)==0)
             { 
-                if (reg.modulo == 2)
+                printf("\nmodulo xd: %d",reg.modulo);
+				if (reg.modulo == 2)
                 {
                 	strcpy(auxiliar.password,reg.password);
                 	strcpy(auxiliar.user,reg.user);
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
                 	auxiliar.matricula = reg.matricula;
-                	
-                	/*printf ("COPIADO CON EXITO !! ");
-                	puts(auxiliar.password);
-                	puts(auxiliar.user);
-                	printf ("%d", auxiliar.modulo);
-                	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);*/
                 	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
@@ -391,13 +408,6 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
                 	
-                	/*printf ("COPIADO CON EXITO EL ASISTENTE !! ");
-                	puts(auxiliar.password);
-                	puts(auxiliar.user);
-                	printf ("%d", auxiliar.modulo);
-                	puts(auxiliar.names);
-                	printf ("%d", auxiliar.matricula);*/
-                	
                 	system("PAUSE");
      	           	fseek(archaux,0,2);
 					fwrite(&auxiliar, sizeof(aux), 1, archaux);
@@ -407,7 +417,7 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
             }
             else
             {
-                printf ("\nLa contrasenia ingresada es incorrecta.\n");
+                printf ("\n\t\t\t\t\t\t\tLa contrasenia ingresada es incorrecta.\n");
             }
             
 		}
@@ -421,12 +431,13 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
 	}
 	else
 	{
-		printf("\nEl usuario no fue encontrado o no existe\n");
+		printf("\n\t\t\t\t\t\t\tEl usuario no fue encontrado o no existe\n");
     	system("PAUSE");
     	return 0;
 	}
 }
- void gotoxy(int x,int y){  
+void gotoxy(int x,int y)
+{  
       HANDLE hcon;  
       hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
       COORD dwPos;  
@@ -435,13 +446,27 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
       SetConsoleCursorPosition(hcon,dwPos);  
  }
  
-   
-/*
-int accexists(userlen  usuario,userlen contrasenia)//Determina si la cuenta existe o no. Devuelve un 1 si existe y un 0 si no.
+void color(int X)
 {
-;
+ 	SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),X);
 }
-int changepass(userlen  usuario,userlen contrasenia)//Cambia la contrasenia.
+void AltEnter()
 {
-    ;
-}*/
+    keybd_event(VK_MENU,
+                0x38,
+                0,
+                0);
+    keybd_event(VK_RETURN,
+                0x1c,
+                0,
+                0);
+    keybd_event(VK_RETURN,
+                0x1c,
+                KEYEVENTF_KEYUP,
+                0);
+    keybd_event(VK_MENU,
+                0x38,
+                KEYEVENTF_KEYUP,
+                0);
+    return;
+}

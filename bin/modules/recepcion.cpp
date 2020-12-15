@@ -30,7 +30,12 @@ void listado(FILE *ArchTurno);
 
 main()
 {
-   system ("colorF0");
+   AltEnter();
+   color(252);
+   // Establecer el idioma a español
+   setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
+   SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
+   SetConsoleOutputCP(1252); // Cambiar STDOUT - Para máquinas Windows
    int menu; // Variable de ingreso al menu
     
     FILE *ArchTurno = fopen("bin/modules/Turno.dat","r+b");
@@ -110,16 +115,16 @@ int menu_principal()
 	}while(!feof(arch_admin) && !feof(archaux1) && auxx == 1);
      int opcion;
      system("CLS");
-	printf("\n\t\t\t    =============================================     ");
-	printf("\n\t\t\t               Modulo %d Del Asistente", auxiliar.modulo);
-	printf("\n\t\t\t  	==============================================    ");
-    printf("\n\t\t\t           Asistente:%s               ", auxiliar.names);
-	printf("\n\t\t\t    1.- Registrar Mascota                             ");
-	printf("\n\t\t\t  	2.- Registrar turno                               ");
-	printf("\n\t\t\t    3.- Listado de Atenciones por Veterinario y Fecha ");
-    printf("\n\t\t\t    4.- Cerrar la aplicacion.                         ");
-	printf("\n\t\t\t =======================================");
-	printf("\n\t\t\t\t 	 Ingrese una opcion: "); 
+	printf("\n\t\t\t\t\t\t\t    ==================================================    ");
+	printf("\n\t\t\t\t\t\t\t               Modulo %d Del Asistente", auxiliar.modulo);
+	printf("\n\t\t\t\t\t\t\t    ==================================================    ");
+    printf("\n\t\t\t\t\t\t\t           Asistente:%s               ", auxiliar.names);
+	printf("\n\t\t\t\t\t\t\t    1.- Registrar Mascota                             ");
+	printf("\n\t\t\t\t\t\t\t    2.- Registrar turno                               ");
+	printf("\n\t\t\t\t\t\t\t    3.- Listado de Atenciones por Veterinario y Fecha ");
+    printf("\n\t\t\t\t\t\t\t    4.- Cerrar la aplicacion.                         ");
+	printf("\n\t\t\t\t\t\t\t   ===================================================    ");
+	printf("\n\t\t\t\t\t\t\t   Ingrese una opcion: "); 
 	scanf("%d", &opcion);
     return opcion;
 	fclose(archaux1);  
@@ -318,17 +323,18 @@ void listado(FILE *ArchTurno){
     fread(&reg, sizeof(Turno), 1,ArchTurno);
 	fread(&reg1,sizeof(auth),1,arch_admin);
     while(!feof(ArchTurno) && !feof(arch_admin) && reg.borradoTurno==false){
-        printf("El turno pertenece al veterinario : ");puts(reg.veterinario);
-        printf ("Mascota a atender : ");puts(reg.mascota);
+        printf("\n\n================================"); 
+		printf("\nEl turno pertenece al veterinario : %s(%d)",reg.veterinario,reg.matricula_de_veterinario);
+		printf ("\nMascota: %s",reg.mascota);
         if (reg.borradoTurno == 0)
         {
-            printf ("La mascota no fue atendida");
+            printf ("(NO ATENDIDO)");
         }
         else
         {
-            printf ("La mascota fue atendida");
+            printf ("(ATENDIDO)");
         }
-        printf("\nMatricula de medico:%d",reg.matricula_de_veterinario);
+        
         printf("\nFECHA:");
         printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
 		fread(&reg1,sizeof(auth),1,arch_admin);

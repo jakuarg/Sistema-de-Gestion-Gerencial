@@ -8,6 +8,8 @@
 
 main()
 {
+	color(240);
+	AltEnter();
 	int m,error=0;//Guarda el modulo proveniente del login
 	char op='n';
 	
@@ -17,8 +19,9 @@ main()
 	    
 		arch_admin=fopen("bin/modules/Usuarios.dat","r+b");//Se abre en modo lectura para verificar si ya existe el archivo //    bin\\modules
 		
-		printf("Bienvenido al menu principal.\n");
-	    printf("=============================\n");
+		printf("\t\t\t\t\t\t\t   ===================================================    ");
+		printf("\n\t\t\t\t\t\t\t               Bienvenido al menu principal.");
+	    printf("\n\t\t\t\t\t\t\t   ===================================================    \n");
 		if(arch_admin==NULL)//Si no existe el archivo...
 		{
 			fclose(arch_admin);//...Lo cierra...
@@ -78,7 +81,7 @@ main()
 		error=1;
 		do
 		{
-			printf("Salir? (s/n): ");
+			printf("Desea salir? (s/n): ");
 			scanf("%c",&op);
 			if(op=='s' or op=='S' or op=='n' or op=='N')
 			{

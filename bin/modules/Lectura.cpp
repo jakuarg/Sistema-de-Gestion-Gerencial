@@ -44,16 +44,16 @@ main()
 int menuprincipal(){
 	int op;
 	system("CLS");
-	printf("\n\t\t\t =======================================");
-	printf("\n\t\t\t           MENU PRINCIPAL               ");
-	printf("\n\t\t\t =======================================");
-	printf("\n\t\t\t    1- Usuarios.dat lectura                ");
-	printf("\n\t\t\t    2- Mascota.dat lectura                ");
-	printf("\n\t\t\t    3- Turno.dat lectura                ");
-	printf("\n\t\t\t    4- auxiliar.dat lectura                ");
-	printf("\n\t\t\t    5- ranking.dat lectura                ");
-	printf("\n\t\t\t =======================================");
-	printf("\n\t\t\t\t Ingrese o Selecione opcion: "); 
+	printf("\t\t\t\t\t\t\t =========================================");
+	printf("\n\t\t\t\t\t\t\t           MENU PRINCIPAL               ");
+	printf("\n\t\t\t\t\t\t\t =======================================");
+	printf("\n\t\t\t\t\t\t\t    1- Usuarios.dat lectura                ");
+	printf("\n\t\t\t\t\t\t\t    2- Mascota.dat lectura                ");
+	printf("\n\t\t\t\t\t\t\t    3- Turno.dat lectura                ");
+	printf("\n\t\t\t\t\t\t\t    4- auxiliar.dat lectura                ");
+	printf("\n\t\t\t\t\t\t\t    5- ranking.dat lectura                ");
+	printf("\n\t\t\t\t\t\t\t =======================================");
+	printf("\n\t\t\t\t\t\t\t\t Ingrese o Selecione opcion: "); 
 	scanf("%d", &op);
 	return op;	
 }
@@ -100,9 +100,9 @@ void usuariosdat()
 		puts(reg.user);
 		puts(reg.password);	
 		puts(reg.names);
-		printf ("Reg veterinario : %d\n", reg.veterinario);
-		printf ("Modulo : %d \n", reg.modulo);	
-		printf ("Matricula : %d \n", reg.matricula);
+		printf ("\nReg veterinario : %d\n", reg.veterinario);
+		printf ("\nModulo : %d \n", reg.modulo);	
+		printf ("\nMatricula : %d \n", reg.matricula);
 		printf ("\n");
 		fread(&reg,sizeof(auth),1,arch);
 	}
@@ -112,29 +112,34 @@ void regturno()
 {
 	FILE *arch;
 	arch = fopen("Turno.dat", "r+b");
-     Turno reg;
-     rewind(arch);
-     fread(&reg, sizeof(Turno), 1,arch);
-
-    printf("\n\t\t\t================================"); 
-    printf("\n\t\t\t       LISTADO DE ATENCION      ");
-    printf("\n\t\t\t================================"); 
-
-    while(!feof(arch))
+    if(arch==NULL)
     {
-    	printf ("\n");
-		puts(reg.veterinario);
-		puts(reg.mascota);
-        printf("\nMatricula de veterinario:%d",reg.matricula_de_veterinario);
-        printf("\nFECHA:");
-        printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
-		printf ("Borrado turno = %d", reg.borradoTurno);
-		printf ("Atenciones realizadas : %d ", reg.atenciones);
-		printf("detalle de atencion : ");puts(reg.detalle_de_atencion);
-        fread(&reg, sizeof(Turno), 1,arch);
-        	
+    	printf("\nNo hay turnos\n");
 	}
-      
+	else
+	{
+		Turno reg;
+	    rewind(arch);
+	    fread(&reg, sizeof(Turno), 1,arch);
+	
+	    printf("\n\t\t\t================================"); 
+	    printf("\n\t\t\t       LISTADO DE ATENCION      ");
+	    printf("\n\t\t\t================================"); 
+	
+	    while(!feof(arch))
+	    {
+	    	printf ("\n");
+			puts(reg.veterinario);
+			puts(reg.mascota);
+	        printf("\nMatricula de veterinario:%d",reg.matricula_de_veterinario);
+	        printf("\nFECHA: ");
+	        printf("%d/%d/%d",reg.fec.dia,reg.fec.mes,reg.fec.anio);
+			printf ("\nBorrado turno = %d", reg.borradoTurno);
+			printf ("\nAtenciones realizadas : %d ", reg.atenciones);
+			printf("\ndetalle de atencion : ");puts(reg.detalle_de_atencion);
+	        fread(&reg, sizeof(Turno), 1,arch);
+		}
+	}
 }
 
 void auxiliar()
@@ -166,8 +171,8 @@ void ranking1()
 	while(!feof(arch))
 	{
 		printf ("\n");
-		printf ("atencion : %d", reg.atencion);
-		printf ("nombre : %s", reg.nom);
+		printf ("\natencion : %d", reg.atencion);
+		printf ("\nnombre : %s", reg.nom);
 		fread(&reg,sizeof(ranking),1,arch);	
 	}
 	system("PAUSE");

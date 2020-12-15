@@ -27,6 +27,8 @@ void Listaespera();
 
 main()
 {
+	AltEnter();
+	color(241);
 	setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para mÃ¡quinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para mÃ¡quinas Windows
     SetConsoleOutputCP(1252); // Cambiar STDOUT - Para mÃ¡quinas Windows
@@ -49,12 +51,10 @@ main()
 			case 1:{
 
 				Listaespera();
-				system("PAUSE");
 				break;
 			}
 			case 2:{
-				evolucionMascota(archMascota,pn);
-				system("PAUSE");						
+				evolucionMascota(archMascota,pn);						
 				break;		
 			}
 			case 3:{
@@ -103,15 +103,15 @@ int menuprincipal()
 		system("CLS");
 		int op;
 		system("CLS");
-		printf("\n\t\t\t    =============================================     ");
-		printf("\n\t\t\t          Modulo %d Consultorio Veterinario           ",auxiliar.modulo);
-		printf("\n\t\t\t  	==============================================    ");
-		printf("\n  				    Veterinario a cargo : %s              ",auxiliar.names);
-		printf("\n\t\t\t    1.- Visualizar Lista de Espera de Turnos (informe)");
-		printf("\n\t\t\t	2.- Registrar Evolucion de la Mascota             ");
-		printf("\n\t\t\t    3.- Cerrar la aplicacion.                         ");
-		printf("\n\t\t\t =======================================");
-		printf("\n\t\t\t\t 	 Ingrese una opcion: 	"); 
+		printf("\n\t\t\t\t\t\t\t   ===================================================    ");
+		printf("\n\t\t\t\t\t\t\t              Modulo %d Consultorio Veterinario         ",auxiliar.modulo);
+		printf("\n\t\t\t\t\t\t\t   ===================================================    ");
+		printf("\n\t\t\t\t\t\t\t              Veterinario a cargo : %s             ",auxiliar.names);
+		printf("\n\t\t\t\t\t\t\t   1.- Visualizar Lista de Espera de Turnos (informe)");
+		printf("\n\t\t\t\t\t\t\t   2.- Registrar Evolucion de la Mascota             ");
+		printf("\n\t\t\t\t\t\t\t   3.- Cerrar la aplicacion.                         ");
+		printf("\n\t\t\t\t\t\t\t  ===================================================    ");
+		printf("\n\t\t\t\t\t\t\t   Ingrese una opcion: 	"); 
 		scanf("%d", &op);
 		return op;
 	}	
@@ -129,28 +129,32 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	int edadDuenio;
 	int auxx = 1,salir=0;
 	char nom[60],nombreaux[50];
+	
 	archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
 	arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
 	FILE *archturno = fopen("bin/modules/Turno.dat", "r+b"); 
+	
 	rewind(archturno);
 	rewind (archaux1);
 	rewind (arch_admin);
+	
 	fread(&reg,sizeof(auth),1,arch_admin);
 	fread(&auxiliar,sizeof(aux),1,archaux1);
 	fread(&reg1,sizeof(Turno),1,archturno);
+	
 	while(!feof(archturno)){
-		printf ("reg.modulo = %d ,auxiliar.modulo = %d,reg.matricula =  %d,auxiliar.matricula =  %d\n",reg.modulo,auxiliar.modulo,reg.matricula,auxiliar.matricula);
+		//printf ("reg.modulo = %d ,auxiliar.modulo = %d,reg.matricula =  %d,auxiliar.matricula =  %d\n",reg.modulo,auxiliar.modulo,reg.matricula,auxiliar.matricula);
 		if (reg.modulo == auxiliar.modulo && reg.matricula == auxiliar.matricula)	
 		{
 			rewind(archturno);
 			fread(&reg1,sizeof(Turno),1,archturno);
 			while(!feof(archturno)){
-			printf ("auxiliar matricula = %d reg1.matricula_de_veterinario = %d",auxiliar.matricula,reg1.matricula_de_veterinario);
+			//printf ("auxiliar matricula = %d reg1.matricula_de_veterinario = %d",auxiliar.matricula,reg1.matricula_de_veterinario);
 			if (auxiliar.matricula == reg1.matricula_de_veterinario){
-				printf ("ENTRO?");
-				system("PAUSE");
+				//printf ("ENTRO?");
+				//system("PAUSE");
 				_flushall();
-				printf ("\nIngrese el Apellido y nombre de la mascota : ");
+				printf ("\nApellido y Nombre(Mascota): ");
 				gets(nom);	
 				rewind(archMascota);
 				rewind(archturno);
@@ -159,29 +163,31 @@ void evolucionMascota(FILE *archMascota,int &pn)
 				do
 				{
 					while(!feof(archturno)){
-					printf ("primera condicion : %s y %s",nom,pet.Apeynom_pet);	
+					//printf ("primera condicion : %s y %s",nom,pet.Apeynom_pet);	
 					if(strcmp(pet.Apeynom_pet,nom)== 0 )
 					{
-						printf ("entro? nashe");
+						//printf ("entro? nashe");
 						if (reg1.borradoTurno == false && strcmp(pet.Apeynom_pet,nom)== 0)
 						{
-							printf ("\nel dni del dueno de la mascota %d", pet.DNI_DUENIO);
-							printf ("\nla localidad del dueno : ");
+							printf ("\nD.N.I del Dueño: %d", pet.DNI_DUENIO);
+							printf ("\nLocalidad: ");
 							puts(pet.localidad);	
-							printf ("Se guardo !");					
+							//printf ("Se guardo !");					
 							auxx = 0;
 							salir = 1;
 								if (auxx == 0 and salir == 1 )
 								{
-										reg1.borradoTurno = true;
-										reg1.atenciones = reg1.atenciones + 1;
-										fseek(archturno,0,2);
-										fwrite(&reg1,sizeof(Turno),1,archturno);  //guarda
-										printf ("\nIngrese la evolucion de la mascota : ");
-										_flushall();
-										gets(pet.informeMascota);
-										fseek(archMascota,0,2);															
-										fwrite(&pet,sizeof(Datos_pet),1,archMascota); 	//guarda		
+									reg1.borradoTurno = true;
+									reg1.atenciones = reg1.atenciones + 1;
+									
+									fseek(archturno,0,2);
+									fwrite(&reg1,sizeof(Turno),1,archturno);  //guarda
+									
+									printf ("\nEvolucion de la mascota: ");
+									_flushall();
+									gets(pet.informeMascota);
+									fseek(archMascota,0,2);															
+									fwrite(&pet,sizeof(Datos_pet),1,archMascota); 	//guarda		
 								}
 								
 							break;
@@ -218,9 +224,9 @@ void evolucionMascota(FILE *archMascota,int &pn)
 	}
 	if (auxx==2)
 	{
-		printf ("\nNo se encontro ninguna mascota ");
+		printf ("\nNo se han encontrado mascotas cargadas.");
 	}
-	printf ("salio re piola aux = %d", auxx);
+	//printf ("salio re piola aux = %d", auxx);
 	system("PAUSE");
 	printf("%d",feof(archMascota));
 
@@ -235,10 +241,10 @@ void Listaespera()
 	FILE *archaux1 = fopen("bin/modules/Auxiliar.dat", "r+b");
 	if (ArchTurno == NULL)
 	{
-		printf ("soy NULL Archturno");
+		printf ("\nNo se han encontrado turnos cargados.");
 	}else
 	if (archaux1 == NULL){
-		printf ("SOY NULL CULIAO archaux1");
+		printf ("\nNo se ha encontrado el Archivo Auxiliar.");
 	}
 	int auxx = 1,salgo=1;
 	Turno reg;
@@ -250,23 +256,23 @@ void Listaespera()
 	fread(&reg,sizeof(Turno),1,ArchTurno);		
 	while(!feof(ArchTurno))
 	{		
-		printf ("ENTRO AL WHILE");
-		printf ("%d y  %d", reg.matricula_de_veterinario, auxiliar.matricula);
+		//printf ("ENTRO AL WHILE");
+		//printf ("%d y  %d", reg.matricula_de_veterinario, auxiliar.matricula);
 		if (reg.matricula_de_veterinario == auxiliar.matricula)	
 		{
-			printf ("Entro ?? ");
-			system("PAUSE");
+			//printf ("Entro ?? ");
+			//system("PAUSE");
 			rewind (ArchTurno);
 			fread(&reg,sizeof(Turno),1,ArchTurno);		
 			while (!feof(ArchTurno) and reg.borradoTurno==false){
 				if (reg.matricula_de_veterinario == auxiliar.matricula)	{
-					printf ("\nEl nombre del veterinario a cargo del turno: ");
+					printf ("\nEl veterinario a cargo es: ");
 					puts(reg.veterinario);
 					printf("\nFecha de turno");
 					printf("DIA: %2d", reg.fec.dia);
 					printf("MES: %2d", reg.fec.mes);
-					printf("AniO: %4d", reg.fec.anio);
-					printf("\nDNI del Dueï¿½o: %d", reg.DNI_DUENIO);
+					printf("AÑO: %4d", reg.fec.anio);
+					printf("\nD.N.I del Dueño: %d", reg.DNI_DUENIO);
 					printf ("\nDetalle de atencion : ");
 					puts(reg.detalle_de_atencion);
 					fread(&reg,sizeof(Turno),1,ArchTurno);	
@@ -282,7 +288,7 @@ void Listaespera()
 		printf("\nNo existen turnos para este veterinario ");
 	}
 	else if (salgo == 2){
-		printf ("");
+		//printf ("");
 	}
 	system("PAUSE");
 	

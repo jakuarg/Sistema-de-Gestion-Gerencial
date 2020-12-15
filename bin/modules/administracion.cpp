@@ -22,12 +22,14 @@
 
 //Funciones
 void Atenciones(int mes);// Listar Atenciones por Veterinarios
-
+void Ranking2();
 
 void Ranking(FILE *Arch,FILE *Arch2,FILE *arch);
 
 main()
 {
+	color(245);
+	AltEnter();
 	// Establecer el idioma a español
     setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para máquinas Linux
     SetConsoleCP(1252); // Cambiar STDIN -  Para máquinas Windows
@@ -56,15 +58,16 @@ main()
 		while(error==1)
 		{
 			system("CLS");
-			printf("Modulo Administracion");
-			printf("\n=======================");
-			printf("\n1.- Registrar Veterinario");
-		 	printf("\n2.- Registrar Asistente");
-		 	printf("\n3.- Atenciones por Veterinarios");
-		 	printf("\n4.- Ranking de Veterinarios por Atenciones");
-		 	printf("\n\n5.- Volver al menu principal");
-		 	printf("\n6.- Cerrar la aplicacion.");
-		 	printf("\n\nIngrese una opcion: ");
+			printf("\n\t\t\t\t\t\t\t   ===================================================    ");
+			printf("\n\t\t\t\t\t\t\t                    Modulo Administracion");
+			printf("\n\t\t\t\t\t\t\t   ===================================================    ");
+			printf("\n\t\t\t\t\t\t\t   1.- Registrar Veterinario");
+		 	printf("\n\t\t\t\t\t\t\t   2.- Registrar Asistente");
+		 	printf("\n\t\t\t\t\t\t\t   3.- Atenciones por Veterinarios");
+		 	printf("\n\t\t\t\t\t\t\t   4.- Ranking de Veterinarios por Atenciones");
+		 	printf("\n\t\t\t\t\t\t\t   5.- Cerrar");
+		 	printf("\n\t\t\t\t\t\t\t   ===================================================    ");
+		 	printf("\n\t\t\t\t\t\t\t   Ingrese una opcion: ");
 		 	scanf("%d",&op_1);
 		 	
 		 	//Validacion de entrada
@@ -104,158 +107,17 @@ main()
 				Atenciones(smes);
 				system("PAUSE");
 				break;
-			case 4:{
-				fclose(arch_admin);
-				fclose(archaux1);
-				FILE *Arch = fopen("bin/modules/Turno.dat", "r+b"); 		
-				FILE *Arch2 = fopen("bin/modules/Usuarios.dat","r+b");
-				FILE *arch = fopen("bin/modules/ranking.dat", "r+b");
-				if (arch == NULL)
-				{
-					fclose(arch);
-					arch = fopen("bin/modules/ranking.dat","w+b");
-				}else
-				if (Arch == NULL)
-				{
-					fclose(Arch);
-					FILE *Arch = fopen("bin/modules/Turno.dat", "rb"); 		
-					printf ("El archivo Arch osea turno no se abrio ");
-				}else if (Arch2 == NULL){
-					printf ("El archivo Arch2 no se abrio ");
-				}else if (arch == NULL){
-					printf ("El archivo arch no se abrio ");
-				}
-				if (arch != NULL and Arch2 != NULL and Arch != NULL)
-				{
-					printf ("Se ejecuto !! ");
-					printf("\nRanking:");
-					Ranking(Arch,Arch2,arch);
-					system("PAUSE");	
-					break;
-				}
-				else
-				{
-					printf ("No se ejecuto !");
-					system("PAUSE");
-					break;
-				}	
-			}
-			case 5:
-				seguir=0;
+			case 4:
+				Ranking2();
 				break;
-			case 6:
-				printf("Saliendo...");
-				exit(1);
+			case 5:
+				fclose(arch_admin);
+				seguir=0;
 				break;
 			default: break;
 		}
 	}while(seguir==1);
 	fclose(arch_admin);
-}
-
-void Ranking(FILE *Arch, FILE *arch, FILE *Arch2)//Ranking por veterinario 
-{
-	
-	int salir = 1,aux,contador,num=0;
-	auth reg; // registro.
-	Turno reg1; // turno
-	ranking guardar;
-	rewind (Arch);
-	rewind (Arch2);
-	fread (&reg,sizeof(auth),1,Arch2);
-	fread (&reg1,sizeof(Turno),1,Arch);	
-	while (!feof(Arch2)){
-		if (reg1.matricula_de_veterinario == reg.matricula)
-		{
-			rewind(Arch);
-			fread(&reg1,sizeof(Turno),1,Arch);		
-			while(!feof(Arch))
-			{
-			if (reg1.borradoTurno == true)
-				{
-					do{
-						num++;
-						strcpy(guardar.nom,reg1.veterinario);
-						aux = guardar.atencion + 1;
-						guardar.atencion = aux;
-						fwrite(&guardar,sizeof(ranking),1,arch);
-						fread(&reg1,sizeof(Turno),1,Arch);		
-						if (!feof(Arch)){
-							salir = 0;
-						}
-					}while(num!=reg1.atenciones or salir == 1);
-					break;
-				}
-				else
-				{
-					fread(&reg1,sizeof(Turno),1,Arch);			
-				}			
-			}
-
-		}	
-		fread(&reg,sizeof(auth),1,Arch2);
-		fread (&reg1,sizeof(Turno),1,Arch);	
-	}
-/*	
-	int b,i=0,n;
-	ranking v[99],regaux;
-	
-	fclose(arch);
-	arch=fopen("bin/modules/ranking.dat","rb");
-	rewind (arch);
-	
-	//1. Pasa los registros a un array
-	
-	fread(&guardar,sizeof(ranking),1,arch);	
-	while(feof(arch)==0)
-	{
-		v[i]=guardar;
-		i++;
-		fread(&guardar,sizeof(ranking),1,arch);	
-	}
-	n=i;
-	
-	//2.Ordena los registros del array
-	do
-	{
-		b=0;
-		for (i=0;i<n-1;i++)
-		{
-			if (v[i].atencion>v[i+1].atencion)
-			{
-				regaux=v[i];
-				v[i]=v[i+1];
-				v[i+1]=regaux;
-				b=1;
-			}
-		}
-	}while (b==1);
-	fclose(arch);
-	
-	//3. Pasa los registros del array al archivo//
-	arch=fopen("bin/modules/ranking.dat","rb");
-	
-	for (i=0;i<n;i++)
-	{
-		guardar=v[i];
-		fread(&guardar,sizeof(ranking),1,arch);	
-	}
-	fclose(arch);
-	
-	system("CLS");
-	
-	//4. Muestra el ranking ordenado
-	printf("\n\nArch Ordenado\n\n");
-	arch=fopen("bin/modules/ranking.dat","rb");
-	fread(&guardar,sizeof(ranking),1,arch);	
-	printf("|ATENCIONES| NOMBRES");
-	while(!feof(arch))
-	{
-		printf("|    %d    | %s",guardar.atencion);
-		printf("Apellido y Nombre: %s\n",guardar.nom);
-		fread(&guardar,sizeof(ranking),1,arch);	
-	}
-	fclose(arch);*/
 }
 
 void Atenciones(int mes)// Listar Atenciones por Veterinarios
@@ -267,14 +129,18 @@ void Atenciones(int mes)// Listar Atenciones por Veterinarios
 	if(arch_admin==NULL)
 	{
 		printf("No hay usuarios registrados");
+		fclose(arch_turno);
+		fclose(arch_admin);
 		exit(1);
 	}
 	else
 	{
-		arch_turno=fopen("bin/modules/Usuarios.dat","rb");
+		arch_turno=fopen("bin/modules/Turno.dat","rb");
 		if(arch_turno==NULL)
 		{
 			printf("No hay turnos registrados");
+			fclose(arch_turno);
+			fclose(arch_admin);
 			exit(1);
 		}
 	}
@@ -283,8 +149,8 @@ void Atenciones(int mes)// Listar Atenciones por Veterinarios
 	auth  regus;
 	int c=0,c2=0;
 	system("CLS");
-	printf("LISTADO DE ATENCION DEL MES %d",mes);
-	printf("\n===============================");
+	printf("\n\t\t\t\t\t\t\tLISTADO DE ATENCION DEL MES %d",mes);
+	printf("\n\t\t\t\t\t\t\t===============================");
 
 	rewind(arch_admin);
 	rewind(arch_turno);
@@ -296,28 +162,90 @@ void Atenciones(int mes)// Listar Atenciones por Veterinarios
 		c=0;
 		if (regus.modulo == 2)
 		{
-			
 			rewind(arch_turno);
 			fread(&regtur,sizeof(Turno), 1,arch_turno);	
-			while(!feof(arch_turno) && regtur.borradoTurno==true)
+			while(!feof(arch_turno))
 	        {
-		        printf("eNTRO");
-		        printf ("regtur.fec.mes =  %d ,mes  = %d regtur.borradoTurno== %d regus.names = %sregtur.veterinario = %s",regtur.fec.mes,mes,regtur.borradoTurno,regus.names,regtur.veterinario);
 				if(regtur.fec.mes==mes && regtur.borradoTurno==1 && strcmp(regus.names,regtur.veterinario)==0)
 				{
-					printf("%s  %s",regus.names,regtur.veterinario);
-					
 					c++;
 				}
 				fread(&regtur ,sizeof(Turno), 1,arch_turno);
 			}
-			printf("\n%s: %d\n",regus.names,c);
+			printf("\n\t\t\t\t\t\t\t%s: %d\n",regus.names,c);
 		}
 		fread(&regus,sizeof(auth) , 1,arch_admin);
     }
     fclose(arch_turno);
     fclose(arch_admin);
     printf("\n");
-    system("PAUSE");
 
 }
+
+void Ranking2()
+{
+	system("CLS");
+	/*------------Seccion de Declaracion------------*/
+	////////// Registros //////////
+	
+	Turno reg_turno,reg_v[100],reg_aux;
+	
+	////////// Variables//////////
+	
+	int i=0,n=0,b=0;
+	
+	////////// Archivos//////////
+	
+	FILE *arch_turno;
+	arch_turno=fopen("bin/modules/Turno.dat","a+b");
+	if(arch_turno==NULL)
+	{
+		printf("\n\t\t\t\t\t\t\tNo hay turnos.");
+		exit(1);
+	}
+	
+	/*------------Seccion Funcional------------*/
+	
+	////////// 1.Pasar el registro a un vector //////////
+	
+	rewind(arch_turno);
+	fread(&reg_turno, sizeof(Turno),1,arch_turno);
+	i=0;
+	while(!feof(arch_turno))
+	{
+		reg_v[i]=reg_turno;
+		i++;
+		fread(&reg_turno, sizeof(Turno),1,arch_turno);
+	}
+	n=i;
+	////////// 2.Ordena los registros del vector //////////
+	do
+	{
+		b=0;
+		for(i=0;i<n-1;i++)
+		{
+			if(reg_v[i].atenciones<reg_v[i+1].atenciones)
+			{
+				reg_aux=reg_v[i];
+				reg_v[i]=reg_v[i+1];
+				reg_v[i+1]=reg_aux;
+				b=1;
+			}
+		}
+	}while(b==1);
+	fclose(arch_turno);
+	////////// 3. Imprimir //////////
+    
+    printf("\n\t\t\t\t\t\t\t|ATENCIONES| NOMBRES\n");
+	i=0;
+	do
+    {
+		
+		printf("\n\t\t\t\t\t\t\t|    %d    | %s",reg_v[i].atenciones,reg_v[i].veterinario);
+		i++;
+	}while(i<n);
+	printf("\n\t\t\t\t\t\t\t");
+    system("PAUSE");
+	
+}
+
