@@ -1,7 +1,7 @@
 /*
   ***********************************
-  *** Trabajo Practico Grupal No2 ***s
-  **  Grupo N 					   **
+  *** Trabajo Practico Grupal No2 ***
+  **  Grupo 2 					   **
   *   Veterinaria					*
   ***********************************
   **********RECEPCION****************
@@ -32,6 +32,7 @@ main()
 {
    AltEnter();
    color(252);
+   Spanish();
    // Establecer el idioma a espaÃ±ol
    setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para mÃ¡quinas Linux
    SetConsoleCP(1252); // Cambiar STDIN -  Para mÃ¡quinas Windows
@@ -77,7 +78,7 @@ main()
                 }
 
           	    default:
-                printf("\n\n El valor ingresado no es valido");
+                printf("\n\n El valor ingresado no es válido");
                 system ("PAUSE");
                 break;
          }
@@ -116,15 +117,15 @@ int menu_principal()
      int opcion;
      system("CLS");
 	printf("\n\t\t\t\t\t\t\t    ==================================================    ");
-	printf("\n\t\t\t\t\t\t\t               Modulo %d Del Asistente", auxiliar.modulo);
+	printf("\n\t\t\t\t\t\t\t               Módulo %d Del Asistente", auxiliar.modulo);
 	printf("\n\t\t\t\t\t\t\t    ==================================================    ");
     printf("\n\t\t\t\t\t\t\t           Asistente:%s               ", auxiliar.names);
 	printf("\n\t\t\t\t\t\t\t    1.- Registrar Mascota                             ");
-	printf("\n\t\t\t\t\t\t\t    2.- Registrar turno                               ");
+	printf("\n\t\t\t\t\t\t\t    2.- Registrar Turno                               ");
 	printf("\n\t\t\t\t\t\t\t    3.- Listado de Atenciones por Veterinario y Fecha ");
-    printf("\n\t\t\t\t\t\t\t    4.- Cerrar la aplicacion.                         ");
+    printf("\n\t\t\t\t\t\t\t    4.- Cerrar la aplicación.                         ");
 	printf("\n\t\t\t\t\t\t\t   ===================================================    ");
-	printf("\n\t\t\t\t\t\t\t   Ingrese una opcion: "); 
+	printf("\n\t\t\t\t\t\t\t   Ingrese una opción: "); 
 	scanf("%d", &opcion);
     return opcion;
 	fclose(archaux1);  
@@ -165,31 +166,31 @@ void reg_pet(){
     } 
     Datos_pet pet;
 
-    printf("\n\t\t\t================================"); 
-    printf("\n\t\t\t       REGISTRO DE MASCOTAS     ");
-    printf("\n\t\t\t================================");
-    printf("\n\t\tASISTENTE A CARGO DEL TURNO : %s ",auxiliar.names);
+    printf("\n\t\t\t\t\t\t\t================================"); 
+    printf("\n\t\t\t\t\t\t\t       REGISTRO DE MASCOTAS     ");
+    printf("\n\t\t\t\t\t\t\t================================");
+    printf("\n\t\t\t\t\t\t\tASISTENTE A CARGO DEL TURNO : %s ",auxiliar.names);
 
-    printf("\nApellido y Nombre de la Mascota (El apellido es el del Duenio o Familia):");
+    printf("\n\nApellido y Nombre de la Mascota (El apellido es el del Dueño o Familia):");
     _flushall();
     gets(pet.Apeynom_pet);
 
     printf("\nLocalidad:"); gets(pet.localidad);
     printf("\nDomicilio:"); gets(pet.domicilio);
-    printf("\nDni del dueÃ±o:"); scanf("%d", &pet.DNI_DUENIO);
+    printf("\nD.N.I del dueño:"); scanf("%d", &pet.DNI_DUENIO);
     printf("\nPeso en KG:"); scanf("%f", &pet.peso);
-    printf("\nTelefono");_flushall(); gets(pet.telefono);
+    printf("\nTelefono: ");_flushall(); gets(pet.telefono);
 
     printf("\nFecha de nacimiento dd/mm/aaaa");
     printf("\nDia:"); scanf("%2d", &pet.de_nacimiento.dia);
     printf("\nMes:"); scanf("%2d", &pet.de_nacimiento.mes);
-    printf("\nAnio:"); scanf("%4d", &pet.de_nacimiento.anio);
+    printf("\nAño:"); scanf("%4d", &pet.de_nacimiento.anio);
 
     fwrite(&pet, sizeof(Datos_pet), 1, archMascotas);
     fclose(archMascotas);
     
     printf("\n");
-    system("pause");
+    system("PAUSE");
 
 }
 
@@ -204,11 +205,11 @@ void reg_turno(FILE *ArchTurno){
 	int bandera,matricula,aux1 = 0;
     FILE *archMascotas = fopen("bin/modules/Mascotas.dat", "r+b");
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
-    printf("\n\t\t\t================================"); 
-    printf("\n\t\t\t       REGISTRO DE TURNO        ");
-    printf("\n\t\t\t================================");
+    printf("\n\t\t\t\t\t\t\t================================"); 
+    printf("\n\t\t\t\t\t\t\t       REGISTRO DE TURNO        ");
+    printf("\n\t\t\t\t\t\t\t================================");
     int salir = 1;
-   	printf("\n\n\t\tMatricula de medico:");
+   	printf("\n\t\t\t\t\t\t\tMatricula de médico:");
     scanf ("%d", &matricula);
 	rewind (arch_admin);
 	fread(&reg1,sizeof(auth),1,arch_admin);
@@ -232,7 +233,7 @@ void reg_turno(FILE *ArchTurno){
 	}
 	if (bandera == 2)
 	{
-		printf ("La matricula ingresada no coincide con ningun veterinario...");
+		printf ("La matrícula ingresada no coincide con ningún veterinario...");
 		system("PAUSE");
 		salir = 2;
 	}
@@ -242,11 +243,11 @@ void reg_turno(FILE *ArchTurno){
 	do{
 	if (bandera == 1)
 	{
-		printf ("El veterinario que atendera el turno es : %s", reg1.names);
+		printf ("El veterinario que atenderá el turno es : %s", reg1.names);
 	    printf("\nFecha de turno");
 	    printf("\nDIA:"); scanf("%2d", &reg.fec.dia);
 	    printf("MES:"); scanf("%2d", &reg.fec.mes);
-	    printf("ANIO:"); scanf("%4d", &reg.fec.anio);
+	    printf("AÑO:"); scanf("%4d", &reg.fec.anio);
         reg.matricula_de_veterinario = reg1.matricula;
         reg.atenciones = aux1 ;
         if (reg.atenciones != 0){
@@ -254,7 +255,7 @@ void reg_turno(FILE *ArchTurno){
 		}
 		reg.borradoTurno = false;
 		
-     	printf("\nDNI del Dueno:");
+     	printf("\nD.N.I del Dueño:");
      	
   	  	scanf("%d", &reg.DNI_DUENIO);
     do
@@ -273,7 +274,7 @@ void reg_turno(FILE *ArchTurno){
 			printf ("%d", pet.DNI_DUENIO);
 			system("CLS");
 	        if(pet.DNI_DUENIO == 0 and feof(archMascotas)==0){
-	                printf("\nDNI del dueÃ±o inexistente, porfavor registrar un DueÃ±o");
+	                printf("\nDNI del dueño inexistente");
 	                system("PAUSE");
 	                salir = 2;
 	                break;
@@ -284,7 +285,7 @@ void reg_turno(FILE *ArchTurno){
 	        } 
             if(salir!=0 && reg.DNI_DUENIO != pet.DNI_DUENIO)
             {
-                printf ("El DNI Del duenio ingresado no es valido, Ingrese nuevamente.....");
+                printf ("El D.N.I Del duenio ingresado no es válido, Ingrese nuevamente.....");
             } 
 		}
 		fread(&pet,sizeof(Datos_pet),1,archMascotas);
@@ -294,14 +295,14 @@ void reg_turno(FILE *ArchTurno){
  }  
     if(salir == 0){
  
-        printf("\nSituacion de la Mascota:");   //Descripcion de lo que le sucede a la mascota
+        printf("\nSituación de la Mascota:");   //Descripcion de lo que le sucede a la mascota
         _flushall();
         gets(reg.detalle_de_atencion);
         strcpy(reg.veterinario,reg1.names);
         fseek(ArchTurno,0,2);
         fwrite(&reg, sizeof(Turno), 1, ArchTurno);  
         printf("\n");
-        system("pause");
+        system("PAUSE");
         break;
  } 
    
@@ -315,16 +316,16 @@ void listado(FILE *ArchTurno){
     arch_admin = fopen("bin/modules/Usuarios.dat", "r+b");
     Turno reg;
 	auth reg1;
-    printf("\n\t\t\t================================"); 
-    printf("\n\t\t\t       LISTADO DE ATENCION      ");
-    printf("\n\t\t\t================================"); 
+    printf("\n\t\t\t\t\t\t\t================================"); 
+    printf("\n\t\t\t\t\t\t\t       LISTADO DE ATENCIÓN      ");
+    printf("\n\t\t\t\t\t\t\t================================"); 
     rewind (arch_admin);
     rewind(ArchTurno);
     fread(&reg, sizeof(Turno), 1,ArchTurno);
 	fread(&reg1,sizeof(auth),1,arch_admin);
     while(!feof(ArchTurno) && !feof(arch_admin) && reg.borradoTurno==false){
-        printf("\n\n================================"); 
-		printf("\nEl turno pertenece al veterinario : %s(%d)",reg.veterinario,reg.matricula_de_veterinario);
+        printf("\n\t\t\t\t\t\t\t================================"); 
+		printf("\n\t\t\t\t\t\t\tEl turno pertenece al veterinario : %s(%d)",reg.veterinario,reg.matricula_de_veterinario);
 		printf ("\nMascota: %s",reg.mascota);
         if (reg.borradoTurno == 0)
         {

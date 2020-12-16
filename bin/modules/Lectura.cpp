@@ -9,6 +9,7 @@ void auxiliar();
 void ranking1();
 main()
 {
+	Spanish();
 	int menu;
 	do{
 		menu = menuprincipal();
@@ -33,10 +34,6 @@ main()
 				system("PAUSE");
 				break;
 			}
-			case 5:{
-				ranking1();
-				break;
-			}
 		}
 	}while(menu!=6);
 }
@@ -51,7 +48,6 @@ int menuprincipal(){
 	printf("\n\t\t\t\t\t\t\t    2- Mascota.dat lectura                ");
 	printf("\n\t\t\t\t\t\t\t    3- Turno.dat lectura                ");
 	printf("\n\t\t\t\t\t\t\t    4- auxiliar.dat lectura                ");
-	printf("\n\t\t\t\t\t\t\t    5- ranking.dat lectura                ");
 	printf("\n\t\t\t\t\t\t\t =======================================");
 	printf("\n\t\t\t\t\t\t\t\t Ingrese o Selecione opcion: "); 
 	scanf("%d", &op);

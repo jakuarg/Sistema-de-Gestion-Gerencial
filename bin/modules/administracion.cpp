@@ -1,7 +1,7 @@
  /*
   ***********************************
   *** Trabajo Practico Grupal No2 ***
-  **  Grupo N 					   **
+  **  Grupo 2 					   **
   *   Veterinaria					*
   ***********************************
   **********ADMINISTRACION***********
@@ -30,17 +30,14 @@ main()
 {
 	color(245);
 	AltEnter();
-	// Establecer el idioma a espaÃ±ol
-    setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para mÃ¡quinas Linux
-    SetConsoleCP(1252); // Cambiar STDIN -  Para mÃ¡quinas Windows
-    SetConsoleOutputCP(1252); // Cambiar STDOUT - Para mÃ¡quinas Windows
+	Spanish();
 	
 	//ALTA
 	arch_admin=fopen("bin/modules/Usuarios.dat","r+b");
 	if(arch_admin==NULL)
 	{
 		system("CLS");
-		printf("SE PRODUJO UN ERROR AL INTENTAR ABRIR EL ARCHIVO\n\n");
+		printf("\n\t\t\t\t\t\t\tSE PRODUJO UN ERROR AL INTENTAR ABRIR EL ARCHIVO\n\n");
 		system("PAUSE");
 		exit(1);
 	}
@@ -59,7 +56,7 @@ main()
 		{
 			system("CLS");
 			printf("\n\t\t\t\t\t\t\t   ===================================================    ");
-			printf("\n\t\t\t\t\t\t\t                    Modulo Administracion");
+			printf("\n\t\t\t\t\t\t\t                    Módulo Administración");
 			printf("\n\t\t\t\t\t\t\t   ===================================================    ");
 			printf("\n\t\t\t\t\t\t\t   1.- Registrar Veterinario");
 		 	printf("\n\t\t\t\t\t\t\t   2.- Registrar Asistente");
@@ -67,13 +64,13 @@ main()
 		 	printf("\n\t\t\t\t\t\t\t   4.- Ranking de Veterinarios por Atenciones");
 		 	printf("\n\t\t\t\t\t\t\t   5.- Cerrar");
 		 	printf("\n\t\t\t\t\t\t\t   ===================================================    ");
-		 	printf("\n\t\t\t\t\t\t\t   Ingrese una opcion: ");
+		 	printf("\n\t\t\t\t\t\t\t   Ingrese una opción: ");
 		 	scanf("%d",&op_1);
 		 	
 		 	//Validacion de entrada
 		 	if(op_1<1 && op_1>5)
 		 	{
-		 		printf("\nIngrese una opcion correcta\n");
+		 		printf("\n\t\t\t\t\t\t\tIngrese una opción correcta\n");
 		 		system("PAUSE");
 		 		system("CLS");
 		 	}else error=0;
@@ -88,8 +85,9 @@ main()
 				{
 					//system("PAUSE");
 					system("CLS");
-					printf("Registro Veterinario");
-					printf("\n=======================\n");
+					printf("\n\t\t\t\t\t\t\t=======================\n");
+					printf("\n\t\t\t\t\t\t\tRegistro Veterinario");
+					printf("\n\t\t\t\t\t\t\t=======================\n");
 				}while(SignUp(2)==0);
 				break;
 			case 2:
@@ -97,12 +95,13 @@ main()
 				{
 					//system("PAUSE");
 					system("CLS");
-					printf("Registro Asistente");
-					printf("\n=======================\n");
+					printf("\n\t\t\t\t\t\t\t=======================\n");
+					printf("\n\t\t\t\t\t\t\tRegistro Asistente");
+					printf("\n\t\t\t\t\t\t\t=======================\n");
 				}while(SignUp(3)==0);
 				break;
 			case 3:
-				printf("Ingrese el mes que desea buscar:");
+				printf("\n\t\t\t\t\t\t\tIngrese el mes que desea buscar:");
 				scanf("%d",&smes);
 				Atenciones(smes);
 				system("PAUSE");
@@ -149,7 +148,7 @@ void Atenciones(int mes)// Listar Atenciones por Veterinarios
 	auth  regus;
 	int c=0,c2=0;
 	system("CLS");
-	printf("\n\t\t\t\t\t\t\tLISTADO DE ATENCION DEL MES %d",mes);
+	printf("\n\t\t\t\t\t\t\tLISTADO DE ATENCIÓN DEL MES %d",mes);
 	printf("\n\t\t\t\t\t\t\t===============================");
 
 	rewind(arch_admin);

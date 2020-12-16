@@ -1,4 +1,12 @@
-/*Menu Principal*/
+/*
+  ***********************************
+  *** Trabajo Practico Grupal No2 ***
+  **  Grupo 2				       **
+  *   Veterinaria					*
+  ***********************************
+  **********MENU*********************
+  ***********************************
+*/
 #include<stdio.h>
 #include<conio.h>
 #include<ctype.h>
@@ -10,6 +18,7 @@ main()
 {
 	color(240);
 	AltEnter();
+	Spanish();
 	int m,error=0;//Guarda el modulo proveniente del login
 	char op='n';
 	
@@ -26,7 +35,7 @@ main()
 		{
 			fclose(arch_admin);//...Lo cierra...
 			system("CLS");
-			printf("ES LA PRIMERA SESION, POR LO TANTO SE CREARA EL PRIMER Y UNICO ADMINISTRADOR\n");
+			printf("ES LA PRIMERA SESIÓN, POR LO TANTO SE CREARA EL PRIMER Y ÚNICO ADMINISTRADOR\n");
 			system("PAUSE");
 			system("CLS");
 			/****************PRIMER REGISTRO DE USUARIO ADMIN******************/
@@ -40,7 +49,7 @@ main()
 	        
 	        system("CLS");
 	        
-			printf("\nPor ser primera sesion, se ejecutara el modulo de administracion para poder ingresar nuevos usuarios.\n");
+			printf("\nPor ser primera sesión, se ejecutará el modulo de administración para poder ingresar nuevos usuarios.\n");
 	        
 			system("PAUSE");
 	        system("CLS");
@@ -60,7 +69,7 @@ main()
 		switch(m)
 	    {
 	    	case 1:
-				printf("\nEjecutando Modulo de Administracion...\n");
+				printf("\nEjecutando Modulo de Administración...\n");
 				system("start bin/modules/administracion.exe");
 				
 				break;

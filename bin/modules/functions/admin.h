@@ -1,3 +1,10 @@
+/************************************
+  *** Trabajo Practico Grupal No2 ***
+  **  Grupo 2				       **
+  *   Veterinaria					*
+  ***********************************
+  **********Admin.h******************
+  ***********************************
 /*Base de datos de usuarios*/
 /*
   En esta libreria se encuentran las funciones:
@@ -10,13 +17,20 @@
   		Sirve para cambiar contrasenias de usuarios ya existentes.(CON TIPO, devuelve 1 si se pudo cambiar y 0 si no.)
 
 */
+//Librerias Principales
 #include<stdio.h>
 #include<conio.h>
-#include<ctype.h>
 #include<stdlib.h>
+//Librerias para los string
 #include<string.h>
-#include "Estructuras.h"
+#include<ctype.h>
+//Librerias de ventanas y el tiempo
 #include <windows.h>
+#include <time.h>
+#include <locale.h>
+//Libreria propia.
+#include "Estructuras.h"
+
 FILE *arch_admin;
 FILE *archaux1;
 
@@ -82,45 +96,36 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
         printf("Usuario: ");
         gets(useraux);
         _flushall();
-        printf("Contrasenia: ");
+        printf("Contraseña: ");
         gets(passaux);
-        //printf("inicia-");printf("\n\n");//DEPURACION
         
         //Validacion de usuario
 		if(strlen(useraux)>=6 && strlen(useraux)<=10)
         {
-            //printf("cond1-");printf("\n\n");//DEPURACION
             if(islower(useraux[0])!=0)
             {
-                //printf("cond2-");printf("\n\n");//DEPURACION
-				//printf("\n****%d****\n",strlen(useraux));printf("\n\n");//DEPURACION
 				for(i=0 ; i < strlen(useraux) ; i++)
                 {
-                    //printf("\n#%d for[%c]-",i,useraux[i]);
 					if(isupper(useraux[i])!=0)
                     {
-                        //printf("\n#%d Fcond3-",i);printf("\n\n");//DEPURACION
 						umay++;
                     }
                     else
                     {
                     	if(isdigit(useraux[i])!=0)
 	                    {
-	                        //printf("\n#%d Fcond4-",i);printf("\n\n");//DEPURACION
 							udig++;
 	                    }
 	                    else
 	                    {
 	                    	if(useraux[i]=='+' || useraux[i]=='-' || useraux[i]=='*' || useraux[i]=='?' || useraux[i]=='¿' || useraux[i]=='!' || useraux[i]=='¿')
 		                    {
-		                        ;//printf("\n#%d caracter admitido-",i);printf("\n\n");//DEPURACION
 		                    }
 		                    else 
 							{
 								if(isalnum(useraux[i])==0)
 								{
 									usim++;
-									//printf("\n#%d Fcond5-",i);printf("\n\n");//DEPURACION
 								}
 							}
 						}
@@ -130,13 +135,9 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
                 if(umay>=2 && udig<=3 && usim==0)
                 {
                     ubandera=1;
-					//printf("\n\nFAPROBADO USUARIO-");
-					//printf("\n\n");//DEPURACION
-					//break;
                 }
             }
         }
-        //printf("c mamo xd %d",ubandera);
 		if(ubandera==1)
         {
             rewind(arch_admin);
@@ -147,6 +148,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
                 {
                     uexiste=1;
                     printf("\nEl usuario ya existe.\n");
+                    system("PAUSE");
                     fclose(arch_admin);
 					return 0;
                     break;
@@ -173,45 +175,35 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 	        	printf("d. Tener como máximo 3 dígitos.(NO CUMPLIDO)\n");
 			}else printf("d. Tener como máximo 3 dígitos.\n");
 		}
-		
-			
-		//printf("\n\n");//DEPURACION
-        //printf("\nINICIA CONTRASENIA %d - %d",uexiste,ubandera);//DEPURACION
+
         if(uexiste==0 && ubandera==1 && strlen(passaux)>=6 && strlen(passaux) <=32)
         {
             //Validacion de contrasenia
             for(i=0;i<strlen(passaux);i++)
             {
-                //printf("\nFor (%d) [%c]",i,passaux[i]);//DEPURACION
 				if(isupper(passaux[i])!=0)
-                {
-                    //printf("\nMAY");//DEPURACION
+				{
 					cmay++;
                 }
                 if(islower(passaux[i])!=0)
                 {
-                    //printf("\nes minuscula");//DEPURACION
 					cmin++;
                 }
                 if(isdigit(passaux[i])!=0)
                 {
-                    //printf("\nes digito");//DEPURACION
 					cdig++;
                 }
                 if(isalnum(passaux[i])==0)
                 {
-                    //printf("\n no es alfanumerico");//DEPURACION
 					calfa++;
                 }
                 if(passaux[i]==passaux[i+1]-1 && passaux[i]==passaux[i+2]-2)
                 {
-                    //printf("\nnumeros consecutivos");//DEPURACION
 					cccon++;
                 }
                 if(passaux[i]+1==passaux[i+1] && passaux[i+1]+1==passaux[i+2])
                 {
                     calfc++;
-                    //printf("\n [%d]=%c,[%d]=%c,[%d]=%c",i,passaux[i],i+1,passaux[i+1]+1,i+2,passaux[i+2]+2);//DEPURACION
                 }
             }
             if(cmay>=1 && cmin>=1 && cdig>=1)
@@ -221,7 +213,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
         }
 		if(debug==1)
         {
-        	printf("CONDICIONES CONTRASENIA:\n");
+        	printf("CONDICIONES CONTRASEÑA:\n");
 			if(cmay>=1 && cmin>=1 && cdig>=1)
 			{
 				printf("a. Deberá contener al menos una letra mayúscula, una letra minúscula y un número.\n");
@@ -259,7 +251,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
         }
         else
         {
-            aprobado=0;printf("\nEl usuario o Contrasenia no cumplen con los requisitos.\n");
+            aprobado=0;printf("\nEl usuario o Contraseña no cumplen con los requisitos.\n");
         }
 
     } while (aprobado==0);
@@ -277,7 +269,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 		if(registrado==2)//Veterinario
         {
             _flushall();
-			printf("Matricula:\n");
+			printf("Matrícula:\n");
             scanf("%d",&reg.matricula);
             reg.modulo=2;
             reg.veterinario = reg.veterinario + 1;
@@ -293,7 +285,7 @@ int SignUp(int registrado)//funcion que devuelve 1 si se pudo registrar y 0 si n
 			else
 			{
 				reg.matricula = 0;
-				printf ("%d", reg.matricula);
+				//printf ("%d", reg.matricula);
 			}
         }
 
@@ -321,85 +313,57 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
     
     int found=0,found_2=0, i;//encontrado
     
-    /*int x=0;
-	for(x=1;x<=80;x++)
-	{
-	   gotoxy(x,1);printf(".");
-	   gotoxy(x,44);printf(".");
-	   gotoxy(4,48);printf("Grupo 2: Fortuny-Gallegos-Jacas-Juarez  Programa: Sistema de Gestion Gerencial(Veterinaria) Comision: 1k3     ");
-	   gotoxy(x,48);printf(".");
-	   if(x<=48)
-	   {
-		   gotoxy(1,x);printf(".");
-		   gotoxy(140,x);printf(".");
-	   }
-	}
-  	getch();*/
   	_flushall();
 	printf("Usuario: ");
-	//gotoxy(80,5);
 	gets(useraux);
-	//printf("¦¦");
-	//gotoxy(80,6);
 	_flushall();
 	printf("Contraseña: ");
 	
 	passlen passaux_1;
 	i=0;
-	
 
-	//	char pass[20],nom[20];
-	//	gets(nom);
-		
-		
-	//	printf("\n\tPass: ");
-		int conta=0;
-		i=0;
-		   
-		 //Se piden caracteres hasta que se introduca enter
-		while(passaux_1[i]!=13)
+	int conta=0;
+	i=0;
+	   
+	//Se piden caracteres hasta que se introduca enter
+	while(passaux_1[i]!=13)
+	{
+		//Capturamos carácter
+		passaux_1[i]=getch();
+		    
+		//Si es un carácter válido y no se ha sobrepasado el límite de 20 caracteres se imprime un asterisco
+		if(passaux_1[i]>32 && i<20)
 		{
-		
-		     //Capturamos carácter
-		    passaux_1[i]=getch();
-		   
-		    //Si es un carácter válido y no se ha sobrepasado el límite de 20 caracteres se imprime un asterisco
-		    if(passaux_1[i]>32 && i<20)
-		            {
-		              putchar('*');
-		              i++;
-		            }
-		    //Si se pulsa la tecla RETROCESO, se retrocede un carácter, se imprime un espacio para eliminar el asterisco y se vuelve a retroceder para que el siguiente asterisco se coloque a continuación del anterior.
-		    else if(passaux_1[i]==8 && i>0)
-		            {
-		              putchar(8);
-		              putchar(' ');
-		              putchar(8);
-		              i--; 
-		            }
-		               
+		    putchar('*');
+		    i++;
 		}
+		//Si se pulsa la tecla RETROCESO, se retrocede un carácter, se imprime un espacio para eliminar el asterisco y se vuelve a retroceder para que el siguiente asterisco se coloque a continuación del anterior.
+		else if(passaux_1[i]==8 && i>0)
+		{
+		    putchar(8);
+		    putchar(' ');
+		    putchar(8);
+		    i--; 
+		}
+	}
+	passaux_1[i]='\0';
 		   
-		passaux_1[i]='\0';
-		   
-		/*if(strcmp(passaux_1,nom)==0)
-		    printf("\n\n\n\n\n\t\tACCESO PERMITIDO");
-		else
-		    printf("\n\n\n\n\n\t\t**ACCESO DENEGADO**");*/
-		getch();
+	/*if(strcmp(passaux_1,nom)==0)
+		printf("\n\n\n\n\n\t\tACCESO PERMITIDO");
+	else
+		printf("\n\n\n\n\n\t\t**ACCESO DENEGADO**");*/
+	getch();
+	
 	strcpy(passaux,passaux_1);
-	printf("%s",passaux);
+	
 	rewind(arch);
 	fread(&reg,sizeof(auth),1,arch);
 	while(!feof(arch))
 	{
-		printf("\nusuario: %s = %s",useraux,reg.user);
 		if(strcmp(useraux,reg.user)==0)
 		{
-            printf("\ncontra: %s = %s",passaux,reg.password);
 			if(strcmp(passaux,reg.password)==0)
             { 
-                printf("\nmodulo xd: %d",reg.modulo);
 				if (reg.modulo == 2)
                 {
                 	strcpy(auxiliar.password,reg.password);
@@ -408,7 +372,6 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	strcpy(auxiliar.names,reg.names);
                 	auxiliar.matricula = reg.matricula;
                 	
-                	system("PAUSE");
      	           	fseek(archaux,0,2);
 					fwrite(&auxiliar, sizeof(aux), 1, archaux);
                 	found=1;
@@ -426,7 +389,6 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
                 	auxiliar.modulo = reg.modulo;
                 	strcpy(auxiliar.names,reg.names);
                 	
-                	system("PAUSE");
      	           	fseek(archaux,0,2);
 					fwrite(&auxiliar, sizeof(aux), 1, archaux);
 					found=1;
@@ -435,12 +397,10 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
             }
             else
             {
-                printf ("\n\t\t\t\t\t\t\tLa contrasenia ingresada es incorrecta.\n");
+                printf ("\n\t\t\t\t\t\t\tLa contraseña ingresada es incorrecta.\n");
             }
-            
 		}
 		fread(&reg,sizeof(auth),1,arch);
-		
 	}
     
 	if(found==1)
@@ -454,7 +414,7 @@ int LogIn(FILE *arch,FILE *archaux)//funcion que devuelve 1 si se pudo logear y 
     	return 0;
 	}
 }
-void gotoxy(int x,int y)
+void gotoxy(int x,int y)//La funcion gotoxy se utiliza para posicionar algun valor en pantalla
 {  
       HANDLE hcon;  
       hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
@@ -464,11 +424,11 @@ void gotoxy(int x,int y)
       SetConsoleCursorPosition(hcon,dwPos);  
  }
  
-void color(int X)
+void color(int X)//Se utiliza para cambiar de color la pantalla
 {
  	SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),X);
 }
-void AltEnter()
+void AltEnter()//Se utiliza para poner la pantalla completa
 {
     keybd_event(VK_MENU,
                 0x38,
@@ -487,4 +447,11 @@ void AltEnter()
                 KEYEVENTF_KEYUP,
                 0);
     return;
+}
+// Establecer el idioma a espaÃ±ol
+void Spanish()
+{
+	setlocale(LC_ALL, "es_ES"); // Cambiar locale - Suficiente para mÃ¡quinas Linux
+	SetConsoleCP(1252); // Cambiar STDIN -  Para mÃ¡quinas Windows
+    SetConsoleOutputCP(1252); // Cambiar STDOUT - Para mÃ¡quinas Windows
 }
